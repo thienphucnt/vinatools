@@ -1,0 +1,51 @@
+{
+  "output": {
+    "filePath": "repomix-output.xml",
+    "style": "xml",
+    "removeComments": false,
+    "showLineNumbers": true
+  },
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      "*.db",
+      "*.zip",
+      "*.png",
+      "*.log",
+      "analytics.json",
+      "vinatools_index.html",
+      "sitemap.xml",
+      "main.py",
+      "WALKTHROUGH.md",
+      ".github/workflows/main.yml",
+      "bien-ban-*/**",
+      "giai-nen-*/**",
+      "nen-*/**",
+      "phan-mem-*/**",
+      "tai-phan-mem-*/**",
+      "cong-cu-chuyen-doi-*/**",
+      "cong-cu-doc-*/**",
+      "cong-cu-gop-*/**",
+      "cong-cu-tach-*/**",
+      "cong-cu-tinh-lai-gop/**",
+      "mau-don-xin-huy-*/**",
+      "mau-don-xin-nghi-*/**",
+      "mau-don-xin-phep*/**",
+      "mau-don-xin-tam-tru/**",
+      "mau-don-xin-thoi-viec/**",
+      "mau-don-xin-thuc-tap/**",
+      "mau-don-xin-viec-*/**",
+      "mau-hop-dong-cho-*/**",
+      "mau-hop-dong-cong-tac-vien/**",
+      "mau-hop-dong-dat-coc-*/**",
+      "mau-hop-dong-dich-vu*/**",
+      "mau-hop-dong-lao-dong-file-word/**",
+      "mau-hop-dong-lao-dong-moi-nhat/**",
+      "mau-hop-dong-mua-ban-xe/**",
+      "mau-hop-dong-nguyen-tac-mua-ban/**",
+      "mau-hop-dong-thu-viec*/**",
+      "mau-hop-dong-thue-*/**"
+    ]
+  }
+}

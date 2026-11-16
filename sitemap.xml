@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage / Directory -->
+  <url>
+    <loc>https://vinatools.vercel.app/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Core Trust Pages -->
+  <url>
+    <loc>https://vinatools.vercel.app/privacy.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://vinatools.vercel.app/terms.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://vinatools.vercel.app/about.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://vinatools.vercel.app/contact.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://vinatools.vercel.app/refund.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <!-- Deployed Tools -->
+  <!-- Công cụ chuyển đổi giọng nói -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-giong-noi</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi heic sang jpg -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-heic-sang-jpg</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi ngoại tệ -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-ngoai-te</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi pdf sang excel -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-pdf-sang-excel</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi png sang jpg -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-png-sang-jpg</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi teencode -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-teencode</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi tiền tệ -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-tien-te</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi video sang mp4 -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-video-sang-mp4</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi định dạng ảnh -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-dinh-dang-anh</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ gộp file -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-file</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ gộp file excel -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-file-excel</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ gộp file pdf -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-file-pdf</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ gộp file word -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-file-word</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ gộp khối ô tính -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-khoi-o-tinh</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ gộp ô trong word -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-o-trong-word</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ gộp ảnh -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-anh</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ tách nhạc -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-tach-nhac</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ tách nhạc nền -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-tach-nhac-nen</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ tính lãi gộp -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-tinh-lai-gop</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng cho thuê mặt bằng -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-cho-thue-mat-bang</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng cho thuê nhà -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-cho-thue-nha</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng cho thuê nhà 2026 -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-cho-thue-nha-2026</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng cho ở nhờ -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-cho-o-nho</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng cộng tác viên -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-cong-tac-vien</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng dịch vụ -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-dich-vu</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng lao động 2026 -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-lao-dong-2026</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu hợp đồng lao động file word -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-lao-dong-file-word</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu hợp đồng lao động mới nhất -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-lao-dong-moi-nhat</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu hợp đồng nguyên tắc mua bán -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-nguyen-tac-mua-ban</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng thuê nhà nguyên căn -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-thue-nha-nguyen-can</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng thuê phòng trọ -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-thue-phong-tro</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng thử việc -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-thu-viec</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng thử việc mới nhất -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-thu-viec-moi-nhat</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin nghỉ phép công ty -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-nghi-phep-cong-ty</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin nghỉ việc file word -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-nghi-viec-file-word</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin nghỉ việc đơn giản -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-nghi-viec-don-gian</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép của học sinh -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-cua-hoc-sinh</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ học -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-hoc</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ học thpt -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-hoc-thpt</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ việc -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-viec</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép vắng mặt -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-vang-mat</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin thôi việc -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-thoi-viec</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin thực tập -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-thuc-tap</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin tạm trú -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-tam-tru</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin việc -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc 2025 -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-2025</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc bác sĩ -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-bac-si</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc bác sĩ file word -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-bac-si-file-word</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc bệnh viện -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-benh-vien</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc cho điều dưỡng -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-cho-dieu-duong</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc chung -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-chung</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc chuẩn -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-chuan</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc có dán ảnh -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-co-dan-anh</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc cơ bản -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-co-ban</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc download -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-download</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc file word -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-file-word</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc ngành y tế -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-nganh-y-te</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc ngắn gọn -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-ngan-gon</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc part time -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-part-time</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc pdf -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-pdf</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc viết tay chuẩn -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-viet-tay-chuan</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Công cụ tính phí sàn tmđt -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-tinh-phi-san-tmdt</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ tách và chuẩn hóa địa chỉ -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-tach-va-chuan-hoa-dia-chi</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ đọc số thành chữ -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-doc-so-thanh-chu</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Biên bản bàn giao tài sản -->
+  <url>
+    <loc>https://vinatools.vercel.app/bien-ban-ban-giao-tai-san</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng mua bán xe -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-mua-ban-xe</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ tính thuế hộ kinh doanh -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-tinh-thue-ho-kinh-doanh</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ gộp ổ cứng -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-o-cung</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén winrar -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-winrar</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng cho ở nhờ để đăng ký tạm trú -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-cho-o-nho-de-dang-ky-tam-tru</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi mp4 sang gif -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-mp4-sang-gif</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép sửa chữa nhà ở -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-sua-chua-nha-o</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng thuê nhà đăng ký tạm trú -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-thue-nha-dang-ky-tam-tru</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén rar cho mac -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-rar-cho-mac</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ làm 1 ngày -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-lam-1-ngay</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén mp4 thành mp3 -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-mp4-thanh-mp3</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Tải phần mềm giải nén winrar -->
+  <url>
+    <loc>https://vinatools.vercel.app/tai-phan-mem-giai-nen-winrar</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén winrar 32 bit -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-winrar-32-bit</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Nén dung lượng ảnh trực tuyến -->
+  <url>
+    <loc>https://vinatools.vercel.app/nen-dung-luong-anh-truc-tuyen</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén pdf miễn phí -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-pdf-mien-phi</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file zip -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-zip</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file rar -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-rar</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin việc mới nhất năm 2026 -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-moi-nhat-nam-2026</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu hợp đồng thuê nhà để đăng ký tạm trú -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-thue-nha-de-dang-ky-tam-tru</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén pdf -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-pdf</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin việc kính gửi ai -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-kinh-gui-ai</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Công cụ gộp pdf -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-gop-pdf</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén video mp4 -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-video-mp4</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén winrar 64 bit -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-winrar-64-bit</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Tải phần mềm nén pdf -->
+  <url>
+    <loc>https://vinatools.vercel.app/tai-phan-mem-nen-pdf</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Nén ảnh trực -->
+  <url>
+    <loc>https://vinatools.vercel.app/nen-anh-truc</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén hình -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-hinh</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén pdf miễn phí -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-pdf-mien-phi</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ việc 1 ngày -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-viec-1-ngay</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file excel -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-excel</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Nén ảnh trực tuyến miễn phí -->
+  <url>
+    <loc>https://vinatools.vercel.app/nen-anh-truc-tuyen-mien-phi</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file pdf foxit reader -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-pdf-foxit-reader</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file pdf trực tuyến -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-pdf-truc-tuyen</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén dung lượng pdf -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-dung-luong-pdf</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén ảnh trực tuyến -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-anh-truc-tuyen</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng dịch vụ với cá nhân -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-dich-vu-voi-ca-nhan</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Nén file ảnh trực tuyến -->
+  <url>
+    <loc>https://vinatools.vercel.app/nen-file-anh-truc-tuyen</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin việc và sơ yếu lý lịch -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-va-so-yeu-ly-lich</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin việc có xác nhận địa phương -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-co-xac-nhan-dia-phuong</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Phần mềm giải nén pdf -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-pdf</loc>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén winrar -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-winrar</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm siêu nén pdf -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-sieu-nen-pdf</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin hủy mã số thuế cá nhân -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-huy-ma-so-thue-ca-nhan</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén hình ảnh online -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-hinh-anh-online</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file hình ảnh -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-hinh-anh</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén dung lượng hình ảnh -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-dung-luong-hinh-anh</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén winrar full crack -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-winrar-full-crack</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén file winrar -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-file-winrar</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu hợp đồng đặt cọc mua bán nhà -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-hop-dong-dat-coc-mua-ban-nha</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Giải nén ảnh trực tuyến -->
+  <url>
+    <loc>https://vinatools.vercel.app/giai-nen-anh-truc-tuyen</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén folder -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-folder</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file pdf mạnh nhất -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-pdf-manh-nhat</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén pdf sang word -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-pdf-sang-word</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén pdf tốt nhất -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-pdf-tot-nhat</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file pdf online -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-pdf-online</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ học lớp đảng viên mới -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-hoc-lop-dang-vien-moi</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ học của phụ huynh -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-hoc-cua-phu-huynh</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén ảnh caesium -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-anh-caesium</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén winrar cho mac -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-winrar-cho-mac</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin việc file word cơ bản -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-file-word-co-ban</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Phần mềm giải nén file hình ảnh -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-file-hinh-anh</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép hành nghề y dược tư nhân ngoài giờ -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-hanh-nghe-y-duoc-tu-nhan-ngoai-gio</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file trên điện thoại -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-tren-dien-thoai</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén hình ảnh -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-hinh-anh</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ học cho con -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-hoc-cho-con</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file word -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-word</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file pdf offline -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-pdf-offline</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file pdf cực nhỏ -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-pdf-cuc-nho</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén hình ảnh -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-hinh-anh</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ của giáo viên -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-cua-giao-vien</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén nhạc mp4 sang mp3 -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-nhac-mp4-sang-mp3</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén rar 32bit -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-rar-32bit</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén mp4 -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-mp4</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm giải nén winrar miễn phí -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-giai-nen-winrar-mien-phi</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Nén ảnh truc tuyen -->
+  <url>
+    <loc>https://vinatools.vercel.app/nen-anh-truc-tuyen</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Phần mềm nén file excel trực tuyến -->
+  <url>
+    <loc>https://vinatools.vercel.app/phan-mem-nen-file-excel-truc-tuyen</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin phép xây dựng nhà ở riêng lẻ mới nhất -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-xay-dung-nha-o-rieng-le-moi-nhat</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Mẫu đơn xin việc cho bác sĩ -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-viec-cho-bac-si</loc>
+    <lastmod>2026-06-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Mẫu đơn xin phép nghỉ phép -->
+  <url>
+    <loc>https://vinatools.vercel.app/mau-don-xin-phep-nghi-phep</loc>
+    <lastmod>2026-06-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Công cụ chuyển đổi số -->
+  <url>
+    <loc>https://vinatools.vercel.app/cong-cu-chuyen-doi-so</loc>
+    <lastmod>2026-06-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

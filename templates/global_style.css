@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg-dark: #0a0c10;
+  --panel-bg: rgba(18, 22, 32, 0.65);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(0, 168, 255, 0.4);
+  
+  /* Color Palette - Vibrant HSL */
+  --accent-primary: hsl(200, 100%, 50%);
+  --accent-primary-glow: hsla(200, 100%, 50%, 0.15);
+  --accent-secondary: hsl(280, 100%, 60%);
+  --accent-secondary-glow: hsla(280, 100%, 60%, 0.15);
+  
+  --text-main: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  --font-body: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --transition-smooth: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(200, 100%, 50%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(280, 100%, 60%, 0.08) 0px, transparent 50%);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Panel Container */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 30px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: var(--transition-smooth);
+}
+
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* Typography styling */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #ffffff 40%, var(--accent-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom interactive input elements */
+input[type="text"], input[type="number"], input[type="email"], textarea, select {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px var(--accent-primary-glow);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Premium Buttons with subtle animations */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, #0088cc 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 var(--accent-primary-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 hsla(200, 100%, 50%, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 1px solid var(--border-glass);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* File Upload drag-and-drop area styling */
+.upload-dropzone {
+  border: 2px dashed var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.01);
+  transition: var(--transition-smooth);
+}
+
+.upload-dropzone:hover, .upload-dropzone.dragover {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary-glow);
+}
+
+/* Paywall Modal Overlays */
+.paywall-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 7, 10, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  will-change: opacity, visibility;
+}
+
+.paywall-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.paywall-card {
+  max-width: 450px;
+  width: 100%;
+  transform: scale(0.95);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.paywall-modal-overlay.active .paywall-card {
+  transform: scale(1);
+}
+
+.qr-code-img {
+  width: 200px;
+  height: 200px;
+  border: 8px solid white;
+  border-radius: var(--radius-sm);
+  margin: 20px auto;
+  display: block;
+}
+
+.payment-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  color: var(--accent-primary);
+  font-weight: 500;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--accent-primary-glow);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Utility layout blocks */
+.layout-container {
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.tool-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.tool-footer {
+  text-align: center;
+  margin-top: 60px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Side Rail Ads Layout */
+.side-ad-left, .side-ad-right {
+  position: fixed;
+  top: 100px;
+  width: 160px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 10;
+}
+.side-ad-left {
+  left: 20px;
+}
+.side-ad-right {
+  right: 20px;
+}
+.side-ad-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+@media (max-width: 1560px) {
+  .portal-body .side-ad-left, .portal-body .side-ad-right {
+    display: none !important;
+  }
+}
+@media (max-width: 1300px) {
+  .side-ad-left, .side-ad-right {
+    display: none !important;
+  }
+}
+
+/* Fallback House Ads Styling */
+.fallback-ad-vertical {
+  width: 160px;
+  height: 600px;
+  background: linear-gradient(180deg, #1f1a3a 0%, #0c0a18 100%);
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 15px;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fallback-ad-vertical:hover {
+  border-color: rgba(139,92,246,0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(139,92,246,0.25);
+}
+.fallback-ad-vertical.second {
+  background: linear-gradient(180deg, #0e2038 0%, #060e1a 100%);
+  border-color: rgba(0, 168, 255, 0.3);
+}
+.fallback-ad-vertical.second:hover {
+  border-color: rgba(0, 168, 255, 0.6);
+  box-shadow: 0 10px 25px rgba(0,168,255,0.25);
+}
+.fallback-ad-crown {
+  font-size: 2.2rem;
+  color: #f59e0b;
+  margin-top: 15px;
+  animation: float-ad 3s infinite ease-in-out;
+}
+.fallback-ad-logo {
+  font-size: 2.2rem;
+  color: #00a8ff;
+  margin-top: 15px;
+  animation: float-ad 3s infinite ease-in-out;
+}
+.fallback-ad-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 10px;
+  font-family: var(--font-display);
+}
+.fallback-ad-text {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  line-height: 1.4;
+  margin: 15px 0;
+  padding: 0 5px;
+}
+.fallback-ad-price {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+}
+.fallback-ad-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(139,92,246,0.3);
+}
+.fallback-ad-vertical.second .fallback-ad-btn {
+  background: linear-gradient(135deg, #00a8ff 0%, #0055ff 100%);
+  box-shadow: 0 4px 10px rgba(0,168,255,0.3);
+}
+.fallback-ad-horizontal {
+  width: 100%;
+  background: linear-gradient(90deg, #1f1a3a 0%, #0c0a18 100%);
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: 8px;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+.fallback-ad-horizontal:hover {
+  border-color: rgba(139,92,246,0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139,92,246,0.25);
+}
+.fallback-ad-horizontal .fallback-ad-crown {
+  font-size: 1.5rem;
+  margin: 0;
+  animation: none;
+}
+
+@keyframes float-ad {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Underline removal overrides for Google AdSense slots and children */
+ins, ins.adsbygoogle, ins *, ins.adsbygoogle *, 
+.fallback-ad-vertical, .fallback-ad-horizontal, 
+.fallback-ad-vertical *, .fallback-ad-horizontal * {
+  text-decoration: none !important;
+}
+

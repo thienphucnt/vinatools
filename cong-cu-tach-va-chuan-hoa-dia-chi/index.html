@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>công cụ tách và chuẩn hóa địa chỉ - Tách Địa Chỉ Việt Nam</title>
+  <meta name="description" content="Công cụ tự động phân tách địa chỉ thô thành 4 trường: số nhà/đường, xã/phường, quận/huyện, tỉnh/thành phố chuẩn quy hoạch hành chính Việt Nam.">
+  <meta name="keywords" content="tách địa chỉ, chuẩn hóa địa chỉ, phân tách địa chỉ, hành chính việt nam">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vinatools.vercel.app/cong-cu-tach-va-chuan-hoa-dia-chi">
+  
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="công cụ tách và chuẩn hóa địa chỉ - Tách Địa Chỉ Việt Nam">
+  <meta property="og:description" content="Công cụ tự động phân tách địa chỉ thô thành 4 trường chuẩn quy hoạch hành chính Việt Nam.">
+  <meta property="og:url" content="https://vinatools.vercel.app/cong-cu-tach-va-chuan-hoa-dia-chi">
+  <meta property="og:site_name" content="VinaTools">
+  <meta property="og:image" content="https://vinatools.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="công cụ tách và chuẩn hóa địa chỉ - Tách Địa Chỉ Việt Nam">
+  <meta name="twitter:description" content="Công cụ tự động phân tách địa chỉ thô thành 4 trường chuẩn quy hoạch hành chính Việt Nam.">
+  <meta name="twitter:image" content="https://vinatools.vercel.app/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "công cụ tách và chuẩn hóa địa chỉ",
+        "operatingSystem": "All",
+        "applicationCategory": "BusinessApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "VND"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "VinaTools",
+            "item": "https://vinatools.vercel.app"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Tiện Ích",
+            "item": "https://vinatools.vercel.app"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "công cụ tách và chuẩn hóa địa chỉ",
+            "item": "https://vinatools.vercel.app/cong-cu-tach-va-chuan-hoa-dia-chi"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" href="/global_style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/global_style.css"></noscript>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0a0c10">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-8865134830595358" crossorigin="anonymous"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Sử dụng công cụ công cụ tách và chuẩn hóa địa chỉ trực tuyến có đảm bảo an toàn dữ liệu không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tuyệt đối an toàn. Công cụ công cụ tách và chuẩn hóa địa chỉ xử lý dữ liệu hoàn toàn bằng JavaScript client-side ngay trên trình duyệt của bạn. Dữ liệu không được truyền lên máy chủ, đảm bảo tuân thủ nghiêm ngặt Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tôi có thể sử dụng công cụ công cụ tách và chuẩn hóa địa chỉ này trên điện thoại di động được không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Có. Trang web VinaTools được thiết kế đáp ứng hoàn toàn chuẩn Responsive, hỗ trợ mượt mà trên tất cả các trình duyệt smartphone (Safari, Chrome, Samsung Internet) chạy iOS và Android."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Làm cách nào để tải và mở khóa file kết quả của công cụ tách và chuẩn hóa địa chỉ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sau khi hệ thống xử lý xong, bạn chỉ cần thực hiện quét mã QR thanh toán phí duy trì cổng tự động (9.000 đ) thông qua VietQR Napas 24/7. Cổng API cục bộ sẽ nhận diện giao dịch trong 1 giây và mở khóa tải file lập tức."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tôi có thể tự do in ấn hoặc chỉnh sửa file kết quả sau khi tải về không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hoàn toàn được. Các tệp tin tải về từ VinaTools được định dạng dưới dạng chuẩn Microsoft Word (.docx) sạch, không bị khóa bảo mật hay giới hạn quyền chỉnh sửa. Bạn có thể in trực tiếp trên giấy A4 hoặc gửi qua email, Zalo cho đối tác bình thường."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+
+  <!-- Persistent Sidebar Ads (Left and Right Rails) -->
+  <div class="side-ad-left">
+    <span class="side-ad-label">Quảng cáo</span>
+    <ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="pub-8865134830595358" data-ad-slot="mock-sidebar-left">
+      <div class="fallback-ad-vertical" onclick="triggerVipUpgrade()">
+        <div class="fallback-ad-crown"><i class="fa-solid fa-crown"></i></div>
+        <div class="fallback-ad-title">VinaTools VIP</div>
+        <div class="fallback-ad-text">Tải file cực nhanh không quảng cáo. Hoàn tiền 100% nếu lỗi.</div>
+        <div class="fallback-ad-price">9.000đ/tháng</div>
+        <span class="fallback-ad-btn">Nâng Cấp</span>
+      </div>
+    </ins>
+  </div>
+  <div class="side-ad-right">
+    <span class="side-ad-label">Quảng cáo</span>
+    <ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="pub-8865134830595358" data-ad-slot="mock-sidebar-right">
+      <!-- Fallback House Ad 2 -->
+      <div class="fallback-ad-vertical second" onclick="window.open('https://vinaearn-ai.vercel.app', '_blank')">
+        <div class="fallback-ad-logo"><i class="fa-solid fa-code"></i></div>
+        <div class="fallback-ad-title">VinaEarn API</div>
+        <div class="fallback-ad-text">Cổng tra cứu doanh nghiệp tự động</div>
+        <div class="fallback-ad-price">VietRegistry</div>
+        <span class="fallback-ad-btn">Xem Thêm</span>
+      </div>
+    </ins>
+  </div>
+
+  <div class="layout-container">
+    <nav class="portal-nav" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border-glass); margin-bottom: 30px;">
+      <a href="/" class="portal-logo" style="display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none;">
+        <i class="fa-solid fa-toolbox" style="color: #00a8ff;"></i> VinaTools
+      </a>
+      <div class="nav-links" style="display: flex; gap: 20px; align-items: center;">
+        <a href="/?filter=don-tu" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="fa-solid fa-file-lines" style="color: #00a8ff; margin-right: 4px;"></i> Đơn từ</a>
+        <a href="/?filter=hop-dong" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="fa-solid fa-file-contract" style="color: #8b5cf6; margin-right: 4px;"></i> Hợp đồng</a>
+        <a href="/?filter=tien-ich" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="fa-solid fa-screwdriver-wrench" style="color: #ec4899; margin-right: 4px;"></i> Tiện ích</a>
+      </div>
+      <div id="user-nav-status" style="font-size: 0.9rem; color: #94a3b8; display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-shield-halved" style="color: #10b981;"></i> Standardized Parser
+      </div>
+    </nav>
+    <header class="tool-header">
+      <h1>công cụ tách và chuẩn hóa địa chỉ</h1>
+      <p style="color: var(--text-secondary); margin-top: 10px;">Chuẩn hóa và tách tự động địa chỉ hành chính Việt Nam phục vụ giao hàng, logistics, xuất hóa đơn.</p>
+    </header>
+
+    <div id="vinatools-top-ad" class="ad-slot text-center mb-6">
+      <ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="pub-8865134830595358" data-ad-slot="mock-top-page">
+         <div class="fallback-ad-horizontal" onclick="triggerVipUpgrade()" style="padding: 10px 15px; border-radius: 6px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+           <span style="font-size: 0.85rem; color: var(--text-secondary);"><i class="fa-solid fa-crown" style="color: #f59e0b; margin-right: 6px;"></i> Nâng cấp thành viên VIP để trải nghiệm không quảng cáo</span>
+           <span style="font-size: 0.75rem; background: var(--accent-primary); color: white; padding: 4px 10px; border-radius: 4px; font-weight: bold;">Đăng ký chỉ 9K</span>
+         </div>
+      </ins>
+    </div>
+
+    
+  <div class="glass-panel" style="margin-bottom: 30px;">
+    <h2 style="margin-bottom: 15px;"><i class="fa-solid fa-map-location-dot" style="color: var(--accent-primary);"></i> Nhập địa chỉ cần tách và chuẩn hóa</h2>
+    
+    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 8px; position: relative;">
+      <input type="checkbox" id="accept-terms" required style="width: auto; margin-top: 4px; cursor: pointer;" checked>
+      <label for="accept-terms" style="font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; line-height: 1.4; user-select: none;">
+        Tôi đồng ý với <a href="/terms.html" target="_blank" style="color: var(--accent-primary);">Điều khoản dịch vụ</a> và <a href="/privacy.html" target="_blank" style="color: var(--accent-primary);">Chính sách bảo mật</a>.
+      </label>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <label style="display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-secondary);">Nhập địa chỉ đầy đủ (Ngăn cách bằng dấu phẩy hoặc khoảng trắng):</label>
+      <textarea id="raw-address" rows="3" placeholder="Ví dụ: Số 12 Đường Lê Lợi, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh" style="width:100%; padding:12px; font-size:0.95rem;"></textarea>
+    </div>
+
+    <button type="button" id="parse-addr-btn" class="btn btn-primary" style="width:100%; padding:12px; font-weight:bold;">
+      <i class="fa-solid fa-wand-magic-sparkles"></i> Phân Tích & Chuẩn Hóa Địa Chỉ
+    </button>
+  </div>
+
+  <div class="glass-panel" id="result-panel" style="margin-bottom: 30px; display:none;">
+    <h2 style="margin-bottom: 20px; color:#10b981;"><i class="fa-solid fa-circle-check"></i> Kết quả phân tách thành công</h2>
+
+    <div style="display:flex; flex-direction:column; gap:15px;">
+      <div>
+        <label style="display:block; margin-bottom:5px; font-size:0.8rem; color:var(--text-secondary);">Số nhà, Tên đường (Số nhà/Đường/Phố/Thôn/Xóm)</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="res-street" readonly style="flex:1;">
+          <button onclick="copyField('res-street')" class="btn btn-secondary" style="padding: 10px;"><i class="fa-solid fa-copy"></i> Copy</button>
+        </div>
+      </div>
+      <div>
+        <label style="display:block; margin-bottom:5px; font-size:0.8rem; color:var(--text-secondary);">Phường / Xã / Thị trấn</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="res-ward" readonly style="flex:1;">
+          <button onclick="copyField('res-ward')" class="btn btn-secondary" style="padding: 10px;"><i class="fa-solid fa-copy"></i> Copy</button>
+        </div>
+      </div>
+      <div>
+        <label style="display:block; margin-bottom:5px; font-size:0.8rem; color:var(--text-secondary);">Quận / Huyện / Thị xã / Thành phố thuộc tỉnh</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="res-district" readonly style="flex:1;">
+          <button onclick="copyField('res-district')" class="btn btn-secondary" style="padding: 10px;"><i class="fa-solid fa-copy"></i> Copy</button>
+        </div>
+      </div>
+      <div>
+        <label style="display:block; margin-bottom:5px; font-size:0.8rem; color:var(--text-secondary);">Tỉnh / Thành phố trực thuộc Trung ương</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="res-province" readonly style="flex:1;">
+          <button onclick="copyField('res-province')" class="btn btn-secondary" style="padding: 10px;"><i class="fa-solid fa-copy"></i> Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unlock VIP button -->
+    <div style="margin-top:25px; border-top:1px dashed var(--border-glass); padding-top:20px; text-align:center;">
+      <button onclick="triggerVipUpgrade()" class="btn" style="width:100%; padding:12px; background:linear-gradient(135deg, #8b5cf6, #ec4899); border:none; color:white; font-weight:bold;">
+        <i class="fa-solid fa-crown"></i> Nâng cấp VIP để tích hợp API Tách Địa Chỉ vào Excel
+      </button>
+    </div>
+  </div>
+  
+
+    <div id="vinatools-page-ad" class="ad-slot mb-6">
+      <ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="pub-8865134830595358" data-ad-slot="mock-page">
+        <div class="fallback-ad-horizontal" onclick="triggerVipUpgrade()">
+          <div style="display:flex; align-items:center; gap: 15px;">
+            <div class="fallback-ad-crown"><i class="fa-solid fa-crown"></i></div>
+            <div style="text-align:left;">
+              <div class="fallback-ad-title" style="margin:0; font-size:1.1rem;">Thành Viên VIP VinaTools</div>
+              <div class="fallback-ad-text" style="margin:2px 0 0 0; font-size:0.85rem;">Tải không giới hạn 60+ biểu mẫu và tắt toàn bộ quảng cáo</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap: 15px;">
+            <div class="fallback-ad-price" style="margin:0; font-size:1.2rem; font-weight:bold; color:#f59e0b;">9.000 đ/tháng</div>
+            <span class="fallback-ad-btn" style="margin:0; padding: 8px 16px;">Đăng Ký Ngay</span>
+          </div>
+        </div>
+      </ins>
+    </div>
+
+    
+    <!-- VINATOOLS_SEO_START -->
+
+      <section class="glass-panel" style="margin-top: 40px; border-color: rgba(255, 255, 255, 0.08); text-align: left; padding: 30px;">
+        <h2 style="margin-bottom: 20px; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-circle-info" style="color: var(--accent-secondary); margin-right: 8px;"></i>
+          Công cụ tách và chuẩn hóa địa chỉ là gì?
+        </h2>
+        
+        <p style="margin-bottom: 25px; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          Công cụ trực tuyến <strong>công cụ tách và chuẩn hóa địa chỉ</strong> cung cấp tiện ích đa năng giúp giải quyết nhanh chóng các nhu cầu xử lý dữ liệu hàng ngày. Giao diện thân thiện, tốc độ xử lý nhanh giúp bạn hoàn thành công việc chỉ trong vài giây ngay trên trình duyệt web.
+        </p>
+
+        <h3 style="margin: 25px 0 15px 0; color: #fff; font-size: 1.2rem;">
+          <i class="fa-solid fa-scale-balanced" style="color: var(--accent-primary); margin-right: 8px;"></i>
+          Giải Thuật Xử Lý Dữ Liệu Tốc Độ Cao & An Toàn
+        </h3>
+        <p style="margin-bottom: 25px; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          Tiện ích <strong>công cụ tách và chuẩn hóa địa chỉ</strong> sử dụng các thư viện lập trình tối ưu hóa bộ nhớ đệm trên máy khách. Quy trình xử lý không đòi hỏi băng thông cao, tương thích hoàn toàn với các giao thức mã hóa đường truyền SSL giúp chống nghe lén và bảo mật tuyệt đối các thao tác nghiệp vụ của bạn.
+        </p>
+
+        <h2 style="margin: 35px 0 20px 0; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-list-check" style="color: var(--accent-secondary); margin-right: 8px;"></i>
+          Hướng dẫn sử dụng công cụ tách và chuẩn hóa địa chỉ
+        </h2>
+        <ol style="margin-left: 20px; margin-bottom: 25px; color: var(--text-secondary); display: grid; gap: 10px; line-height: 1.6; font-size: 0.95rem;">
+          <li style="padding-left: 5px;">Bước 1: Tải file nguồn cần phân tách dữ liệu lên hệ thống công cụ công cụ tách và chuẩn hóa địa chỉ.</li>
+      <li style="padding-left: 5px;">Bước 2: Thiết lập các tùy chọn phân tách (chia nhỏ trang PDF, tách âm thanh MP3 từ luồng video).</li>
+      <li style="padding-left: 5px;">Bước 3: Chờ hệ thống biên dịch và phân chia các luồng dữ liệu riêng biệt.</li>
+      <li style="padding-left: 5px;">Bước 4: Xem trước dung lượng và định dạng của các tệp tin kết quả sau phân tách.</li>
+      <li style="padding-left: 5px;">Bước 5: Hoàn tất giao dịch VietQR để tải trọn gói các file đã tách thành công.</li>
+    </ol>
+
+        <div style="background: rgba(245, 158, 11, 0.05); border-left: 4px solid #f59e0b; padding: 15px 20px; border-radius: 4px; margin-bottom: 30px;">
+          <h4 style="margin: 0 0 8px 0; color: #f59e0b; font-weight: bold; font-size: 1rem;"><i class="fa-solid fa-triangle-exclamation"></i> Khuyến Nghị An Toàn & Bảo Mật</h4>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+            Cam kết dịch vụ: VinaTools cam kết hoạt động phi lợi nhuận phục vụ cộng đồng, tuân thủ đầy đủ các chuẩn mực về quản lý dữ liệu cá nhân theo quy định số 91/2025/QH15 của Quốc hội.
+          </p>
+        </div>
+
+        <h2 style="margin: 40px 0 20px 0; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-clipboard-question" style="color: var(--accent-primary); margin-right: 8px;"></i>
+          Các câu hỏi thường gặp về công cụ tách và chuẩn hóa địa chỉ (FAQ)
+        </h2>
+        <div style="display: grid; gap: 20px;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Sử dụng công cụ công cụ tách và chuẩn hóa địa chỉ trực tuyến có đảm bảo an toàn dữ liệu không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Tuyệt đối an toàn. Công cụ công cụ tách và chuẩn hóa địa chỉ xử lý dữ liệu hoàn toàn bằng JavaScript client-side ngay trên trình duyệt của bạn. Dữ liệu không được truyền lên máy chủ, đảm bảo tuân thủ nghiêm ngặt Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Tôi có thể sử dụng công cụ công cụ tách và chuẩn hóa địa chỉ này trên điện thoại di động được không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Có. Trang web VinaTools được thiết kế đáp ứng hoàn toàn chuẩn Responsive, hỗ trợ mượt mà trên tất cả các trình duyệt smartphone (Safari, Chrome, Samsung Internet) chạy iOS và Android.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Làm cách nào để tải và mở khóa file kết quả của công cụ tách và chuẩn hóa địa chỉ?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Sau khi hệ thống xử lý xong, bạn chỉ cần thực hiện quét mã QR thanh toán phí duy trì cổng tự động (9.000 đ) thông qua VietQR Napas 24/7. Cổng API cục bộ sẽ nhận diện giao dịch trong 1 giây và mở khóa tải file lập tức.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Tôi có thể tự do in ấn hoặc chỉnh sửa file kết quả sau khi tải về không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Hoàn toàn được. Các tệp tin tải về từ VinaTools được định dạng dưới dạng chuẩn Microsoft Word (.docx) sạch, không bị khóa bảo mật hay giới hạn quyền chỉnh sửa. Bạn có thể in trực tiếp trên giấy A4 hoặc gửi qua email, Zalo cho đối tác bình thường.</p>
+          </div>
+    </div>
+        
+        
+      <!-- Related Tools Internal Linking Panel -->
+      <section style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; text-align: left;">
+        <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-layer-group" style="color: var(--accent-secondary);"></i>
+          Công Cụ Hữu Ích Liên Quan Gợi Ý
+        </h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+          
+        <a href="/cong-cu-chuyen-doi-so" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; text-transform: capitalize; line-height: 1.4;">công cụ chuyển đổi số</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến giúp xử lý công cụ chuyển đổi số chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-fire" style="color: #f59e0b;"></i> 3820 lượt sử dụng/tháng
+             </span>
+          </div>
+        </a>
+        
+        <a href="/cong-cu-gop-o-cung" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; text-transform: capitalize; line-height: 1.4;">công cụ gộp ổ cứng</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến giúp xử lý công cụ gộp ổ cứng chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-fire" style="color: #f59e0b;"></i> 4030 lượt sử dụng/tháng
+             </span>
+          </div>
+        </a>
+        
+        <a href="/phan-mem-giai-nen-rar-32bit" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; text-transform: capitalize; line-height: 1.4;">phần mềm giải nén rar 32bit</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến giúp xử lý phần mềm giải nén rar 32bit chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-fire" style="color: #f59e0b;"></i> 2830 lượt sử dụng/tháng
+             </span>
+          </div>
+        </a>
+        
+        </div>
+      </section>
+      
+      <style>
+        .related-tool-card:hover div {
+          border-color: var(--accent-secondary-glow) !important;
+          background: rgba(255,255,255,0.035) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+      </style>
+    
+      </section>
+    
+    <!-- VINATOOLS_SEO_END -->
+
+    <footer class="tool-footer" style="margin-top: 60px; padding-top: 25px; border-top: 1px solid var(--border-glass); font-size: 0.8rem; color: var(--text-muted); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <p>&copy; 2026 VinaTools. Bảo mật dữ liệu người dùng tuyệt đối. Mọi tính toán diễn ra tại trình duyệt.</p>
+      <p style="margin-bottom: 2px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="/terms.html" style="color: var(--text-secondary); text-decoration: none;">Điều khoản</a>
+        <a href="/privacy.html" style="color: var(--text-secondary); text-decoration: none;">Bảo mật</a>
+        <a href="/about.html" style="color: var(--text-secondary); text-decoration: none;">Giới thiệu</a>
+        <a href="/contact.html" style="color: var(--text-secondary); text-decoration: none;">Liên hệ</a>
+      </p>
+    </footer>
+  </div>
+  <script src="/checkout_modal.js?v=1.0.2"></script>
+  <script>
+    initCheckoutConfig({
+      bankName: "techcombank",
+      bankId: "TCB",
+      accountNumber: "19027557341011",
+      accountName: "NGUYEN TRUNG THIEN PHUC",
+      apiEndpoint: "https://f882b288e3e029b5-42-114-207-242.serveousercontent.com/api/check-payment"
+    });
+
+    // Hide ads for VIP members
+    if (localStorage.getItem("vipToken")) {
+      const ads = document.querySelectorAll(".side-ad-left, .side-ad-right, #vinatools-page-ad, #vinatools-top-ad");
+      ads.forEach(el => el.style.display = "none");
+    } else {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error("AdSense page ad load failed:", e);
+      }
+    }
+
+    
+    function copyField(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.select();
+        document.execCommand('copy');
+        alert('Đã sao chép: ' + el.value);
+      }
+    }
+    window.copyField = copyField;
+
+    document.getElementById('parse-addr-btn').addEventListener('click', function() {
+      const acceptTerms = document.getElementById('accept-terms');
+      if (acceptTerms && !acceptTerms.checked) {
+        alert('Bạn phải đồng ý với Điều khoản dịch vụ & Chính sách bảo mật.');
+        return;
+      }
+
+      const raw = document.getElementById('raw-address').value.trim();
+      if (!raw) {
+        alert('Vui lòng nhập địa chỉ cần tách!');
+        return;
+      }
+
+      // Standard Regex matching for Vietnam Address
+      let province = "";
+      let district = "";
+      let ward = "";
+      let street = "";
+
+      // Match major provinces
+      const provinces = [
+        "Thành phố Hồ Chí Minh", "TP. Hồ Chí Minh", "TP.HCM", "TP HCM", "Hồ Chí Minh", "Sài Gòn",
+        "Hà Nội", "Thành phố Hà Nội", "TP. Hà Nội",
+        "Đà Nẵng", "Thành phố Đà Nẵng", "TP. Đà Nẵng",
+        "Bình Dương", "Đồng Nai", "Bà Rịa - Vũng Tàu", "Bà Rịa Vũng Tàu", "Vũng Tàu",
+        "Long An", "Tiền Giang", "Bến Tre", "Trà Vinh", "Vĩnh Long", "Đồng Tháp",
+        "An Giang", "Kiên Giang", "Cần Thơ", "Hậu Giang", "Sóc Trăng", "Bạc Liêu", "Cà Mau",
+        "Tây Ninh", "Bình Phước", "Lâm Đồng", "Đà Lạt", "Đắk Nông", "Đắk Lắk", "Gia Lai", "Kon Tum",
+        "Khánh Hòa", "Nha Trang", "Phú Yên", "Bình Định", "Quảng Ngãi", "Quảng Nam", "Thừa Thiên Huế", "Huế",
+        "Quảng Trị", "Quảng Bình", "Hà Tĩnh", "Nghệ An", "Thanh Hóa", "Ninh Bình", "Nam Định", "Thái Bình",
+        "Hà Nam", "Hưng Yên", "Hải Dương", "Hải Phòng", "Quảng Ninh", "Bắc Giang", "Bắc Ninh", "Vĩnh Phúc",
+        "Phú Thọ", "Thái Nguyên", "Tuyên Quang", "Yên Bái", "Lạng Sơn", "Cao Bằng", "Bắc Kạn", "Hà Giang",
+        "Hòa Bình", "Sơn La", "Điện Biên", "Lai Châu", "Lào Cai"
+      ];
+
+      let cleanRaw = raw;
+      
+      // Look for Province at the end
+      for (let prov of provinces) {
+        const regex = new RegExp('(,?\s*(' + prov.replace(/[-\/\^$*+?.()|[\]{}]/g, '\$&') + '))$', 'i');
+        const match = cleanRaw.match(regex);
+        if (match) {
+          province = prov;
+          cleanRaw = cleanRaw.substring(0, match.index).trim();
+          // strip trailing comma
+          if (cleanRaw.endsWith(',')) cleanRaw = cleanRaw.slice(0, -1).trim();
+          break;
+        }
+      }
+
+      // Fallback search if not at the very end
+      if (!province) {
+        for (let prov of provinces) {
+          const regex = new RegExp('(,?\s*(' + prov.replace(/[-\/\^$*+?.()|[\]{}]/g, '\$&') + '))', 'i');
+          const match = cleanRaw.match(regex);
+          if (match) {
+            province = prov;
+            cleanRaw = cleanRaw.replace(match[0], '').trim();
+            break;
+          }
+        }
+      }
+
+      // Standardize Province Output Name
+      if (province) {
+        if (province.toLowerCase().includes("hồ chí minh") || province.toLowerCase().includes("hcm")) province = "Thành phố Hồ Chí Minh";
+        else if (province.toLowerCase().includes("hà nội")) province = "Thành phố Hà Nội";
+        else if (province.toLowerCase().includes("đà nẵng")) province = "Thành phố Đà Nẵng";
+        else if (province.toLowerCase().includes("hải phòng")) province = "Thành phố Hải Phòng";
+        else if (province.toLowerCase().includes("cần thư") || province.toLowerCase().includes("cần thơ")) province = "Thành phố Cần Thơ";
+      }
+
+      // Try to find District (Quận / Huyện / Thị xã / Thành phố)
+      // Matches pattern: (Quận/Huyện/Thị xã/Thành phố) + name
+      const distMatch = cleanRaw.match(/(,?\s*(Quận|Huyện|Thị\s*xã|Thành\s*phố)\s+[A-Za-z0-9\sĂâĐđêÔôơƯưáàảãạíìỉĩịúùủũụýỳỷỹỵẮắẰằẲẳẴẵẶặẤấẦầẨẩẪẫẬậẾếỀềỂểỄễỆệỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỨứỪừỬửỮữỰự]+)$/i);
+      if (distMatch) {
+        district = distMatch[1].replace(/^,?\s*/, '').trim();
+        cleanRaw = cleanRaw.substring(0, distMatch.index).trim();
+        if (cleanRaw.endsWith(',')) cleanRaw = cleanRaw.slice(0, -1).trim();
+      } else {
+        // Fallback: match commonly named districts
+        const districtKeywords = ["q.", "h.", "tx.", "tp.", "quận", "huyện", "thị xã", "thành phố"];
+        // split by comma and search backward
+        const parts = cleanRaw.split(',');
+        if (parts.length > 1) {
+          const lastPart = parts[parts.length - 1].trim();
+          for (let key of districtKeywords) {
+            if (lastPart.toLowerCase().startsWith(key)) {
+              district = lastPart;
+              parts.pop();
+              cleanRaw = parts.join(',').trim();
+              break;
+            }
+          }
+        }
+      }
+
+      // Try to find Ward (Phường / Xã / Thị trấn)
+      const wardMatch = cleanRaw.match(/(,?\s*(Phường|Xã|Thị\s*trấn|P\.)\s+[A-Za-z0-9\sĂâĐđêÔôơƯưáàảãạíìỉĩịúùủũụýỳỷỹỵẮắẰằẲẳẴẵẶặẤấẦầẨẩẪẫẬậẾếỀềỂểỄễỆệỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỨứỪừỬửỮữỰự]+)$/i);
+      if (wardMatch) {
+        ward = wardMatch[1].replace(/^,?\s*/, '').trim();
+        cleanRaw = cleanRaw.substring(0, wardMatch.index).trim();
+        if (cleanRaw.endsWith(',')) cleanRaw = cleanRaw.slice(0, -1).trim();
+      } else {
+        // Fallback by comma split
+        const parts = cleanRaw.split(',');
+        if (parts.length > 1) {
+          const lastPart = parts[parts.length - 1].trim();
+          if (lastPart.toLowerCase().startsWith('phường') || lastPart.toLowerCase().startsWith('xã') || lastPart.toLowerCase().startsWith('p.')) {
+            ward = lastPart;
+            parts.pop();
+            cleanRaw = parts.join(',').trim();
+          }
+        }
+      }
+
+      // The rest is street/number
+      street = cleanRaw;
+
+      // Fill in result inputs
+      document.getElementById('res-street').value = street || "Không tìm thấy";
+      document.getElementById('res-ward').value = ward || "Không tìm thấy";
+      document.getElementById('res-district').value = district || "Không tìm thấy";
+      document.getElementById('res-province').value = province || "Không tìm thấy";
+
+      document.getElementById('result-panel').style.display = 'block';
+      document.getElementById('result-panel').scrollIntoView({ behavior: 'smooth' });
+    });
+  
+  </script>
+</body>
+</html>

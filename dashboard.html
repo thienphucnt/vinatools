@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VinaEarn AI - Admin Console</title>
+  
+  <!-- Font Awesome for modern icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Style Sheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- ==========================================================================
+         SIDEBAR NAVIGATION
+         ========================================================================== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <div>
+          <h1 class="brand-name">VinaEarn Admin</h1>
+          <span class="agent-status">
+            <span class="status-dot"></span> Active
+          </span>
+        </div>
+      </div>
+      
+      <ul class="nav-links">
+        <li class="nav-item active" data-tab="overview">
+          <a href="#"><i class="fa-solid fa-chart-line"></i> Overview</a>
+        </li>
+        <li class="nav-item" data-tab="keys">
+          <a href="#"><i class="fa-solid fa-key"></i> Quản Lý API Keys</a>
+        </li>
+        <li class="nav-item" data-tab="seo">
+          <a href="#"><i class="fa-solid fa-globe"></i> SEO Landing Pages</a>
+        </li>
+        <li class="nav-item" data-tab="tax">
+          <a href="#"><i class="fa-solid fa-scale-balanced"></i> Tax Assistant</a>
+        </li>
+        <li class="nav-item" data-tab="usage">
+          <a href="#"><i class="fa-solid fa-chart-bar"></i> API Usage</a>
+        </li>
+        <li class="nav-item" data-tab="support">
+          <a href="#"><i class="fa-solid fa-circle-question"></i> Customer Support</a>
+        </li>
+        <li class="nav-item" data-tab="feedback">
+          <a href="#"><i class="fa-solid fa-comment-dots"></i> User Feedback</a>
+        </li>
+        <li class="nav-item" data-tab="settings">
+          <a href="#"><i class="fa-solid fa-sliders"></i> System Settings</a>
+        </li>
+        <li class="nav-item-logout" id="btn-logout" style="margin-top: 24px; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.08);">
+          <a href="#" style="color: #f87171; display: flex; align-items: center; gap: 12px; padding: 12px 20px; font-weight: 500; text-decoration: none; border-radius: 8px; transition: all 0.2s;"><i class="fa-solid fa-right-from-bracket"></i> Đăng Xuất</a>
+        </li>
+      </ul>
+      
+      <div class="sidebar-footer">
+        <span class="sidebar-footer-title">Total API Requests</span>
+        <div class="sidebar-footer-stat" id="footer-actions-count">--</div>
+      </div>
+    </aside>
+
+    <!-- ==========================================================================
+         MAIN CONTENT AREA
+         ========================================================================== -->
+    <main class="main-wrapper">
+      
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-title-section">
+          <h2>Registry API Console</h2>
+          <p>Quản lý khóa API, cấu hình Webhook VietQR và theo dõi nghĩa vụ thuế</p>
+        </div>
+        
+        <div class="header-controls">
+          <div class="header-stat-badge vietnam-time-badge">
+            <i class="fa-solid fa-clock"></i>
+            <span id="vietnam-time">--:--:-- (ICT)</span>
+          </div>
+          <div class="header-stat-badge">
+            <i class="fa-solid fa-dong-sign"></i>
+            <span>Doanh Thu: <strong id="header-real-revenue">0 đ</strong></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Container -->
+      <div class="content-body">
+
+        <!-- Connection Warning Banner -->
+        <div id="connection-warning-banner" class="connection-warning" style="display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #f87171; padding: 12px 20px; border-radius: 12px; margin-bottom: 24px; font-weight: 500; font-size: 0.9rem; align-items: center; gap: 12px; border-left: 4px solid #ef4444;">
+          <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.1rem; color: #ef4444;"></i>
+          <span style="flex: 1;">Không thể kết nối đến Local Gateway Webhook API. Vui lòng đảm bảo server python và tunnel ở local đang hoạt động (Agent đang tự động duy trì kết nối này).</span>
+          <button class="btn btn-secondary" onclick="location.reload()" style="padding: 6px 12px; font-size: 0.75rem; border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.03); color: #fff;"><i class="fa-solid fa-arrows-rotate"></i> Tải Lại</button>
+        </div>
+
+        <!-- ==========================================================================
+             TAB: OVERVIEW
+             ========================================================================== -->
+        <section class="tab-content active" id="overview-tab">
+          
+          <!-- Key Metrics Grid -->
+          <div class="stats-grid">
+            
+            <div class="glass-panel stat-card">
+              <div class="stat-card-header">
+                <span>Doanh Thu Thực Tế (VietQR)</span>
+                <div class="stat-card-icon">
+                  <i class="fa-solid fa-dong-sign"></i>
+                </div>
+              </div>
+              <div class="stat-card-value text-teal" id="stat-monthly">0 đ</div>
+              <div class="stat-card-trend text-muted" id="stat-monthly-trend">
+                <i class="fa-solid fa-arrow-trend-up"></i> Tích lũy từ hệ thống
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card teal">
+              <div class="stat-card-header">
+                <span id="stat-adsense-title">Doanh Thu QC AdSense (Ước Tính Dự Kiến)</span>
+                <div class="stat-card-icon">
+                  <i class="fa-solid fa-rectangle-ad"></i>
+                </div>
+              </div>
+              <div class="stat-card-value" id="stat-adsense">0 đ</div>
+              <div class="stat-card-trend text-muted" id="stat-adsense-trend" title="Doanh thu được ước tính dựa trên lưu lượng tìm kiếm từ khóa của các công cụ SEO đã deploy, không phải doanh thu thực tế được rút từ Google AdSense.">
+                <i class="fa-solid fa-circle-info"></i> <span id="stat-adsense-trend-text">Ước tính từ SEO Search Volume</span>
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-card-header">
+                <span>Hạn Mức Miễn Thuế Còn Lại</span>
+                <div class="stat-card-icon">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </div>
+              </div>
+              <div class="stat-card-value" id="stat-bot-success">1,000,000,000 đ</div>
+              <div class="stat-card-trend text-muted" id="stat-bot-success-trend">
+                <i class="fa-solid fa-scale-balanced"></i> Decree 141/2026/NĐ-CP
+              </div>
+            </div>
+
+            <div class="glass-panel stat-card teal">
+              <div class="stat-card-header">
+                <span>Số SEO Tools Đã Deploy</span>
+                <div class="stat-card-icon">
+                  <i class="fa-solid fa-network-wired"></i>
+                </div>
+              </div>
+              <div class="stat-card-value" id="stat-scrapers">0</div>
+              <div class="stat-card-trend text-muted" id="stat-scrapers-trend">
+                <i class="fa-solid fa-circle-play"></i> Tự động hóa SEO
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Earnings Flow & Recent Logs -->
+          <div class="dashboard-details-grid">
+            
+            <!-- Custom CSS Chart Card -->
+            <div class="glass-panel chart-card">
+              <div class="chart-header" style="margin-bottom: 15px;">
+                <h3 class="chart-title"><i class="fa-solid fa-chart-column text-teal"></i> Doanh Thu Theo Ngày Trong Tuần (VND)</h3>
+                <span class="text-muted" style="font-size: 0.85rem;" id="chart-update-time">Cập nhật thời gian thực</span>
+              </div>
+              <div style="display: flex; gap: 15px; margin-bottom: 20px; font-size: 0.8rem;">
+                <span style="display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 10px; height: 10px; border-radius: 2px; background: var(--accent-primary); display: inline-block;"></span>
+                  Thành viên VIP (VietQR)
+                </span>
+                <span style="display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 10px; height: 10px; border-radius: 2px; background: var(--accent-secondary); display: inline-block;"></span>
+                  <span id="chart-legend-adsense">Quảng cáo AdSense (Ước Tính)</span>
+                </span>
+              </div>
+              <div class="chart-container" id="overview-chart-container">
+                <!-- Will be dynamically populated from SQLite database -->
+              </div>
+            </div>
+
+            <!-- Revenue Breakdown Card -->
+            <div class="glass-panel breakdown-card">
+              <div class="chart-header" style="margin-bottom: 20px;">
+                <h3 class="chart-title"><i class="fa-solid fa-chart-pie text-secondary" style="color: var(--accent-secondary);"></i> Cơ Cấu Doanh Thu</h3>
+              </div>
+              
+              <!-- Stacked Progress Bar comparing sources -->
+              <div style="margin-bottom: 24px;">
+                <div style="height: 12px; display: flex; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,0.05); margin-bottom: 12px;">
+                  <div id="breakdown-bar-vietqr" style="width: 0%; background: var(--accent-primary); transition: width 0.5s ease;"></div>
+                  <div id="breakdown-bar-adsense" style="width: 0%; background: var(--accent-secondary); transition: width 0.5s ease;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-secondary);">
+                  <span style="display: flex; align-items: center; gap: 4px;">
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent-primary); display: inline-block;"></span>
+                    VIP: <strong id="breakdown-vietqr-pct">0%</strong>
+                  </span>
+                  <span style="display: flex; align-items: center; gap: 4px;">
+                    <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent-secondary); display: inline-block;"></span>
+                    <span id="breakdown-adsense-label">AdSense (Ước Tính)</span>: <strong id="breakdown-adsense-pct">0%</strong>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Detailed breakdown metrics list -->
+              <div style="display: flex; flex-direction: column; gap: 14px; flex: 1; justify-content: center;">
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; font-size: 0.9rem;">
+                  <span style="color: var(--text-secondary);">VIP Membership (Thật):</span>
+                  <span style="font-weight: bold; color: #fff;" id="breakdown-vietqr-val">0 đ</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; font-size: 0.9rem;">
+                  <span style="color: var(--text-secondary);" id="breakdown-adsense-row-label">QC AdSense (Ước Tính):</span>
+                  <span style="font-weight: bold; color: #fff;" id="breakdown-adsense-val">0 đ</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; font-size: 0.9rem;">
+                  <span style="color: var(--text-secondary);" id="breakdown-clicks-row-label">Lượt click QC (Ước Tính):</span>
+                  <span style="font-weight: bold; color: var(--accent-secondary);" id="breakdown-clicks-val">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 4px; font-size: 0.9rem;">
+                  <span style="color: var(--text-secondary);" id="breakdown-views-row-label">Lượt view QC (Ước Tính):</span>
+                  <span style="font-weight: bold; color: var(--accent-secondary);" id="breakdown-views-val">0</span>
+                </div>
+              </div>
+              <div style="margin-top: 10px; font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 10px;" id="breakdown-adsense-note">
+                <i class="fa-solid fa-circle-info"></i> Doanh thu thực tế nhận từ Google AdSense hiện tại là <strong>$0.00 (0 đ)</strong> do website mới triển khai chưa có lượt truy cập thực tế ổn định từ Google. Số liệu hiển thị ở trên là <strong>ước tính tiềm năng thu nhập</strong> dựa trên lượt tìm kiếm từ khóa (Search Volume) của các công cụ SEO đã deploy.
+              </div>
+            </div>
+
+            <!-- Agent Activity Logs -->
+            <div class="glass-panel activity-card">
+              <div class="chart-header">
+                <h3 class="chart-title"><i class="fa-solid fa-terminal text-primary"></i> Nhật Ký Hoạt Động Của Agent</h3>
+              </div>
+              <div class="activity-list" id="activity-list">
+                <!-- Activities populate dynamically from JS -->
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ==========================================================================
+             TAB: API KEYS MANAGEMENT
+             ========================================================================== -->
+        <section class="tab-content" id="keys-tab">
+          <div style="margin-bottom: 30px;">
+            <h3><i class="fa-solid fa-key text-teal"></i> Quản Lý Khóa API & Đối Tác</h3>
+            <p class="text-muted" style="margin-top: 4px;">Cấp phát, gia hạn và kiểm soát các khóa truy cập API. Thống kê doanh thu VietQR.</p>
+          </div>
+          
+          <div class="dashboard-details-grid" style="margin-bottom: 30px;">
+            <!-- Manual API Key Generator -->
+            <div class="glass-panel" style="padding: 24px;">
+              <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-wand-magic-sparkles text-teal"></i> Cấp Khóa API Thủ Công</h4>
+              <p class="text-muted" style="font-size:0.85rem; margin-bottom:20px;">Dành cho đối tác thanh toán ngoài hệ thống hoặc các trường hợp gia hạn thủ công.</p>
+              
+              <form id="manual-key-form" style="display:flex; flex-direction:column; gap:16px;">
+                <div class="form-group">
+                  <label class="form-label" for="manual-key-memo">Tên đối tác / Ghi chú (Memo)</label>
+                  <input type="text" id="manual-key-memo" class="form-input" placeholder="Ví dụ: Đại lý VinaSoft hoặc VE_PARTNER_ABC" required>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="manual-key-duration">Thời hạn gói khóa</label>
+                  <select id="manual-key-duration" class="form-input">
+                    <option value="30">Gói 30 ngày (1 tháng)</option>
+                    <option value="90">Gói 90 ngày (3 tháng)</option>
+                    <option value="180">Gói 180 ngày (6 tháng)</option>
+                    <option value="365">Gói 365 ngày (1 năm)</option>
+                    <option value="0">Gói Vô Thời Hạn (Lifetime)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="manual-key-amount">Số tiền ghi nhận (VND)</label>
+                  <input type="number" id="manual-key-amount" class="form-input" value="250000" placeholder="250000">
+                </div>
+
+                <button type="submit" class="btn" style="align-self: flex-start;">
+                  <i class="fa-solid fa-key"></i> Tạo & Ký Số Khóa API
+                </button>
+              </form>
+
+              <!-- Output key display -->
+              <div id="manual-key-result-wrapper" style="display:none; margin-top:20px; background:rgba(0,0,0,0.2); padding:16px; border-radius:6px; border:1px dashed var(--accent-secondary);">
+                <label style="font-size:0.75rem; color:var(--text-muted); font-weight:bold; display:block; margin-bottom:6px;">KHÓA API ĐÃ ĐƯỢC TẠO & KÝ SỐ:</label>
+                <div style="display:flex; gap:8px;">
+                  <input type="text" readonly id="manual-key-output" style="flex:1; background:var(--bg-secondary); border:1px solid var(--border-glass); padding:10px; border-radius:4px; color:#fff; font-family:monospace; font-size:0.85rem;">
+                  <button type="button" class="btn" id="manual-key-copy-btn" style="padding:10px 14px;"><i class="fa-solid fa-copy"></i></button>
+                </div>
+                <span id="manual-key-copy-status" style="font-size:0.75rem; color:#10b981; display:none; margin-top:6px;"><i class="fa-solid fa-check"></i> Đã sao chép!</span>
+              </div>
+            </div>
+
+            <!-- VietQR Payment Webhook logs summary -->
+            <div class="glass-panel" style="padding: 24px;">
+              <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-money-bill-transfer text-teal"></i> Thông Tin Thanh Toán VietQR</h4>
+              <p class="text-muted" style="font-size:0.85rem; margin-bottom:16px;">Tất cả các giao dịch bán khóa API được xử lý qua Techcombank bằng VietQR và SQLite Webhook:</p>
+              
+              <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-glass); border-radius:6px; padding:16px; margin-bottom:16px;">
+                <h5 style="color:white; margin-bottom:8px;">Cơ chế xác thực không trạng thái (Stateless)</h5>
+                <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.5;">Vercel Serverless Functions không cần kết nối tới SQLite địa phương. Khi giao dịch hoàn tất ở máy local, server local của bạn sẽ ký số API Key bằng thuật toán <strong>HMAC-SHA256</strong> kèm theo hạn dùng.</p>
+              </div>
+
+              <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-glass); border-radius:6px; padding:16px;">
+                <h5 style="color:white; margin-bottom:8px;">Thông số ví nhận diện:</h5>
+                <ul style="font-size:0.8rem; color:var(--text-secondary); padding-left:16px; display:flex; flex-direction:column; gap:6px;">
+                  <li>Chủ tài khoản: <strong>NGUYEN TRUNG THIEN PHUC</strong></li>
+                  <li>Số tài khoản: <strong>19027557341011</strong></li>
+                  <li>Ngân hàng: <strong>Techcombank (TCB)</strong></li>
+                  <li>Webhook URL: <code>/webhook</code></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Keys List Table -->
+          <div class="glass-panel" style="padding: 24px;">
+            <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-table-list text-teal"></i> Danh Sách Khóa API Hoạt Động (Theo Giao Dịch)</h4>
+            <div style="overflow-x:auto;">
+              <table class="api-table" style="margin-top:0px; width:100%; border-collapse:collapse;">
+                <thead>
+                  <tr>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Đối Tác / Memo</th>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Ngày Đăng Ký</th>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Ngày Hết Hạn</th>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Khóa API (Ký Số)</th>
+                  </tr>
+                </thead>
+                <tbody id="keys-list-tbody">
+                  <tr>
+                    <td colspan="4" style="text-align:center; padding: 30px 0; color:var(--text-muted);">
+                      Đang tải danh sách khóa...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             TAB: SEO LANDING PAGES
+             ========================================================================== -->
+        <section class="tab-content" id="seo-tab">
+          <div style="margin-bottom: 30px;">
+            <h3><i class="fa-solid fa-globe text-teal"></i> SEO Landing Pages Đã Deploy</h3>
+            <p class="text-muted" style="margin-top: 4px;">Danh sách các trang công cụ SEO tự động giúp thu hút lưu lượng truy cập từ khóa ngách về trang sandbox.</p>
+          </div>
+          
+          <div class="product-grid" id="seo-pages-grid">
+            <!-- Dynamic cards populate from app.js using analytics.json -->
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             TAB: TAX ASSISTANT
+             ========================================================================== -->
+        <section class="tab-content" id="tax-tab">
+          <div style="margin-bottom: 30px;">
+            <h3><i class="fa-solid fa-scale-balanced text-teal"></i> Trợ Lý Thuế Doanh Nghiệp Của Bạn</h3>
+            <p class="text-muted" style="margin-top: 4px;">Quản lý doanh thu bán khóa API, theo dõi hạn mức miễn thuế và chuẩn bị hồ sơ khai thuế điện tử ( Decree 141/2026/NĐ-CP ).</p>
+          </div>
+          
+          <div class="stats-grid" style="margin-bottom: 30px;">
+            <div class="glass-panel stat-card">
+              <div class="stat-card-header">
+                <span>Tổng Doanh Thu Năm (Tích Lũy)</span>
+                <div class="stat-card-icon"><i class="fa-solid fa-dong-sign"></i></div>
+              </div>
+              <div class="stat-card-value text-teal" id="tax-total-revenue">0 đ</div>
+              <div class="stat-card-trend text-muted" id="tax-total-tx-count">0 giao dịch thành công</div>
+            </div>
+
+            <div class="glass-panel stat-card teal">
+              <div class="stat-card-header">
+                <span>Thuế Suất Áp Dụng (Cá nhân KD)</span>
+                <div class="stat-card-icon"><i class="fa-solid fa-percent"></i></div>
+              </div>
+              <div class="stat-card-value">7% <span style="font-size:1rem; font-weight:normal; color:var(--text-secondary);">(5% VAT + 2% PIT)</span></div>
+              <div class="stat-card-trend text-muted">Mã ngành: Dịch vụ phần mềm / nội dung số</div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-card-header">
+                <span>Hạn Mức Miễn Thuế Còn Lại</span>
+                <div class="stat-card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              </div>
+              <div class="stat-card-value text-primary" id="tax-remaining-headroom">200,000,000 đ</div>
+              <div class="stat-card-trend text-muted" id="tax-exemption-status">Được miễn thuế hoàn toàn (&lt; 200 Triệu VND)</div>
+            </div>
+          </div>
+
+          <!-- Exemption Progress Bar -->
+          <div class="glass-panel" style="padding: 24px; margin-bottom: 30px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="color:white;"><i class="fa-solid fa-bars-progress text-teal"></i> Hạn Mức Tích Lũy Doanh Thu Miễn Thuế (Luật Thuế Sửa Đổi)</h4>
+              <span id="tax-progress-text" style="font-size:0.9rem; font-weight:bold; color:var(--accent-secondary);">0% (0 đ / 200,000,000 đ)</span>
+            </div>
+            <div style="width:100%; height:16px; background:rgba(255,255,255,0.05); border-radius:100px; overflow:hidden; border:1px solid var(--border-glass);">
+              <div id="tax-progress-bar" style="width: 0%; height:100%; background:linear-gradient(90deg, var(--accent-secondary), var(--accent-primary)); border-radius:100px; transition: width 0.5s ease-in-out;"></div>
+            </div>
+            <p class="text-muted" style="font-size:0.8rem; margin-top:8px;"><i class="fa-solid fa-circle-info"></i> Theo Luật Thuế sửa đổi năm 2025 (có hiệu lực từ ngày 1/7/2025), hạn mức doanh thu miễn thuế áp dụng cho hộ kinh doanh & cá nhân kinh doanh là <strong>200 triệu đồng/năm</strong>. Tuy nhiên bạn vẫn phải lập và nộp tờ khai thuế định kỳ.</p>
+          </div>
+
+          <div class="dashboard-details-grid" style="margin-bottom: 30px;">
+            <!-- Copyable parameters for eTax Form 01/CNKD -->
+            <div class="glass-panel" style="padding: 24px;">
+              <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-file-invoice text-teal"></i> Tham Số Điền Tờ Khai Thuế Mẫu 01/CNKD</h4>
+              <p class="text-muted" style="font-size:0.85rem; margin-bottom:16px;">Sao chép chính xác các giá trị dưới đây để điền vào phần mềm khai thuế eTax Mobile hoặc Cổng thông tin Tổng cục Thuế:</p>
+              
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:10px 16px; border-radius:6px; border:1px solid var(--border-glass);">
+                  <div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Mẫu tờ khai</span>
+                    <h5 style="color:white; margin-top:2px;">01/CNKD (Khai thuế cá nhân kinh doanh)</h5>
+                  </div>
+                  <button type="button" class="btn btn-secondary" onclick="navigator.clipboard.writeText('01/CNKD')" style="padding:6px 12px; font-size:0.75rem;"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:10px 16px; border-radius:6px; border:1px solid var(--border-glass);">
+                  <div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Doanh thu tính thuế GTGT (Chỉ tiêu [27])</span>
+                    <h5 style="color:white; margin-top:2px;" id="tax-indicator-27">0 đ</h5>
+                  </div>
+                  <button type="button" class="btn btn-secondary" id="tax-copy-27" style="padding:6px 12px; font-size:0.75rem;"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:10px 16px; border-radius:6px; border:1px solid var(--border-glass);">
+                  <div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Doanh thu tính thuế TNCN (Chỉ tiêu [28])</span>
+                    <h5 style="color:white; margin-top:2px;" id="tax-indicator-28">0 đ</h5>
+                  </div>
+                  <button type="button" class="btn btn-secondary" id="tax-copy-28" style="padding:6px 12px; font-size:0.75rem;"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:10px 16px; border-radius:6px; border:1px solid var(--border-glass);">
+                  <div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Thuế GTGT phải nộp (Chỉ tiêu [33])</span>
+                    <h5 style="color:white; margin-top:2px;" id="tax-indicator-33">0 đ</h5>
+                  </div>
+                  <button type="button" class="btn btn-secondary" id="tax-copy-33" style="padding:6px 12px; font-size:0.75rem;"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:10px 16px; border-radius:6px; border:1px solid var(--border-glass);">
+                  <div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Thuế TNCN phải nộp (Chỉ tiêu [34])</span>
+                    <h5 style="color:white; margin-top:2px;" id="tax-indicator-34">0 đ</h5>
+                  </div>
+                  <button type="button" class="btn btn-secondary" id="tax-copy-34" style="padding:6px 12px; font-size:0.75rem;"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- step-by-step submission guidance card -->
+            <div class="glass-panel" style="padding: 24px;">
+              <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-circle-info text-teal"></i> Hướng Dẫn Khai Thuế Điện Tử 2026</h4>
+              <div class="etax-guidance-steps" style="display:flex; flex-direction:column; gap:12px; font-size:0.85rem; color:var(--text-secondary);">
+                <div style="display:flex; gap:12px;">
+                  <span style="width:20px; height:20px; background:var(--accent-secondary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:bold;">1</span>
+                  <p>Mở ứng dụng <strong>eTax Mobile</strong> hoặc truy cập Cổng thông tin thuế <a href="https://canhan.gdt.gov.vn" target="_blank" style="color:var(--accent-secondary);">canhan.gdt.gov.vn</a> và đăng nhập bằng MST cá nhân.</p>
+                </div>
+                <div style="display:flex; gap:12px;">
+                  <span style="width:20px; height:20px; background:var(--accent-secondary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:bold;">2</span>
+                  <p>Chọn mục <strong>Thuế cá nhân kinh doanh</strong> &gt; <strong>Khai Thuế Năm/Quý</strong>. Chọn tờ khai mẫu <strong>01/CNKD</strong>.</p>
+                </div>
+                <div style="display:flex; gap:12px;">
+                  <span style="width:20px; height:20px; background:var(--accent-secondary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:bold;">3</span>
+                  <p>Điền doanh thu tính thuế vào chỉ tiêu [27] và [28]. Đối với doanh thu &lt; 200 Triệu/năm, các khoản thuế phải nộp [33], [34] sẽ tự động bằng <strong>0 đ</strong>.</p>
+                </div>
+                <div style="display:flex; gap:12px;">
+                  <span style="width:20px; height:20px; background:var(--accent-secondary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:bold;">4</span>
+                  <p>Ký số hoặc gửi tờ khai trực tuyến. Việc kê khai đầy đủ giúp bạn tuân thủ pháp luật và xác minh nguồn thu trực tuyến hợp lệ.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transaction Table Card -->
+          <div class="glass-panel" style="padding: 24px;">
+            <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-list-check text-teal"></i> Nhật Ký Giao Dịch & Khóa API</h4>
+            <div style="overflow-x:auto;">
+              <table class="api-table" style="margin-top:0px; width:100%; border-collapse:collapse;">
+                <thead>
+                  <tr>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Thời Gian</th>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Nội Dung (Memo)</th>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Số Tiền (VND)</th>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Trạng Thái</th>
+                  </tr>
+                </thead>
+                <tbody id="tax-transactions-tbody">
+                  <tr>
+                    <td colspan="4" style="text-align:center; padding: 30px 0; color:var(--text-muted);">
+                      <i class="fa-solid fa-circle-notch fa-spin" style="margin-right:8px;"></i> Đang tải danh sách giao dịch từ cơ sở dữ liệu địa phương...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             TAB: API USAGE ANALYTICS
+             ========================================================================== -->
+        <section class="tab-content" id="usage-tab">
+          <div style="margin-bottom: 30px;">
+            <h3><i class="fa-solid fa-chart-bar text-teal"></i> API Usage Analytics & Lead Capture</h3>
+            <p class="text-muted" style="margin-top: 4px;">Monitor API request volume per key, track endpoint popularity, and manage developer signups.</p>
+          </div>
+          
+          <!-- Usage Stats Cards -->
+          <div class="stats-grid" style="margin-bottom: 30px;">
+            <div class="glass-panel stat-card">
+              <div class="stat-card-header">
+                <span>Total API Requests</span>
+                <div class="stat-card-icon"><i class="fa-solid fa-server"></i></div>
+              </div>
+              <div class="stat-card-value text-teal" id="usage-total-requests">0</div>
+              <div class="stat-card-trend text-muted">All-time across all keys</div>
+            </div>
+
+            <div class="glass-panel stat-card teal">
+              <div class="stat-card-header">
+                <span>Requests (24h)</span>
+                <div class="stat-card-icon"><i class="fa-solid fa-bolt"></i></div>
+              </div>
+              <div class="stat-card-value" id="usage-24h-requests">0</div>
+              <div class="stat-card-trend text-muted">Last 24 hours</div>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <div class="stat-card-header">
+                <span>Requests (7 days)</span>
+                <div class="stat-card-icon"><i class="fa-solid fa-calendar-week"></i></div>
+              </div>
+              <div class="stat-card-value" id="usage-7d-requests">0</div>
+              <div class="stat-card-trend text-muted">Last 7 days</div>
+            </div>
+
+            <div class="glass-panel stat-card teal">
+              <div class="stat-card-header">
+                <span>Developer Leads</span>
+                <div class="stat-card-icon"><i class="fa-solid fa-envelope"></i></div>
+              </div>
+              <div class="stat-card-value" id="usage-total-leads">0</div>
+              <div class="stat-card-trend text-muted">Email signups captured</div>
+            </div>
+          </div>
+
+          <div class="dashboard-details-grid" style="margin-bottom: 30px;">
+            <!-- Top Endpoints Chart -->
+            <div class="glass-panel" style="padding: 24px;">
+              <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-ranking-star text-teal"></i> Top Endpoints by Request Count</h4>
+              <div id="usage-endpoints-chart" style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="color:var(--text-muted); text-align:center; padding:20px;">Loading...</div>
+              </div>
+            </div>
+
+            <!-- Per-Key Usage Table -->
+            <div class="glass-panel" style="padding: 24px;">
+              <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-key text-teal"></i> Usage by API Key</h4>
+              <div style="overflow-x:auto;">
+                <table class="api-table" style="margin-top:0px; width:100%; border-collapse:collapse;">
+                  <thead>
+                    <tr>
+                      <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">API Key</th>
+                      <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Requests</th>
+                      <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Last Used</th>
+                    </tr>
+                  </thead>
+                  <tbody id="usage-keys-tbody">
+                    <tr>
+                      <td colspan="3" style="text-align:center; padding: 30px 0; color:var(--text-muted);">Loading API keys usage...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leads List -->
+          <div class="glass-panel" style="padding: 24px;">
+            <h4 style="color:white; margin-bottom:16px;"><i class="fa-solid fa-users text-teal"></i> Captured Developer Leads</h4>
+            <div style="overflow-x:auto;">
+              <table class="api-table" style="margin-top:0px; width:100%; border-collapse:collapse;">
+                <thead>
+                  <tr>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Email</th>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Source</th>
+                    <th style="text-align:left; padding:12px; border-bottom:1px solid var(--border-glass);">Signup Date</th>
+                  </tr>
+                </thead>
+                <tbody id="usage-leads-tbody">
+                  <tr>
+                    <td colspan="3" style="text-align:center; padding: 30px 0; color:var(--text-muted);">Loading leads...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             TAB: CUSTOMER SUPPORT TICKETS
+             ========================================================================== -->
+        <section class="tab-content" id="support-tab">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h2 style="font-size: 1.8rem; margin-bottom: 6px; color: white;"><i class="fa-solid fa-circle-question text-primary"></i> Customer Support Tickets</h2>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">View and manage customer support requests submitted from all VinaTools utility pages.</p>
+            </div>
+            <button class="btn btn-secondary" onclick="loadSupportTickets()" style="padding: 10px 16px;"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>
+          </div>
+
+          <div class="glass-panel" style="padding: 24px; overflow-x: auto;">
+            <table class="api-table" style="margin-top:0px; width:100%; border-collapse:collapse;" id="support-tickets-table">
+              <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left;">
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">ID</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Customer Details</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Transaction (Memo)</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Support Message</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Status</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Submitted At</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="support-tickets-tbody">
+                <!-- Will be dynamically populated via Javascript -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="tab-content" id="feedback-tab">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h2 style="font-size: 1.8rem; margin-bottom: 6px; color: white;"><i class="fa-solid fa-comment-dots text-primary"></i> User Feedback & Backlog</h2>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">Xem ý kiến đóng góp từ người dùng, đánh giá tự động từ AI Agent và trạng thái backlog của các đề xuất.</p>
+            </div>
+            <button class="btn btn-secondary" onclick="loadFeedbacks()" style="padding: 10px 16px;"><i class="fa-solid fa-arrows-rotate"></i> Làm mới</button>
+          </div>
+
+          <div class="glass-panel" style="padding: 24px; overflow-x: auto;">
+            <table class="api-table" style="margin-top:0px; width:100%; border-collapse:collapse;" id="feedback-table">
+              <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left;">
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">ID</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Người đóng góp</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Nội dung đóng góp</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">AI Đánh giá / Backlog</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Trạng thái</th>
+                  <th style="padding:12px; color:var(--text-secondary); font-size:0.85rem; text-transform:uppercase;">Ngày gửi</th>
+                </tr>
+              </thead>
+              <tbody id="feedback-tbody">
+                <!-- Will be dynamically populated via Javascript -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==========================================================================
+             TAB: SETTINGS
+             ========================================================================== -->
+        <section class="tab-content" id="settings-tab">
+          <div class="glass-panel" style="padding: 32px; max-width: 700px;">
+            <h3 style="margin-bottom: 24px;"><i class="fa-solid fa-sliders text-primary"></i> Cấu Hình Hệ Thống Registry API Console</h3>
+            
+            <form id="settings-form" class="settings-container">
+              
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">Tên Ngân Hàng Nhận Tiền</label>
+                  <select id="settings-bank-select" class="form-input" style="padding: 12px;">
+                    <option value="techcombank">Techcombank (Ngân hàng Kỹ thương)</option>
+                    <option value="vietcombank">Vietcombank (Ngoại thương Việt Nam)</option>
+                    <option value="mbbank">MB Bank (Quân đội)</option>
+                    <option value="acb">ACB (Á Châu)</option>
+                    <option value="bidv">BIDV (Đầu tư & Phát triển)</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label">Tên Chủ Tài Khoản (Không dấu)</label>
+                  <input type="text" id="settings-account-name" class="form-input" style="padding: 12px;" required placeholder="NGUYEN VAN A">
+                </div>
+              </div>
+
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">Số Tài Khoản</label>
+                  <input type="text" id="settings-account-no" class="form-input" style="padding: 12px;" required placeholder="19035678234011">
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label">Mục Tiêu Doanh Thu Tháng (VND)</label>
+                  <input type="number" id="settings-commission-goal" class="form-input" style="padding: 12px;" required placeholder="15000000">
+                </div>
+              </div>
+
+              <div class="settings-grid">
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Địa Chỉ Tunnel Webhook API Địa Phương (Local Gateway)</label>
+                  <input type="url" id="settings-local-api-url" class="form-input" style="padding: 12px;" placeholder="https://xxx.serveousercontent.com hoặc http://localhost:8080">
+                  <span style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;"><i class="fa-solid fa-circle-info"></i> Đường dẫn Tunnel kết nối Dashboard với Webhook ở local của bạn để tải báo cáo thuế.</span>
+                </div>
+              </div>
+
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">Google AdSense Publisher ID</label>
+                  <input type="text" id="settings-adsense-client" class="form-input" style="padding: 12px;" required placeholder="ca-pub-XXXXXXXXXXXXXXXX">
+                  <span style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;"><i class="fa-solid fa-circle-info"></i> Publisher ID liên kết tài khoản AdSense của bạn để nhận doanh thu quảng cáo.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Mật Mã Truy Cập Admin Console</label>
+                  <input type="password" id="settings-admin-passcode" class="form-input" style="padding: 12px;" required placeholder="VinaAdmin@2026Secure">
+                  <span style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;"><i class="fa-solid fa-circle-info"></i> Mật khẩu bảo vệ bảng điều khiển VinaEarn Admin Console.</span>
+                </div>
+              </div>
+
+          <!-- Drag-and-drop or select client_secret JSON file -->
+          <div style="margin-bottom: 20px; padding: 15px; border: 2px dashed rgba(255,255,255,0.1); border-radius: 10px; background: rgba(255,255,255,0.01); display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: border-color 0.3s ease;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <span style="font-size: 0.85rem; color: #fff; font-weight: 500;"><i class="fa-solid fa-file-import" style="color: var(--accent-secondary); margin-right: 6px;"></i> Nhập cấu hình tự động từ tệp JSON</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Tải lên tệp client_secret_*.json đã tải từ Google Cloud Console để điền nhanh.</span>
+            </div>
+            <input type="file" id="settings-google-json-upload" accept=".json" style="display: none;">
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('settings-google-json-upload').click()" style="padding: 8px 16px; font-size: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; cursor: pointer; transition: background 0.2s ease;">Chọn tệp JSON...</button>
+          </div>
+
+              <div class="settings-grid">
+                <div class="form-group">
+                  <label class="form-label">Google OAuth 2.0 Client ID</label>
+                  <input type="text" id="settings-google-client-id" class="form-input" style="padding: 12px;" placeholder="713386865870-....apps.googleusercontent.com">
+                  <span style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;"><i class="fa-solid fa-circle-info"></i> Client ID từ Google Cloud Console dùng để xác thực AdSense API.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Google OAuth 2.0 Client Secret</label>
+                  <input type="password" id="settings-google-client-secret" class="form-input" style="padding: 12px;" placeholder="GOCSPX-................">
+                  <span style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;"><i class="fa-solid fa-circle-info"></i> Client Secret bảo mật dùng để đổi Token OAuth 2.0.</span>
+                </div>
+              </div>
+
+              <!-- AdSense Connection Status Card -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); padding: 20px; border-radius: 12px; margin-top: 10px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                  <div id="adsense-connection-icon" style="width: 44px; height: 44px; border-radius: 10px; background: rgba(239, 68, 68, 0.1); color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+                    <i class="fa-brands fa-google"></i>
+                  </div>
+                  <div>
+                    <h5 style="color: white; margin: 0 0 4px 0; font-size: 0.95rem;">Kết Nối API Google AdSense</h5>
+                    <p id="adsense-connection-status" style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Trạng thái: Chưa kết nối tài khoản. Vui lòng nhập thông tin OAuth ở trên, lưu cài đặt rồi thực hiện kết nối.</p>
+                  </div>
+                </div>
+                <button type="button" id="btn-connect-adsense" class="btn" style="padding: 10px 16px; font-size: 0.85rem; background: var(--accent-secondary); color: #fff; display: flex; align-items: center; gap: 8px;">
+                  <i class="fa-solid fa-link"></i> Kết Nối Ngay
+                </button>
+              </div>
+
+              <div class="settings-toggle-group">
+                <h4 style="font-size: 1rem; color: white; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">Tùy chọn Cấu Hình API Gateway</h4>
+                
+                <div class="toggle-row">
+                  <div class="toggle-details">
+                    <span class="toggle-title">Tự động gia hạn khóa khi nhận được thanh toán</span>
+                    <span class="toggle-desc">Gia hạn thời gian hiệu lực của khóa API khi hệ thống local khớp memo VietQR.</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="settings-auto-renew" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-row">
+                  <div class="toggle-details">
+                    <span class="toggle-title">Cho phép truy vấn Sandbox công khai</span>
+                    <span class="toggle-desc">Chấp nhận truy vấn không có Header Authorization từ local và sandbox.</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="settings-sandbox-public" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-row">
+                  <div class="toggle-details">
+                    <span class="toggle-title">Cảnh báo nghĩa vụ thuế tự động</span>
+                    <span class="toggle-desc">Gửi thông báo khi tích lũy doanh thu thực đạt 90% hạn mức miễn thuế (180 triệu VND).</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="settings-tax-alert" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn" style="align-self: flex-start; margin-top: 20px;">
+                <i class="fa-solid fa-floppy-disk"></i> Lưu Cấu Hình Hệ Thống
+              </button>
+
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Auth Overlay -->
+  <div id="login-overlay" class="login-overlay">
+    <div class="glass-panel login-card">
+      <div class="login-header">
+        <i class="fa-solid fa-lock login-lock-icon"></i>
+        <h2>VinaEarn Admin Console</h2>
+        <p>Vui lòng nhập mật mã quản trị viên để tiếp tục</p>
+      </div>
+      <form id="login-form">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <input type="password" id="login-passcode" class="form-input" placeholder="Mật mã truy cập..." required style="padding:14px; text-align:center; font-size:1.1rem; letter-spacing:0.1em; width:100%; border-radius:8px;">
+        </div>
+        <div id="login-error" class="login-error-msg" style="display:none;">
+          <i class="fa-solid fa-circle-exclamation"></i> Mật mã không chính xác!
+        </div>
+        <button type="submit" class="btn" style="width:100%; padding:14px; font-size:1rem; border-radius:8px;">
+          <i class="fa-solid fa-key"></i> Đăng Nhập Hệ Thống
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Javascript Logic -->
+  <script src="app.js?v=20260622b"></script>
+</body>
+</html>

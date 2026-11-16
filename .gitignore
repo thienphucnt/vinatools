@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*.log
+deploy.lock
+index.html.bak
+scratch/
+payments.db
+config.local.json
+repomix-output.*

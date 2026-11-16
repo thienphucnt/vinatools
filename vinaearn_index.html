@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vietnam Business Registry API - Real-time Tax Code & Company Data</title>
+  
+  <!-- Font Awesome for modern icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Core Style Sheet -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="global_style.css">
+  
+  <style>
+    /* Custom developer portal landing page overrides */
+    .portal-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header.hero-section {
+      text-align: center;
+      padding: 100px 0 60px 0;
+      background: radial-gradient(circle, var(--accent-primary-glow) 0%, transparent 60%);
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(139, 92, 246, 0.1);
+      color: #a78bfa;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .hero-title {
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 40%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: var(--font-display);
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      line-height: 1.6;
+    }
+    
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    
+    /* Navigation Bar */
+    .portal-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-glass);
+      position: sticky;
+      top: 0;
+      background: rgba(8, 11, 17, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
+    }
+    
+    .portal-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      color: white;
+      text-decoration: none;
+    }
+    
+    .portal-logo i {
+      color: var(--accent-secondary);
+      filter: drop-shadow(0 0 8px var(--accent-secondary));
+    }
+    
+    .nav-links-menu {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+    
+    .nav-link-item a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    
+    .nav-link-item a:hover {
+      color: white;
+    }
+    
+    /* Features Grid */
+    .features-section {
+      padding: 60px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 12px;
+      font-family: var(--font-display);
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 48px auto;
+      font-size: 1rem;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .feature-card {
+      padding: 32px;
+      height: 100%;
+    }
+    
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: rgba(20, 184, 166, 0.1);
+      border: 1px solid rgba(20, 184, 166, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-secondary);
+      font-size: 1.3rem;
+      margin-bottom: 24px;
+    }
+    
+    .feature-card.violet .feature-icon {
+      background: rgba(139, 92, 246, 0.1);
+      border-color: rgba(139, 92, 246, 0.2);
+      color: var(--accent-primary);
+    }
+    
+    .feature-title {
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 12px;
+    }
+    
+    .feature-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    
+    /* Live Sandbox Explorer */
+    .sandbox-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-glass);
+    }
+    
+    .sandbox-container {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 32px;
+      align-items: start;
+    }
+    
+    .sandbox-panel {
+      padding: 32px;
+    }
+    
+    .sandbox-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .sandbox-input-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    
+    .sandbox-input {
+      flex: 1;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    
+    .sandbox-input:focus {
+      border-color: var(--accent-secondary);
+      box-shadow: var(--shadow-neon-teal);
+    }
+    
+    /* Code output terminal styling */
+    .sandbox-output-panel {
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 480px;
+    }
+    
+    .terminal-header {
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+    
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #4b5563;
+    }
+    
+    .terminal-dot.red { background: #ef4444; }
+    .terminal-dot.yellow { background: #f59e0b; }
+    .terminal-dot.green { background: #10b981; }
+    
+    .terminal-status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+    
+    .terminal-status.success {
+      color: var(--success);
+    }
+    
+    .terminal-body {
+      padding: 24px;
+      flex: 1;
+      overflow-y: auto;
+      background: rgba(8, 11, 17, 0.95);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #10b981;
+    }
+    
+    /* Code tabs selection */
+    .code-tabs-container {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .code-tab-header {
+      display: flex;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-glass);
+      padding-bottom: 10px;
+    }
+    
+    .code-tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+    
+    .code-tab-btn.active {
+      color: var(--accent-primary);
+      background: rgba(139, 92, 246, 0.1);
+    }
+    
+    .code-block-wrapper {
+      position: relative;
+    }
+    
+    .code-block-pre {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+    
+    .code-block-panel {
+      display: none;
+    }
+    
+    .code-block-panel.active {
+      display: block;
+    }
+    
+    .copy-code-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+    
+    /* Pricing Section */
+    .pricing-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-glass);
+    }
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .pricing-card {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    
+    .pricing-card.popular {
+      border-color: rgba(139, 92, 246, 0.3);
+      box-shadow: var(--shadow-neon-violet);
+    }
+    
+    .pricing-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--accent-primary);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .plan-name {
+      font-size: 1.4rem;
+      color: white;
+      margin-bottom: 8px;
+    }
+    
+    .plan-price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: white;
+      font-family: var(--font-display);
+      margin-bottom: 24px;
+    }
+    
+    .plan-price span {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .plan-features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+      width: 100%;
+      text-align: left;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 24px;
+    }
+    
+    .plan-features-list li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .plan-features-list li i {
+      color: var(--accent-secondary);
+    }
+    
+    /* Documentation Table Styling */
+    .docs-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-glass);
+    }
+    
+    .api-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 24px;
+      margin-bottom: 40px;
+    }
+    
+    .api-table th, .api-table td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    
+    .api-table th {
+      background: rgba(255, 255, 255, 0.02);
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .api-table td {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .param-name {
+      font-family: monospace;
+      color: var(--accent-secondary);
+      font-weight: 600;
+    }
+    
+    .param-badge {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .param-badge.optional {
+      background: rgba(156, 163, 175, 0.1);
+      color: var(--text-secondary);
+      border-color: rgba(156, 163, 175, 0.2);
+    }
+    
+    /* Footer */
+    .portal-footer {
+      border-top: 1px solid var(--border-glass);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-container">
+    
+    <!-- Top Nav Bar -->
+    <nav class="portal-nav">
+      <a href="index.html" class="portal-logo">
+        <i class="fa-solid fa-server"></i> VietRegistry API
+      </a>
+      <ul class="nav-links-menu">
+        <li class="nav-link-item"><a href="#features">Features</a></li>
+        <li class="nav-link-item"><a href="#sandbox">Live Sandbox</a></li>
+        <li class="nav-link-item"><a href="#docs">Documentation</a></li>
+        <li class="nav-link-item"><a href="#pricing">Pricing</a></li>
+      </ul>
+      <div id="user-nav-status" style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px;">
+        <a href="#pricing" class="btn" style="padding: 10px 20px; font-size: 0.85rem;">
+          <i class="fa-solid fa-bolt"></i> Subscribe PRO
+        </a>
+      </div>
+    </nav>
+    
+    <!-- Hero Banner -->
+    <header class="hero-section">
+      <div class="hero-badge">
+        <i class="fa-solid fa-circle-check text-teal"></i> Real-time GDT Sync
+      </div>
+      <h2 class="hero-title">Vietnam Business Registry API</h2>
+      <p class="hero-subtitle">
+        Query structured business profiles, lookup registrations by tax code (MST), and search Vietnamese companies instantly in real-time. Designed for developers, automated workflows, and CRM synchronization.
+      </p>
+      <div class="hero-actions">
+        <a href="#sandbox" class="btn">
+          <i class="fa-solid fa-terminal"></i> Try Live Explorer
+        </a>
+        <a href="#pricing" class="btn btn-secondary">
+          <i class="fa-solid fa-key"></i> Get API Key
+        </a>
+      </div>
+    </header>
+    
+    <!-- Features Grid -->
+    <section class="features-section" id="features">
+      <h3 class="section-title">Why Developers Choose VietRegistry</h3>
+      <p class="section-subtitle">A high-performance scraping pipeline that packages raw GDT data into clean, formatted JSON.</p>
+      
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <article class="glass-panel feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h4 class="feature-title">Real-time Scraping</h4>
+          <p class="feature-desc">No outdated caches. The API queries public GDT repositories and masothue.com live to return the absolute latest status.</p>
+        </article>
+        
+        <!-- Feature 2 -->
+        <article class="glass-panel feature-card violet">
+          <div class="feature-icon">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h4 class="feature-title">Structured JSON Response</h4>
+          <p class="feature-desc">All responses are perfectly mapped containing company names, directors, charter capital, addresses, and status details.</p>
+        </article>
+        
+        <!-- Feature 3 -->
+        <article class="glass-panel feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h4 class="feature-title">High Reliability</h4>
+          <p class="feature-desc">Built-in user-agent rotation and request header emulation ensure consistent query execution with minimal rate limits.</p>
+        </article>
+      </div>
+    </section>
+    
+    <!-- Live Sandbox Explorer -->
+    <section class="sandbox-section" id="sandbox">
+      <h3 class="section-title">Live API Sandbox Explorer</h3>
+      <p class="section-subtitle">Run queries directly against our backend deployment. Test parameters and see the live outputs.</p>
+      
+      <div class="sandbox-container">
+        
+        <!-- Left Side: Config Panel -->
+        <div class="glass-panel sandbox-panel">
+          <h4 style="margin-bottom: 20px;"><i class="fa-solid fa-sliders text-teal"></i> Request Builder</h4>
+          
+          <!-- Terms and Conditions Acceptance Checkbox -->
+          <div style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 8px; text-align: left;">
+            <input type="checkbox" id="accept-terms-sandbox" required style="width: auto; margin-top: 4px; cursor: pointer;">
+            <label for="accept-terms-sandbox" style="font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; line-height: 1.4; user-select: none;">
+              I have read and agree to the <a href="/terms.html" target="_blank" style="color: var(--accent-secondary); text-decoration: none; font-weight: 600;">Terms & Conditions</a> and <a href="/privacy.html" target="_blank" style="color: var(--accent-secondary); text-decoration: none; font-weight: 600;">Privacy Policy</a>.
+            </label>
+          </div>
+          
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label class="sandbox-label">Endpoint</label>
+            <select id="sandbox-endpoint-select" class="sandbox-input" style="padding: 12px; appearance: none; background: var(--bg-secondary) url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%239ca3af%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E') no-repeat right 16px center; background-size: 16px;">
+              <option value="company">GET /api/company (Tax Code Lookup)</option>
+              <option value="search">GET /api/search (Keyword Search)</option>
+            </select>
+          </div>
+          
+          <!-- Params Container -->
+          <div id="params-company-group" class="form-group">
+            <label class="sandbox-label">Query Parameter: <span class="param-name">tax_code</span></label>
+            <input type="text" id="param-tax-code" class="sandbox-input" placeholder="e.g. 0100109106" value="0100109106">
+            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Vietnamese national business tax code (MST) — 10 digits.</span>
+          </div>
+          
+          <div id="params-search-group" class="form-group" style="display: none;">
+            <label class="sandbox-label">Query Parameter: <span class="param-name">q</span></label>
+            <input type="text" id="param-search-query" class="sandbox-input" placeholder="e.g. cong ty xay dung" value="cong ty xay dung">
+            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Company name keyword or description string.</span>
+          </div>
+          
+          <div class="sandbox-input-row">
+            <button class="btn" id="sandbox-send-btn" style="width: 100%;">
+              <i class="fa-solid fa-paper-plane"></i> Send Request
+            </button>
+          </div>
+        </div>
+        
+        <!-- Right Side: Terminal Code Block -->
+        <div class="glass-panel sandbox-output-panel">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+            </div>
+            <div id="sandbox-status" class="terminal-status">Status: Idle</div>
+          </div>
+          <div class="terminal-body" id="sandbox-response-body">
+// Click "Send Request" to fetch live business records from the Vercel API...
+{
+  "message": "Waiting for request..."
+}
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Code Snippets Integration -->
+      <div class="code-tabs-container">
+        <div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 8px;"><i class="fa-solid fa-code text-teal"></i> Integration Code Snippets</h4>
+          <p class="text-muted" style="font-size: 0.85rem;">Copy and paste code directly into your local scripts to query our API endpoints.</p>
+        </div>
+        
+        <div class="code-tab-header">
+          <button class="code-tab-btn active" data-code-tab="curl">cURL</button>
+          <button class="code-tab-btn" data-code-tab="js">JavaScript (Fetch)</button>
+          <button class="code-tab-btn" data-code-tab="python">Python (Requests)</button>
+        </div>
+        
+        <div class="code-block-wrapper">
+          <!-- cURL -->
+          <div class="code-block-panel active" id="code-curl">
+            <pre class="code-block-pre"><code id="code-curl-text">curl -X GET "https://vinaearn-ai.vercel.app/api/company?tax_code=0100109106"</code></pre>
+          </div>
+          
+          <!-- JS -->
+          <div class="code-block-panel" id="code-js">
+            <pre class="code-block-pre"><code id="code-js-text">fetch("https://vinaearn-ai.vercel.app/api/company?tax_code=0100109106")
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Error:", error));</code></pre>
+          </div>
+          
+          <!-- Python -->
+          <div class="code-block-panel" id="code-python">
+            <pre class="code-block-pre"><code id="code-python-text">import requests
+
+url = "https://vinaearn-ai.vercel.app/api/company"
+params = {"tax_code": "0100109106"}
+
+response = requests.get(url, params=params)
+if response.status_code == 200:
+    company_data = response.json()
+    print(company_data)
+else:
+    print(f"Error: {response.status_code}")</code></pre>
+          </div>
+          
+          <button class="btn btn-secondary copy-code-btn" id="copy-snippet-btn">
+            <i class="fa-solid fa-copy"></i> Copy Code
+          </button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Documentation Section -->
+    <section class="docs-section" id="docs">
+      <h3 class="section-title">API Reference Docs</h3>
+      <p class="section-subtitle">All parameters, authentication standards, and schema descriptions.</p>
+      
+      <!-- Endpoint 1 -->
+      <div class="glass-panel" style="padding: 32px; margin-bottom: 32px;">
+        <h4 style="font-size: 1.15rem; color: white; display: flex; align-items: center; gap: 12px;">
+          <span style="background: var(--accent-secondary); color: white; padding: 4px 10px; font-size: 0.75rem; border-radius: 4px; font-weight: bold;">GET</span>
+          <span>/api/company</span>
+        </h4>
+        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Look up official company parameters by their 10-digit tax code (Mã số thuế).</p>
+        
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th style="width: 25%">Parameter</th>
+              <th style="width: 15%">Type</th>
+              <th style="width: 15%">Requirement</th>
+              <th style="width: 45%">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="param-name">tax_code</td>
+              <td>STRING</td>
+              <td><span class="param-badge">Required</span></td>
+              <td>The 10-digit business registration number (Mã số thuế) representing a business in Vietnam. e.g. <code>0100109106</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Endpoint 2 -->
+      <div class="glass-panel" style="padding: 32px;">
+        <h4 style="font-size: 1.15rem; color: white; display: flex; align-items: center; gap: 12px;">
+          <span style="background: var(--accent-secondary); color: white; padding: 4px 10px; font-size: 0.75rem; border-radius: 4px; font-weight: bold;">GET</span>
+          <span>/api/search</span>
+        </h4>
+        <p class="text-muted" style="margin-top: 10px; font-size: 0.9rem;">Query businesses by keyword matching official registered business names.</p>
+        
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th style="width: 25%">Parameter</th>
+              <th style="width: 15%">Type</th>
+              <th style="width: 15%">Requirement</th>
+              <th style="width: 45%">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="param-name">q</td>
+              <td>STRING</td>
+              <td><span class="param-badge">Required</span></td>
+              <td>The company keyword query search term. e.g. <code>cong ty xay dung</code>.</td>
+            </tr>
+            <tr>
+              <td class="param-name">province</td>
+              <td>STRING</td>
+              <td><span class="param-badge optional">Optional</span></td>
+              <td>Filter results by province or city. e.g. <code>hanoi</code>, <code>hcm</code>, <code>danang</code>, <code>binhduong</code>.</td>
+            </tr>
+            <tr>
+              <td class="param-name">status</td>
+              <td>STRING</td>
+              <td><span class="param-badge optional">Optional</span></td>
+              <td>Filter results by operational status. Supported: <code>active</code>, <code>inactive</code>, <code>all</code> (default: <code>active</code>).</td>
+            </tr>
+            <tr>
+              <td class="param-name">page</td>
+              <td>INTEGER</td>
+              <td><span class="param-badge optional">Optional</span></td>
+              <td>Pagination index for results. Starts at <code>1</code>.</td>
+            </tr>
+            <tr>
+              <td class="param-name">limit</td>
+              <td>INTEGER</td>
+              <td><span class="param-badge optional">Optional</span></td>
+              <td>Results limits. Maximum: <code>20</code> (default: <code>10</code>).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <!-- Pricing plans -->
+    <section class="pricing-section" id="pricing">
+      <h3 class="section-title">Simple Developer Pricing</h3>
+      <p class="section-subtitle">Start testing for free and upgrade easily using secure direct bank transfers.</p>
+      
+      <!-- Scarcity / Urgency Banner -->
+      <div class="urgency-banner" style="background: linear-gradient(90deg, rgba(139, 92, 246, 0.15), rgba(20, 184, 166, 0.15)); border: 1px solid var(--border-glass); border-left: 4px solid var(--accent-primary); padding: 16px; border-radius: var(--radius-md); text-align: center; margin: 20px auto 40px auto; max-width: 800px; font-weight: 600; font-size: 0.9rem; color: white;">
+        <i class="fa-solid fa-fire" style="color: #f59e0b; margin-right: 8px;"></i> GIỚI HẠN: Chỉ còn <strong>7 slot</strong> Pro Key được áp dụng mức giá ưu đãi cố định trọn đời.
+      </div>
+
+      <div class="pricing-grid">
+        <!-- BASIC -->
+        <article class="glass-panel pricing-card">
+          <h4 class="plan-name">BASIC</h4>
+          <div class="plan-price">0 đ<span>/tháng</span></div>
+          <ul class="plan-features-list">
+            <li><i class="fa-solid fa-circle-check"></i> 100 requests per month</li>
+            <li><i class="fa-solid fa-circle-check"></i> Hard-limited quota protection</li>
+            <li><i class="fa-solid fa-circle-check"></i> Access to all endpoints</li>
+            <li><i class="fa-solid fa-circle-check"></i> Public GDT scraping backend</li>
+          </ul>
+           <a href="#sandbox" class="btn btn-secondary" style="width: 100%;">
+            Try Sandbox (Free)
+          </a>
+        </article>
+        
+        <!-- PRO -->
+        <article class="glass-panel pricing-card popular">
+          <div class="pricing-badge">Popular</div>
+          <h4 class="plan-name">PRO</h4>
+          <div class="plan-price">250K VNĐ<span>/tháng</span></div>
+          <ul class="plan-features-list">
+            <li><i class="fa-solid fa-circle-check"></i> 5,000 requests per month</li>
+            <li><i class="fa-solid fa-circle-check"></i> Kích hoạt tức thì 24/7 qua VietQR</li>
+            <li><i class="fa-solid fa-circle-check"></i> Tốc độ cao & Hỗ trợ đa luồng</li>
+            <li><i class="fa-solid fa-circle-check"></i> <strong>Hoàn tiền 100% trong 7 ngày nếu lỗi</strong></li>
+          </ul>
+          <button class="btn" id="buy-pro-plan-btn" style="width: 100%;">
+            Mua Gói PRO (VietQR)
+          </button>
+        </article>
+      </div>
+
+      <!-- Cost Reframing Calculator -->
+      <div class="glass-panel" style="max-width: 800px; margin: 50px auto 0 auto; padding: 30px; border: 1px solid rgba(139, 92, 246, 0.15);">
+        <h4 style="color: white; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-size: 1.15rem;"><i class="fa-solid fa-calculator text-teal"></i> So Sánh Chi Phí Tự Xây Dựng vs Sử Dụng API</h4>
+        <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 20px;">Tiết kiệm hàng chục triệu đồng chi phí hạ tầng và công sức bảo trì mỗi tháng:</p>
+        <div style="overflow-x: auto;">
+          <table class="api-table" style="margin: 0; font-size: 0.85rem; width: 100%;">
+            <thead>
+              <tr>
+                <th style="width: 40%;">Hạng Mục</th>
+                <th style="width: 30%;">Tự Xây Dựng Scraper</th>
+                <th style="width: 30%; color: var(--accent-secondary); font-weight: bold;">Sử Dụng VietRegistry API</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Máy chủ & Proxies xoay vòng chống chặn</td>
+                <td>~500.000 đ/tháng</td>
+                <td style="color: #10b981; font-weight: bold;">0 đ (Đã bao gồm)</td>
+              </tr>
+              <tr>
+                <td>Giải mã Captcha tự động (OCR API)</td>
+                <td>~200.000 đ/tháng</td>
+                <td style="color: #10b981; font-weight: bold;">0 đ (Đã bao gồm)</td>
+              </tr>
+              <tr>
+                <td>Công sức bảo trì sửa lỗi khi GDT thay đổi cấu trúc web</td>
+                <td>Ít nhất 1-2 ngày công dev (~1.500.000 đ)</td>
+                <td style="color: #10b981; font-weight: bold;">Tự động cập nhật 100%</td>
+              </tr>
+              <tr style="background: rgba(255,255,255,0.02); font-weight: bold;">
+                <td>Tổng Cộng Chi Phí</td>
+                <td style="color: #f87171;">~2.200.000 đ/tháng</td>
+                <td style="color: var(--accent-secondary); font-size: 1.05rem;">Chỉ 250.000 đ/tháng</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Social Proof / Testimonials -->
+      <div style="margin-top: 60px; text-align: center;">
+        <h4 style="font-size: 1.25rem; color: white; margin-bottom: 24px;"><i class="fa-solid fa-comments text-teal"></i> Được Tin Dùng Bởi Các Nhà Phát Triển Việt</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto;">
+          <div class="glass-panel" style="padding: 24px; text-align: left; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.05);">
+            <p style="color: var(--text-secondary); font-style: italic; line-height: 1.6;">"API hoạt động cực kỳ ổn định, tốc độ phản hồi nhanh < 2s. Giúp hệ thống CRM của chúng tôi tự động hóa hoàn toàn khâu kiểm tra thông tin đối tác trước khi xuất hóa đơn."</p>
+            <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-primary); display: flex; align-items: center; justify-content: center; font-weight: bold; color: white;">MT</div>
+              <div>
+                <strong style="color: white; display: block;">Minh Tuấn</strong>
+                <span style="color: var(--text-muted); font-size: 0.75rem;">CTO tại TechFlow JSC</span>
+              </div>
+            </div>
+          </div>
+          <div class="glass-panel" style="padding: 24px; text-align: left; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.05);">
+            <p style="color: var(--text-secondary); font-style: italic; line-height: 1.6;">"Đã từng tự viết bot cào dữ liệu GDT nhưng liên tục bị chặn IP. Chuyển sang dùng VietRegistry giải phóng hoàn toàn thời gian bảo trì hệ thống cho đội ngũ kỹ thuật của tôi."</p>
+            <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-secondary); display: flex; align-items: center; justify-content: center; font-weight: bold; color: white;">HP</div>
+              <div>
+                <strong style="color: white; display: block;">Hoàng Phan</strong>
+                <span style="color: var(--text-muted); font-size: 0.75rem;">Fullstack Developer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    
+    <!-- Footer disclaimer -->
+    <footer class="portal-footer" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 30px; margin-top: 50px; text-align: center; color: var(--text-muted); font-size: 0.8rem; line-height: 1.6; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 24px; margin-bottom: 5px;">
+        <!-- SSL Protected Badge -->
+        <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 8px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);">
+          <i class="fa-solid fa-lock" style="color: #10b981; font-size: 1.2rem; filter: drop-shadow(0 0 5px rgba(16,185,129,0.4));"></i>
+          <div style="text-align: left; line-height: 1.2;">
+            <div style="color: #fff; font-weight: bold; font-size: 0.72rem; letter-spacing: 0.05em;">SSL SECURE</div>
+            <div style="color: var(--text-muted); font-size: 0.62rem; letter-spacing: 0.02em;">256-BIT ENCRYPTION</div>
+          </div>
+        </div>
+        <!-- Napas 24/7 Instant Transfer Badge -->
+        <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 8px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);">
+          <i class="fa-solid fa-shield-halved" style="color: var(--accent-secondary); font-size: 1.2rem; filter: drop-shadow(0 0 5px rgba(236,72,153,0.4));"></i>
+          <div style="text-align: left; line-height: 1.2;">
+            <div style="color: #fff; font-weight: bold; font-size: 0.72rem; letter-spacing: 0.05em;">NAPAS 24/7</div>
+            <div style="color: var(--text-muted); font-size: 0.62rem; letter-spacing: 0.02em;">XÁC THỰC TỰ ĐỘNG</div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top: 5px;">© 2026 VietRegistry API. All data sourced in real-time from the General Department of Taxation of Vietnam (GDT).</p>
+      <p style="margin-top: 4px; font-size: 0.75rem; max-width: 600px; margin-left: auto; margin-right: auto;">This portal is an independent development platform. Direct bank transfer via VietQR handles all authentication keys and quota metering.</p>
+    </footer>
+    
+  </div>
+
+  <!-- Javascript Logic -->
+  <script src="checkout_modal.js"></script>
+  <script src="api-portal.js"></script>
+</body>
+</html>

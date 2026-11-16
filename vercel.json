@@ -1,0 +1,6 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/webhook", "destination": "/api/payment_webhook.py" }
+  ]
+}
