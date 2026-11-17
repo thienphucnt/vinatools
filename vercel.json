@@ -1,6 +1,8 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/webhook", "destination": "/api/payment_webhook.py" }
+    { "source": "/api/company", "destination": "/api/company.py" },
+    { "source": "/api/search", "destination": "/api/search.py" },
+    { "source": "/api/ping", "destination": "/api/ping.py" }
   ]
 }

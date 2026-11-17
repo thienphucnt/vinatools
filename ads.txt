@@ -1,1 +1,1 @@
-google.com, pub-8865134830595358, DIRECT, f08c47fec0942fa0
+# Configure your publisher ID via ads.txt when deploying in production.

@@ -69,6 +69,17 @@ def evaluate_keyword_viability(keyword):
   For simplicity and 100% reliability, we calculate an intent density score.
   """
   clean_kw = keyword.lower().strip()
+
+  # Negative keyword filter: reject pirated software, hardware impossibilities, or placebo dropzone terms
+  blocked_terms = ["crack", "winrar", "foxit", "caesium", "ổ cứng", "full crack", "keygen", "serial"]
+  if any(term in clean_kw for term in blocked_terms):
+    return {
+      "keyword": keyword,
+      "score": 0,
+      "estimated_monthly_volume": 0,
+      "competition_level": "blocked",
+      "category": "rejected"
+    }
   
   # Heuristics for high conversion rate utility niches
   score = 50 # Base score

@@ -7,8 +7,8 @@ const APP_STATE = {
   activeTab: 'overview',
   bankConfig: {
     bankCode: 'techcombank',
-    accountNo: '19027557341011',
-    accountName: 'NGUYEN TRUNG THIEN PHUC',
+    accountNo: 'REDACTED_SET_IN_ENV',
+    accountName: 'VINATOOLS PLATFORM',
     commissionGoal: 50000000,
     autoRenew: true,
     sandboxPublic: true,
@@ -130,7 +130,7 @@ function verifyPasscode(passcode) {
   })
   .catch(err => {
     console.warn("Auth check failed:", err);
-    return true; 
+    return false;
   });
 }
 
@@ -1058,21 +1058,16 @@ function setupIndicatorCopy(btnId, val) {
 // --------------------------------------------------------------------------
 // Tab: API Usage Analytics
 // --------------------------------------------------------------------------
-// INJECTED_TUNNEL_URL (auto-updated by tunnel_manager.py on each reconnect)
-const ACTIVE_TUNNEL_URL = "https://f882b288e3e029b5-42-114-207-242.serveousercontent.com";
+const ACTIVE_TUNNEL_URL = "";
 
 function getLocalApiUrl() {
   const localApiUrlField = document.getElementById("settings-local-api-url");
-  // In production, always prefer the injected tunnel URL from the latest deployment
   const isProduction = window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1" && window.location.protocol !== "file:";
   
   if (isProduction) {
-    // Always use the URL from the latest Vercel deployment (injected at deploy time)
-    // This ensures stale localStorage values never override the current tunnel
-    const tunnelUrl = ACTIVE_TUNNEL_URL;
-    localStorage.setItem("localApiUrl", tunnelUrl);
-    if (localApiUrlField) localApiUrlField.value = tunnelUrl;
-    return tunnelUrl;
+    const configuredUrl = ACTIVE_TUNNEL_URL || localStorage.getItem("localApiUrl") || window.location.origin;
+    if (localApiUrlField) localApiUrlField.value = configuredUrl;
+    return configuredUrl.replace(/\/$/, "");
   }
   
   // In dev, use localhost or whatever is saved

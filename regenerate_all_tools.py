@@ -12,36 +12,39 @@ if sys.stderr.encoding != 'utf-8':
 WORKSPACE = os.path.dirname(os.path.abspath(__file__))
 DEPLOYED_LOG = os.path.join(WORKSPACE, "deployed_tools.json")
 
-# Import the generation engine
 from agent_code_generator import generate_tool
 from agent_seo_writer import generate_seo_article
+
 
 def main():
     if not os.path.exists(DEPLOYED_LOG):
         print("Error: deployed_tools.json not found!")
-        return
-        
+        sys.exit(1)
+
     with open(DEPLOYED_LOG, "r", encoding="utf-8") as f:
         tools = json.load(f)
-        
-    print(f"Loaded {len(tools)} tool entries from history.")
-    
-    # Group by keyword to avoid duplicate generations
-    unique_keywords = sorted(list(set(t["keyword"] for t in tools)))
-    print(f"Found {len(unique_keywords)} unique tool keywords to regenerate.")
-    
+
+    print(f"Loaded {len(tools)} flagship tool entries from deployed_tools.json.")
+
     success_count = 0
-    for idx, kw in enumerate(unique_keywords):
-        print(f"[{idx+1}/{len(unique_keywords)}] Regenerating tool page for: '{kw}'...")
+    errors = []
+    for idx, t in enumerate(tools):
+        kw = t["keyword"]
+        target_slug = t.get("slug")
+        print(f"[{idx + 1}/{len(tools)}] Regenerating '{kw}' -> /{target_slug}...")
         try:
-            slug = generate_tool(kw)
+            slug = generate_tool(kw, slug=target_slug)
             generate_seo_article(slug, kw)
             print(f"   -> Success! Generated in: /{slug}")
             success_count += 1
         except Exception as e:
             print(f"   -> Error: {e}")
-            
-    print(f"\nRegeneration complete. Successfully updated {success_count} / {len(unique_keywords)} pages.")
+            errors.append((kw, str(e)))
+
+    print(f"\nRegeneration complete. Successfully updated {success_count} / {len(tools)} pages.")
+    if errors:
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

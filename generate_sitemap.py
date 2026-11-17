@@ -29,9 +29,9 @@ def generate_sitemap():
     xml_content.append('    <priority>1.0</priority>')
     xml_content.append('  </url>')
     
-    # Core Trust Pages
-    xml_content.append('  <!-- Core Trust Pages -->')
-    trust_pages = ["privacy.html", "terms.html", "about.html", "contact.html", "refund.html"]
+    # Core Trust & Developer Pages
+    xml_content.append('  <!-- Core Trust & Developer Pages -->')
+    trust_pages = ["api-docs.html", "privacy.html", "terms.html", "about.html", "contact.html", "refund.html"]
     for page in trust_pages:
         xml_content.append('  <url>')
         xml_content.append(f'    <loc>https://vinatools.vercel.app/{page}</loc>')

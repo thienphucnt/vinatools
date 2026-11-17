@@ -19,13 +19,29 @@ import time
 import os
 from http.server import BaseHTTPRequestHandler
 
-API_SECRET_KEY = os.environ.get("API_SECRET_KEY", "default_secret_key_change_me_in_production")
+API_SECRET_KEY = os.environ.get("API_SECRET_KEY", "")
+
+RATE_LIMIT_WINDOW = 60
+MAX_REQ_PER_WINDOW = 60
+_RATE_LIMIT_STORE = {}
+
+def _is_rate_limited(client_ip: str) -> bool:
+    now = time.time()
+    hits = [t for t in _RATE_LIMIT_STORE.get(client_ip, []) if now - t < RATE_LIMIT_WINDOW]
+    if len(hits) >= MAX_REQ_PER_WINDOW:
+        _RATE_LIMIT_STORE[client_ip] = hits
+        return True
+    hits.append(now)
+    _RATE_LIMIT_STORE[client_ip] = hits
+    return False
 
 def verify_api_key(key: str) -> bool:
     """
     Verifies a cryptographically signed API key.
     Format: MSTAPI.<memo>.<expiry>.<signature>
     """
+    if not API_SECRET_KEY:
+        return False
     if not key or not key.startswith("MSTAPI."):
         return False
     parts = key.split(".")
@@ -208,36 +224,31 @@ class handler(BaseHTTPRequestHandler):
             vals = params.get(key, [default])
             return vals[0].strip() if vals else default
 
-        # 1. Authorization Verification
-        referer = self.headers.get("Referer", "")
-        origin = self.headers.get("Origin", "")
-        
-        is_sandbox = False
-        # Allow queries directly from the developer portal website
-        if referer and ("vinaearn" in referer or "vercel.app" in referer or "localhost" in referer):
-            is_sandbox = True
-        elif origin and ("vinaearn" in origin or "vercel.app" in origin or "localhost" in origin):
-            is_sandbox = True
+        # 1. Authorization & Per-IP Rate Limit Verification
+        auth_header = self.headers.get("Authorization", "")
+        api_key = ""
+        if auth_header.startswith("Bearer "):
+            api_key = auth_header.split(" ", 1)[1].strip()
+        elif auth_header:
+            api_key = auth_header.strip()
+        else:
+            api_key = self.headers.get("x-api-key", "").strip() or get_param("api_key")
 
-        if not is_sandbox:
-            # Check API Key in headers
-            auth_header = self.headers.get("Authorization", "")
-            api_key = ""
-            if auth_header.startswith("Bearer "):
-                api_key = auth_header.split(" ")[1].strip()
-            else:
-                api_key = self.headers.get("x-api-key", "")
-                
-            if not api_key:
-                # Query param fallback
-                api_key = get_param("api_key")
-                
-            if not api_key or not verify_api_key(api_key):
+        if api_key:
+            if not verify_api_key(api_key):
                 self._send_json({
-                    "error": "Unauthorized. A valid API Key is required.",
-                    "reason": "Missing or invalid API Key in headers (Authorization: Bearer <key> or x-api-key: <key>).",
-                    "purchase_url": "https://vinaearn-ai.vercel.app/#pricing"
+                    "error": "Unauthorized. Invalid or expired API Key.",
+                    "reason": "API Key verification failed or API_SECRET_KEY is not configured."
                 }, status=401)
+                return
+        else:
+            forwarded = self.headers.get("X-Forwarded-For", "")
+            client_ip = forwarded.split(",")[0].strip() if forwarded else (self.client_address[0] if self.client_address else "unknown")
+            if _is_rate_limited(client_ip):
+                self._send_json({
+                    "error": "Too Many Requests",
+                    "reason": "Public sandbox rate limit exceeded (60 requests/minute). Supply a signed API key for higher quotas."
+                }, status=429)
                 return
 
         # 2. Parameter Extraction

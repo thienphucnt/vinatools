@@ -10,8 +10,8 @@ let paymentConfig = {
   bankId: "TCB",
   accountNumber: "",
   accountName: "",
-  apiEndpoint: "https://f882b288e3e029b5-42-114-207-242.serveousercontent.com/api/check-payment",
-  adsenseClient: "pub-8865134830595358"
+  apiEndpoint: "/api/check-payment",
+  adsenseClient: ""
 };
 
 function initCheckoutConfig(config) {
@@ -319,7 +319,6 @@ function showAuthModal(onSuccessCallback) {
         <div class="auth-input-wrapper">
           <label class="auth-label" for="otp-input">Mã xác minh 6 số (OTP):</label>
           <input type="text" id="otp-input" class="auth-input-field" placeholder="Nhập 6 chữ số nhận được" maxlength="6" style="text-align: center; font-size: 1.25rem !important; letter-spacing: 4px;">
-          <div id="sandbox-otp-helper" style="display: none; margin-top: 6px; font-size: 0.85rem; color: #10b981; background: rgba(16,185,129,0.1); border: 1px dashed rgba(16,185,129,0.3); padding: 8px 12px; border-radius: 6px; text-align: center;"></div>
         </div>
 
         <div class="auth-input-wrapper">
@@ -374,7 +373,6 @@ function showAuthModal(onSuccessCallback) {
   const submitOtpResetBtn = modal.querySelector("#submit-otp-reset-btn");
   const otpErrorMsg = modal.querySelector("#otp-error-msg");
   const otpPanelDesc = modal.querySelector("#otp-panel-desc");
-  const sandboxOtpHelper = modal.querySelector("#sandbox-otp-helper");
   const toggleOtpPwdBtn = modal.querySelector("#toggle-otp-pwd-btn");
 
   let activeRecoveredEmail = "";
@@ -545,7 +543,7 @@ function showAuthModal(onSuccessCallback) {
   };
 
   // Helper function to transition to OTP reset screen
-  function openOtpPanel(email, maskedEmail, mockOtp) {
+  function openOtpPanel(email, maskedEmail) {
     activeRecoveredEmail = email;
     recoveryPanel.style.display = "none";
     otpPanel.style.display = "block";
@@ -554,13 +552,6 @@ function showAuthModal(onSuccessCallback) {
     otpNewPasswordInput.value = "";
     
     otpPanelDesc.innerHTML = `Mã xác minh (OTP) đã được gửi đến hộp thư của bạn: <strong style="color: #00a8ff;">${maskedEmail}</strong>. Vui lòng nhập mã và thiết lập mật khẩu mới bên dưới.`;
-    
-    if (mockOtp) {
-      sandboxOtpHelper.innerHTML = `Mã OTP kiểm thử (Môi trường Sandbox): <strong>${mockOtp}</strong> <button onclick="document.getElementById('otp-input').value='${mockOtp}'; this.parentElement.style.display='none';" style="margin-left: 8px; padding: 2px 8px; background: #10b981; color: white; border: none; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">Điền nhanh</button>`;
-      sandboxOtpHelper.style.display = "block";
-    } else {
-      sandboxOtpHelper.style.display = "none";
-    }
   }
 
   // 5. Submit Recover Password by Email
@@ -593,7 +584,7 @@ function showAuthModal(onSuccessCallback) {
     .then(data => {
       submitRecoverEmailBtn.disabled = false;
       submitRecoverEmailBtn.innerText = "Gửi mã OTP qua Email";
-      openOtpPanel(data.email, data.masked_email, data.mock_otp);
+      openOtpPanel(data.email, data.masked_email);
     })
     .catch(err => {
       submitRecoverEmailBtn.disabled = false;
@@ -633,7 +624,7 @@ function showAuthModal(onSuccessCallback) {
     .then(data => {
       submitRecoverVipBtn.disabled = false;
       submitRecoverVipBtn.innerText = "Tìm kiếm bằng mã chuyển khoản VIP";
-      openOtpPanel(data.email, data.masked_email, data.mock_otp);
+      openOtpPanel(data.email, data.masked_email);
     })
     .catch(err => {
       submitRecoverVipBtn.disabled = false;
@@ -770,81 +761,9 @@ function proceedToVipUpgrade() {
 }
 
 function showFreeDownloadCountdown(onComplete) {
-  let countdownModal = document.getElementById("download-countdown-modal");
-  if (!countdownModal) {
-    countdownModal = document.createElement("div");
-    countdownModal.id = "download-countdown-modal";
-    countdownModal.className = "paywall-modal-overlay";
-    document.body.appendChild(countdownModal);
+  if (typeof onComplete === "function") {
+    onComplete();
   }
-  
-  const adsenseClient = paymentConfig.adsenseClient || "pub-8865134830595358";
-  
-  countdownModal.innerHTML = `
-    <div class="glass-panel paywall-card" style="position: relative; max-width: 450px; text-align: center; padding: 30px;">
-      <button id="close-countdown-btn" style="position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; display: none;">&times;</button>
-      <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-primary);"></i> Đang chuẩn bị tệp tin...</h3>
-      <div id="countdown-timer" style="font-size: 3.5rem; font-weight: bold; margin: 20px 0; color: var(--accent-primary);">15</div>
-      
-      <div style="margin-bottom: 20px;">
-        <ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="${adsenseClient}" data-ad-slot="mock-modal">
-          <div class="fallback-ad-horizontal" onclick="triggerVipUpgrade()" style="padding: 12px 15px; border-radius: 6px; background: linear-gradient(90deg, #1f1a3a 0%, #0c0a18 100%);">
-            <div style="display:flex; align-items:center; gap: 8px;">
-              <div class="fallback-ad-crown" style="font-size:1.1rem; margin:0; animation:none;"><i class="fa-solid fa-crown"></i></div>
-              <div style="text-align:left;">
-                <div class="fallback-ad-title" style="margin:0; font-size:0.9rem;">Thành Viên VIP VinaTools</div>
-                <div class="fallback-ad-text" style="margin:2px 0 0 0; font-size:0.75rem; color:#9ca3af;">Không chờ đợi, không quảng cáo.</div>
-              </div>
-            </div>
-            <span class="fallback-ad-btn" style="margin:0; padding: 6px 12px; font-size: 0.75rem; width: auto; border-radius: 12px;">Đăng Ký</span>
-          </div>
-        </ins>
-      </div>
-
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 15px; line-height: 1.6;">
-        Nâng cấp **Thành viên VIP** chỉ <strong style="color:#f59e0b;">9.000 đ/tháng</strong> để tải ngay lập tức, tắt toàn bộ quảng cáo và mở khóa in ấn.
-      </p>
-      <button id="upgrade-vip-countdown-btn" class="btn" style="width: 100%; padding: 12px; margin-top: 10px; font-weight: bold; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; color: white; border-radius: 6px; cursor: pointer;"><i class="fa-solid fa-crown"></i> Nâng cấp VIP (Chỉ 9K/tháng)</button>
-    </div>
-  `;
-  countdownModal.classList.add("active");
-  
-  // Push ad inside modal if not VIP
-  if (!localStorage.getItem("vipToken")) {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch(e) {
-      console.error("AdSense modal ad push failed:", e);
-    }
-  }
-
-  let seconds = 15;
-  const timerEl = document.getElementById("countdown-timer");
-  const closeBtn = document.getElementById("close-countdown-btn");
-  
-  closeBtn.onclick = () => {
-    countdownModal.classList.remove("active");
-  };
-
-  const upgradeBtn = document.getElementById("upgrade-vip-countdown-btn");
-  upgradeBtn.onclick = () => {
-    countdownModal.classList.remove("active");
-    triggerVipUpgrade();
-  };
-  
-  const interval = setInterval(() => {
-    seconds--;
-    if (timerEl) timerEl.innerText = seconds;
-    if (seconds <= 0) {
-      clearInterval(interval);
-      if (timerEl) timerEl.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #10b981;"></i>';
-      if (closeBtn) closeBtn.style.display = "block";
-      onComplete();
-      setTimeout(() => {
-        countdownModal.classList.remove("active");
-      }, 2000);
-    }
-  }, 1000);
 }
 
 // Add CSS classes dynamically if FontAwesome or modal classes aren't styled

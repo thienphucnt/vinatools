@@ -8,6 +8,7 @@ import sys
 import re
 import hmac
 import hashlib
+import secrets
 import time
 import threading
 
@@ -38,7 +39,7 @@ def load_admin_passcode():
 
 ADMIN_PASSCODE = load_admin_passcode()
 
-API_SECRET_KEY = os.environ.get("API_SECRET_KEY", "default_secret_key_change_me_in_production")
+API_SECRET_KEY = os.environ.get("API_SECRET_KEY") or secrets.token_hex(32)
 
 def generate_api_key(memo: str, duration_days: int = 30) -> str:
     """
@@ -415,7 +416,7 @@ def fetch_adsense_live_data(access_token):
             res_data = json.loads(res.read().decode("utf-8"))
             accounts = res_data.get("accounts", [])
             if accounts:
-                account_name = accounts[0].get("name") # e.g. "accounts/pub-8865134830595358"
+                account_name = accounts[0].get("name")
     except Exception as e:
         print(f"[ERROR] Failed to fetch AdSense accounts: {e}")
         return None
@@ -1521,12 +1522,14 @@ Website: https://vinatools.vercel.app/
       parts = email.split("@")
       masked_email = parts[0][:2] + "***@" + parts[1] if len(parts[0]) > 2 else "***@" + parts[1]
       
-      self.send_json(200, {
+      resp_payload = {
         "status": "otp_sent",
         "email": email,
-        "masked_email": masked_email,
-        "mock_otp": otp # Returned for simulation testing
-      })
+        "masked_email": masked_email
+      }
+      if os.environ.get("TESTING") == "true" or globals().get("TESTING", False):
+        resp_payload["mock_otp"] = otp
+      self.send_json(200, resp_payload)
       return
 
     elif parsed_url.path == "/api/recover/reset":

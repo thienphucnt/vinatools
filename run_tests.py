@@ -55,8 +55,8 @@ class TestVinaTools(unittest.TestCase):
         cls.mock_config = {
             "bank_name": "Techcombank",
             "bank_id": "TCB",
-            "bank_account": "19027557341011",
-            "bank_account_holder": "NGUYEN TRUNG THIEN PHUC",
+            "bank_account": "REDACTED_SET_IN_ENV",
+            "bank_account_holder": "VINATOOLS PLATFORM",
             "google_adsense_client": "ca-pub-mock-test",
             "admin_passcode": "TestPasscode@2026",
             "api_url": f"http://localhost:{TEST_PORT}/api/check-payment"
@@ -943,49 +943,59 @@ class TestVinaTools(unittest.TestCase):
         self.assertIn("toggle-pwd-btn", content)
         self.assertIn("toggle-otp-pwd-btn", content)
 
-    def test_117_directory_crawl_timer_15s_all(self):
-        # Find all generated folders containing index.html, verify countdown timer wait is 15 seconds
-        ignore_dirs = {".git", ".gemini", "templates", "__pycache__", "api", "scratch"}
+    def test_117_flagship_tools_manifest_and_dirs(self):
+        with open(os.path.join(WORKSPACE, "deployed_tools.json"), "r", encoding="utf-8") as f:
+            deployed = json.load(f)
+        with open(os.path.join(WORKSPACE, "niche_opportunities.json"), "r", encoding="utf-8") as f:
+            opportunities = json.load(f)
+
+        self.assertEqual(len(deployed), 12, "deployed_tools.json must contain exact 12 flagship tools")
+        self.assertEqual(len(opportunities), 12, "niche_opportunities.json must contain exact 12 flagship tools")
+        for tool in deployed:
+            slug = tool["slug"]
+            index_html = os.path.join(WORKSPACE, slug, "index.html")
+            self.assertTrue(os.path.exists(index_html), f"Missing generated HTML for flagship tool: {slug}")
+
+    def test_118_directory_crawl_user_nav_and_free_exports(self):
+        with open(os.path.join(WORKSPACE, "deployed_tools.json"), "r", encoding="utf-8") as f:
+            deployed = json.load(f)
+
         count = 0
-        for name in os.listdir(WORKSPACE):
-            path = os.path.join(WORKSPACE, name)
-            if os.path.isdir(path) and name not in ignore_dirs:
-                index_html = os.path.join(path, "index.html")
-                if os.path.exists(index_html):
-                    count += 1
-                    with open(index_html, "r", encoding="utf-8") as f:
-                        html = f.read()
-                    
-                    # Verify either count text or variable is updated to 15 if the page has a countdown timer
-                    if "countdown-timer" in html or "let seconds =" in html:
-                        self.assertTrue(
-                            "let seconds = 15;" in html or 
-                            "countdown-timer" in html and "15" in html,
-                            f"Wait time in {name} is not set to 15 seconds"
-                        )
-        self.assertTrue(count > 0, "No generated tools found to crawl")
+        for tool in deployed:
+            slug = tool["slug"]
+            index_html = os.path.join(WORKSPACE, slug, "index.html")
+            with open(index_html, "r", encoding="utf-8") as f:
+                html = f.read()
+            count += 1
+            self.assertIn("user-nav-status", html, f"Missing user-nav-status anchor in {slug}")
+            self.assertNotIn("Chọn Tệp Tin Cần Xử Lý", html, f"Placebo dropzone detected in {slug}")
+            self.assertNotIn("showFreeDownloadCountdown", html, f"15s countdown gate detected in {slug}")
+            self.assertNotIn("side-ad-left", html, f"Side-rail ad detected in {slug}")
+            self.assertNotIn("#user-kính-gửi", html, f"Non-ASCII DOM ID detected in {slug}")
+        self.assertEqual(count, 12)
 
-    def test_118_directory_crawl_user_nav_all(self):
-        ignore_dirs = {".git", ".gemini", "templates", "__pycache__", "api", "scratch"}
-        for name in os.listdir(WORKSPACE):
-            path = os.path.join(WORKSPACE, name)
-            if os.path.isdir(path) and name not in ignore_dirs:
-                index_html = os.path.join(path, "index.html")
-                if os.path.exists(index_html):
-                    with open(index_html, "r", encoding="utf-8") as f:
-                        html = f.read()
-                    self.assertIn("user-nav-status", html, f"Missing user-nav-status anchor in {name}")
-
-    def test_119_directory_crawl_checkout_script_all(self):
-        ignore_dirs = {".git", ".gemini", "templates", "__pycache__", "api", "scratch"}
-        for name in os.listdir(WORKSPACE):
-            path = os.path.join(WORKSPACE, name)
-            if os.path.isdir(path) and name not in ignore_dirs:
-                index_html = os.path.join(path, "index.html")
-                if os.path.exists(index_html):
-                    with open(index_html, "r", encoding="utf-8") as f:
-                        html = f.read()
-                    self.assertIn("checkout_modal.js", html, f"Missing checkout_modal.js script in {name}")
+    def test_119_repo_hygiene_no_pii_or_secrets(self):
+        forbidden_tokens = [
+            "".join(["1902755", "7341011"]),
+            "".join(["NGUYEN TRUNG ", "THIEN PHUC"]),
+            "".join(["pub-886513", "4830595358"]),
+            "".join(["serveouser", "content.com"]),
+            "".join(["default_secret_key_", "change_me_in_production"]),
+        ]
+        ignore_dirs = {".git", "__pycache__", "node_modules", ".pytest_cache", "scratch"}
+        scan_exts = {".py", ".js", ".html", ".json", ".txt", ".md"}
+        for root, dirs, files in os.walk(WORKSPACE):
+            dirs[:] = [d for d in dirs if d not in ignore_dirs]
+            for fname in files:
+                if fname.startswith("test_") or fname == "repomix-output.xml":
+                    continue
+                if os.path.splitext(fname)[1].lower() not in scan_exts:
+                    continue
+                fpath = os.path.join(root, fname)
+                with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
+                    content = f.read()
+                for token in forbidden_tokens:
+                    self.assertNotIn(token, content, f"Forbidden PII/secret token '{token}' found in {fpath}")
 
     def test_120_options_cors_preflight(self):
         code, _ = self.make_request("OPTIONS", "/api/tax-report")
@@ -1068,6 +1078,377 @@ class TestVinaTools(unittest.TestCase):
         code, body = self.make_request("GET", "/api/oauth2callback?code=mock_code")
         self.assertEqual(code, 400)
         self.assertIn("not fully configured", json.loads(body).get("error", ""))
+
+    # ================= 9. PHASE 5 SECURITY, LEGAL WIZARD & 2026 STATUTORY TESTS =================
+
+    def test_130_portal_index_and_api_docs_clean(self):
+        index_path = os.path.join(WORKSPACE, "index.html")
+        api_docs_path = os.path.join(WORKSPACE, "api-docs.html")
+        self.assertTrue(os.path.exists(index_path))
+        self.assertTrue(os.path.exists(api_docs_path))
+
+        with open(index_path, "r", encoding="utf-8") as f:
+            html = f.read()
+        self.assertNotIn("{len(tools)}", html)
+        self.assertNotIn("{tool_count}", html)
+        style_block = html.split("<style>")[1].split("</style>")[0]
+        self.assertNotIn("}}", style_block)
+        self.assertIn("/api-docs.html", html)
+
+        with open(os.path.join(WORKSPACE, "deployed_tools.json"), "r", encoding="utf-8") as f:
+            for t in json.load(f):
+                self.assertIn(f"/{t['slug']}", html)
+
+    def test_131_api_security_hardening(self):
+        import importlib.util
+
+        for mod_name, rel_path in [("api_company", "api/company.py"), ("api_search", "api/search.py")]:
+            full_path = os.path.join(WORKSPACE, rel_path)
+            with open(full_path, "r", encoding="utf-8") as f:
+                src = f.read()
+            self.assertNotIn('"vercel.app" in referer', src)
+            self.assertNotIn('"localhost" in referer', src)
+            self.assertNotIn("".join(["default_secret_key_", "change_me_in_production"]), src)
+
+            spec = importlib.util.spec_from_file_location(mod_name, full_path)
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            orig_secret = mod.API_SECRET_KEY
+            try:
+                mod.API_SECRET_KEY = ""
+                self.assertFalse(mod.verify_api_key("MSTAPI.test.0.anysig"))
+                mod.API_SECRET_KEY = "unit_test_secret_2026"
+                self.assertFalse(mod.verify_api_key("MSTAPI.test.0.forged"))
+                valid_sig = hmac.new(b"unit_test_secret_2026", b"test.0", hashlib.sha256).hexdigest()
+                self.assertTrue(mod.verify_api_key(f"MSTAPI.test.0.{valid_sig}"))
+            finally:
+                mod.API_SECRET_KEY = orig_secret
+
+        with open(os.path.join(WORKSPACE, "app.js"), "r", encoding="utf-8") as f:
+            app_js = f.read()
+        fn_block = app_js.split("function verifyPasscode")[1].split("function initializeDashboardContent")[0]
+        self.assertIn("return false;", fn_block)
+        self.assertNotIn("return true;", fn_block)
+
+    def test_132_recover_no_mock_otp_when_testing_false(self):
+        email = "prodnootp@gmail.com"
+        self.make_request("POST", "/api/subscribe", {"email": email, "password": "password123"})
+        orig_testing = payment_webhook.TESTING
+        orig_env = os.environ.pop("TESTING", None)
+        try:
+            payment_webhook.TESTING = False
+            code, body = self.make_request("POST", "/api/recover", {"email": email})
+            self.assertEqual(code, 200)
+            data = json.loads(body)
+            self.assertEqual(data.get("status"), "otp_sent")
+            self.assertNotIn("mock_otp", data)
+        finally:
+            payment_webhook.TESTING = orig_testing
+            if orig_env is not None:
+                os.environ["TESTING"] = orig_env
+
+    def test_133_legal_wizards_decree30_and_clauses(self):
+        legal_slugs = [
+            "mau-hop-dong-lao-dong-2026",
+            "bien-ban-ban-giao-tai-san",
+            "mau-don-xin-viec",
+            "mau-don-xin-nghi-phep-cong-ty",
+            "mau-don-xin-tam-tru",
+        ]
+        for slug in legal_slugs:
+            with open(os.path.join(WORKSPACE, slug, "index.html"), "r", encoding="utf-8") as f:
+                html = f.read()
+            self.assertIn("@page { size: A4 portrait; margin: 20mm 15mm 20mm 30mm; }", html, f"Missing Decree 30 @page in {slug}")
+            self.assertIn("Times New Roman", html)
+            self.assertNotIn("if (false)", html, f"Dead branch detected in {slug}")
+            if slug in ("mau-don-xin-viec", "mau-don-xin-nghi-phep-cong-ty", "mau-don-xin-tam-tru"):
+                self.assertIn("user-recipient", html, f"Missing ASCII #user-recipient in {slug}")
+
+        with open(os.path.join(WORKSPACE, "mau-hop-dong-lao-dong-2026", "index.html"), "r", encoding="utf-8") as f:
+            labor_html = f.read()
+        for clause_num in range(1, 10):
+            self.assertIn(f"Điều {clause_num}:", labor_html, f"Missing Điều {clause_num} in labor contract")
+        self.assertNotIn("Thuê nhà nguyên căn làm văn phòng", labor_html)
+
+    def test_134_node_js_syntax_and_legal_validate_step(self):
+        import re
+        import subprocess
+        from html.parser import HTMLParser
+
+        node_bin = shutil.which("node") or (r"D:\Software\nodejs\node.exe" if os.path.exists(r"D:\Software\nodejs\node.exe") else None)
+        self.assertIsNotNone(node_bin, "Node.js binary must be available for JS verification")
+
+        class WizardStepParser(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.steps = {}
+                self.cur_step = None
+                self.step_depth = 0
+                self.in_textarea = False
+                self.cur_textarea = None
+                self.in_select = False
+                self.cur_select = None
+
+            def handle_starttag(self, tag, attrs):
+                d = dict(attrs)
+                cls = d.get("class", "")
+                if tag == "div" and "form-step" in cls and "data-step" in d and self.cur_step is None:
+                    self.cur_step = d["data-step"]
+                    self.step_depth = 1
+                    self.steps.setdefault(self.cur_step, [])
+                    return
+                if self.cur_step is not None:
+                    if tag == "div":
+                        self.step_depth += 1
+                    is_req = "required" in d
+                    if tag == "input" and is_req:
+                        self.steps[self.cur_step].append({
+                            "id": d.get("id", ""),
+                            "type": d.get("type", "text"),
+                            "value": d.get("value", ""),
+                            "checked": "checked" in d,
+                        })
+                    elif tag == "textarea" and is_req:
+                        self.in_textarea = True
+                        self.cur_textarea = {"id": d.get("id", ""), "type": "textarea", "value": "", "checked": False}
+                    elif tag == "select" and is_req:
+                        self.in_select = True
+                        self.cur_select = {"id": d.get("id", ""), "type": "select-one", "value": "", "checked": False}
+                    elif tag == "option" and self.in_select and self.cur_select and not self.cur_select["value"]:
+                        self.cur_select["value"] = d.get("value", "selected")
+
+            def handle_data(self, data):
+                if self.in_textarea and self.cur_textarea is not None:
+                    self.cur_textarea["value"] += data
+
+            def handle_endtag(self, tag):
+                if tag == "textarea" and self.in_textarea:
+                    self.in_textarea = False
+                    if self.cur_step and self.cur_textarea:
+                        self.cur_textarea["value"] = self.cur_textarea["value"].strip()
+                        self.steps[self.cur_step].append(self.cur_textarea)
+                    self.cur_textarea = None
+                elif tag == "select" and self.in_select:
+                    self.in_select = False
+                    if self.cur_step and self.cur_select:
+                        self.steps[self.cur_step].append(self.cur_select)
+                    self.cur_select = None
+                elif tag == "div" and self.cur_step is not None:
+                    self.step_depth -= 1
+                    if self.step_depth <= 0:
+                        self.cur_step = None
+
+        with open(os.path.join(WORKSPACE, "deployed_tools.json"), "r", encoding="utf-8") as f:
+            deployed = json.load(f)
+
+        legal_slugs = {
+            "mau-hop-dong-lao-dong-2026",
+            "bien-ban-ban-giao-tai-san",
+            "mau-don-xin-viec",
+            "mau-don-xin-nghi-phep-cong-ty",
+            "mau-don-xin-tam-tru",
+        }
+
+        for tool in deployed:
+            slug = tool["slug"]
+            with open(os.path.join(WORKSPACE, slug, "index.html"), "r", encoding="utf-8") as f:
+                html = f.read()
+            scripts = [
+                m.group(1)
+                for m in re.finditer(r"<script(?![^>]*src=)(?![^>]*application/ld\+json)[^>]*>([\s\S]*?)</script>", html)
+                if m.group(1).strip()
+            ]
+            self.assertTrue(len(scripts) >= 1, f"Expected inline JS in {slug}")
+            main_script = scripts[-1]
+
+            # 1) Verify clean JS compilation across all 12 tools
+            syntax_runner = (
+                "const fs = require('fs'); const vm = require('vm');"
+                "const code = fs.readFileSync(0, 'utf8');"
+                "new vm.Script(code);"
+            )
+            proc = subprocess.run([node_bin, "-e", syntax_runner], input=main_script, text=True, encoding="utf-8", capture_output=True)
+            self.assertEqual(proc.returncode, 0, f"JS SyntaxError in {slug}: {proc.stderr}")
+
+            # 2) Simulate DOM and run validateStep(1), (2), (3) for all 5 legal wizards
+            if slug in legal_slugs:
+                parser = WizardStepParser()
+                parser.feed(html)
+                self.assertIn("1", parser.steps, f"Missing .form-step[data-step=1] in {slug}")
+                self.assertIn("2", parser.steps, f"Missing .form-step[data-step=2] in {slug}")
+                payload = json.dumps({"steps": parser.steps, "script": main_script}, ensure_ascii=False)
+                dom_runner = r"""
+const fs = require('fs');
+const vm = require('vm');
+const { steps, script } = JSON.parse(fs.readFileSync(0, 'utf8'));
+const doc = {
+  querySelector(sel) {
+    const m = sel.match(/\.form-step\[data-step="(\d+)"\]/);
+    if (!m || !steps[m[1]]) return null;
+    const list = steps[m[1]].map(x => ({
+      id: x.id, type: x.type, value: x.value, checked: x.checked,
+      classList: { add() {}, remove() {} }
+    }));
+    return { querySelectorAll() { return list; } };
+  },
+  querySelectorAll() { return []; },
+  getElementById() { return null; },
+  addEventListener() {}
+};
+const sandbox = {
+  document: doc, window: {}, navigator: {}, console,
+  Math, Number, String, Array, Object, Set, Map, Date, RegExp, JSON,
+  parseInt, parseFloat, isNaN, isFinite,
+  setTimeout: () => 0, Blob: function() {}, URL: {}
+};
+vm.runInNewContext(script, sandbox);
+if (sandbox.validateStep(1) !== true) throw new Error('validateStep(1) expected true');
+if (sandbox.validateStep(2) !== true) throw new Error('validateStep(2) expected true');
+if (sandbox.validateStep(3) !== true) throw new Error('validateStep(3) expected true');
+if (steps['1'].length > 0) {
+  const orig = Object.assign({}, steps['1'][0]);
+  steps['1'][0].value = '';
+  steps['1'][0].checked = false;
+  if (sandbox.validateStep(1) !== false) throw new Error('validateStep(1) expected false when empty');
+  steps['1'][0] = orig;
+}
+if (steps['2'].length > 0) {
+  const orig = Object.assign({}, steps['2'][0]);
+  steps['2'][0].value = '';
+  steps['2'][0].checked = false;
+  if (sandbox.validateStep(2) !== false) throw new Error('validateStep(2) expected false when empty');
+  steps['2'][0] = orig;
+}
+console.log('WIZARD_OK');
+"""
+                proc_dom = subprocess.run([node_bin, "-e", dom_runner], input=payload, text=True, encoding="utf-8", capture_output=True)
+                self.assertEqual(proc_dom.returncode, 0, f"validateStep failed for {slug}: {proc_dom.stderr} {proc_dom.stdout}")
+                self.assertIn("WIZARD_OK", proc_dom.stdout)
+
+    def test_135_hkd_2026_statutory_math(self):
+        from statutory_engines import calculate_hkd_tax_2026
+
+        # Tier 1: <= 1B VND is exempt
+        t1 = calculate_hkd_tax_2026(1_000_000_000, 700_000_000, "group1")
+        self.assertEqual(t1["tier"], "Tier 1")
+        self.assertEqual(t1["recommended_method"], "exempt")
+        self.assertEqual(t1["vat"], 0)
+        self.assertEqual(t1["pit_optimal"], 0)
+        self.assertEqual(t1["total_tax"], 0)
+
+        # Tier 2 threshold (> 1B to 3B): Group 1 (1% VAT, 0.5% PIT on excess over 1B vs 15% profit)
+        t2 = calculate_hkd_tax_2026(2_500_000_000, 2_400_000_000, "group1", ecom_pct=40)
+        self.assertEqual(t2["tier"], "Tier 2")
+        self.assertEqual(t2["vat"], 25_000_000)
+        self.assertEqual(t2["pit_method1"], 7_500_000)
+        self.assertEqual(t2["pit_method2"], 15_000_000)
+        self.assertEqual(t2["pit_optimal"], 7_500_000)
+        self.assertEqual(t2["withheld_at_source"], 15_000_000)
+        self.assertEqual(t2["self_declared_due"], 17_500_000)
+
+        # Tier 3 (> 3B to 50B): mandatory 17% on profit
+        t3 = calculate_hkd_tax_2026(5_000_000_000, 4_000_000_000, "group2")
+        self.assertEqual(t3["tier"], "Tier 3")
+        self.assertEqual(t3["vat"], 250_000_000)
+        self.assertEqual(t3["pit_optimal"], 170_000_000)
+
+        # Tier 4 (> 50B): mandatory 20% on profit
+        t4 = calculate_hkd_tax_2026(60_000_000_000, 50_000_000_000, "group1")
+        self.assertEqual(t4["tier"], "Tier 4")
+        self.assertEqual(t4["vat"], 600_000_000)
+        self.assertEqual(t4["pit_optimal"], 2_000_000_000)
+
+    def test_136_pit_2026_5bracket_math_and_node(self):
+        import re
+        import subprocess
+        from statutory_engines import calculate_pit_2026
+
+        # Gross 25M, 1 dependent, Region I, H2 2026 (base 2.53M, cap 50.6M):
+        # ins = 25M * 10.5% = 2,625,000; ded2026 = 15.5M + 6.2M = 21,700,000
+        # taxable2026 = 675,000 -> pit2026 = 33,750/mo (405,000/yr)
+        # tax2025: ded = 11M + 4.4M = 15.4M -> taxable = 6,975,000 -> pit2025 = 447,500/mo (5,370,000/yr)
+        res = calculate_pit_2026(25_000_000, mode="gross-to-net", dependents=1, region="1", period="h2_2026")
+        self.assertEqual(res["total_insurance"], 2_625_000)
+        self.assertEqual(res["personal_deduction_2026"] + res["dependent_deduction_2026"], 21_700_000)
+        self.assertEqual(res["tntt_2026"], 675_000)
+        self.assertEqual(res["pit_2026"], 33_750)
+        self.assertEqual(res["pit_2025"], 447_500)
+        self.assertEqual(res["monthly_tax_saved"], 413_750)
+        self.assertEqual(res["annual_tax_saved"], 4_965_000)
+
+        # Net -> Gross binary search round-trip accuracy
+        inv = calculate_pit_2026(res["net"], mode="net-to-gross", dependents=1, region="1", period="h2_2026")
+        self.assertLessEqual(abs(inv["net"] - res["net"]), 2)
+        self.assertLessEqual(abs(inv["gross"] - 25_000_000), 2)
+
+        # Verify client-side JS parity on generated PIT HTML via Node.js
+        node_bin = shutil.which("node") or r"D:\Software\nodejs\node.exe"
+        with open(os.path.join(WORKSPACE, "cong-cu-tinh-luong-gross-net-tncn-2026", "index.html"), "r", encoding="utf-8") as f:
+            pit_html = f.read()
+        script = re.findall(r"<script(?![^>]*src=)(?![^>]*application/ld\+json)[^>]*>([\s\S]*?)</script>", pit_html)[-1]
+        js_probe = (
+            "const fs=require('fs'), vm=require('vm');"
+            "const code=fs.readFileSync(0,'utf8');"
+            "const noopEl=()=>({addEventListener(){},getAttribute(){return '0';},classList:{add(){},remove(){}},style:{},innerText:'',value:'0'});"
+            "const sb={document:{getElementById:noopEl,querySelectorAll:()=>[],addEventListener(){}},window:{},console,Math,parseFloat,parseInt,Number,String,Object,Array,setTimeout:()=>0};"
+            "vm.runInNewContext(code,sb);"
+            "const r=sb.evalGross(25000000,1,'1','h2_2026','full',0,0);"
+            "console.log(JSON.stringify(r));"
+        )
+        proc = subprocess.run([node_bin, "-e", js_probe], input=script, text=True, encoding="utf-8", capture_output=True, check=True)
+        js_res = json.loads(proc.stdout.strip())
+        self.assertEqual(js_res["tax2026"], 33750)
+        self.assertEqual(js_res["tax2025"], 447500)
+
+    def test_137_ecommerce_2026_fees_math(self):
+        from statutory_engines import calculate_ecommerce_fees_2026
+
+        # Shopee 1M order, 6% payment fee + 3.5% fixed + 3,000 infra + Voucher Xtra (capped 50k) + 1.5% tax
+        sh = calculate_ecommerce_fees_2026(
+            platform="shopee",
+            selling_price=1_000_000,
+            cogs=500_000,
+            ops=20_000,
+            pay_fee_pct=6.0,
+            fixed_fee_pct=3.5,
+            infra_fee=3000,
+            voucher_xtra=True,
+            tax_withholding=True,
+        )
+        self.assertEqual(sh["transaction_fee"], 60_000)
+        self.assertEqual(sh["fixed_fee"], 35_000)
+        self.assertEqual(sh["infra_fee"], 3_000)
+        self.assertEqual(sh["voucher_xtra_fee"], 50_000)
+        self.assertEqual(sh["platform_fee"], 148_000)
+        self.assertEqual(sh["tax_withheld"], 15_000)
+        self.assertEqual(sh["net_payout"], 837_000)
+        self.assertEqual(sh["net_profit"], 317_000)
+        self.assertIsNotNone(sh["break_even_roas"])
+
+        # TikTok 1M order: 6% transaction + 14% commission + 3,000 flat order fee
+        tt = calculate_ecommerce_fees_2026(
+            platform="tiktok",
+            selling_price=1_000_000,
+            cogs=450_000,
+            ops=20_000,
+            tiktok_trans_pct=6.0,
+            tiktok_comm_pct=14.0,
+            tiktok_flat_fee=3000,
+            tax_withholding=True,
+        )
+        self.assertEqual(tt["platform_fee"], 203_000)
+        self.assertEqual(tt["tax_withheld"], 15_000)
+        self.assertEqual(tt["net_payout"], 782_000)
+
+    def test_138_unsupported_slug_rejects_dropzone(self):
+        from agent_niche_finder import evaluate_keyword_viability
+
+        with self.assertRaises(ValueError):
+            generate_tool("phan mem giai nen winrar full crack")
+
+        res = evaluate_keyword_viability("công cụ gộp ổ cứng")
+        self.assertEqual(res["score"], 0)
+        self.assertEqual(res["competition_level"], "blocked")
 
 if __name__ == "__main__":
     unittest.main()

@@ -124,7 +124,13 @@ def scan_files_to_deploy():
   files_list = []
   
   # Core root pages
-  core_files = ["index.html", "global_style.css", "checkout_modal.js", "robots.txt", "sitemap.xml", "terms.html", "privacy.html", "refund.html", "ads.txt", "sw.js", "og-image.png", "vercel.json", "manifest.json", "offline.html", "about.html", "contact.html", "logo.png"]
+  core_files = [
+    "index.html", "api-docs.html", "dashboard.html",
+    "global_style.css", "styles.css", "checkout_modal.js", "app.js", "api-portal.js",
+    "robots.txt", "sitemap.xml", "terms.html", "privacy.html", "refund.html",
+    "ads.txt", "sw.js", "og-image.png", "vercel.json", "manifest.json",
+    "offline.html", "about.html", "contact.html", "logo.png"
+  ]
   for f in core_files:
     path = os.path.join(WORKSPACE, f)
     if os.path.exists(path):
@@ -192,7 +198,7 @@ def run_deployment():
   # Step 1: Copy templates to root
   copy_static_assets()
   
-  # Step 2: Generate up-to-date vinatools directory page and sitemap.xml
+  # Step 2: Generate up-to-date directory index.html and sitemap.xml
   try:
     from generate_niche_portal import generate_index
     generate_index()
@@ -205,25 +211,9 @@ def run_deployment():
   except Exception as e:
     print(f"Error generating sitemap.xml: {e}")
 
-  # Step 3: Temporarily swap index.html with vinatools_index.html
-  has_original = os.path.exists(os.path.join(WORKSPACE, "index.html"))
-  index_bak = os.path.join(WORKSPACE, "index.html.bak")
-  index_temp = os.path.join(WORKSPACE, "vinatools_index.html")
-  
-  if has_original:
-    if os.path.exists(index_bak):
-      os.remove(index_bak)
-    os.rename(os.path.join(WORKSPACE, "index.html"), index_bak)
-    
-  if os.path.exists(index_temp):
-    shutil.copy(index_temp, os.path.join(WORKSPACE, "index.html"))
-    print("Temporarily copied vinatools_index.html to index.html for deployment.")
-  else:
-    print("Warning: vinatools_index.html not found! Using default index.html.")
-
   deployment_url = None
   try:
-    # Scan files (will scan the swapped index.html)
+    # Scan files directly from workspace
     files_to_deploy = scan_files_to_deploy()
     print(f"Scanned {len(files_to_deploy)} files for deployment.")
     
@@ -274,12 +264,6 @@ def run_deployment():
         print(f"Vercel deployment failed with HTTP error {e.code} - {e.read().decode('utf-8')}")
         raise
   finally:
-    # Restore original index.html
-    if os.path.exists(os.path.join(WORKSPACE, "index.html")):
-      os.remove(os.path.join(WORKSPACE, "index.html"))
-    if has_original and os.path.exists(index_bak):
-      os.rename(index_bak, os.path.join(WORKSPACE, "index.html"))
-      print("Restored original index.html in workspace root.")
     release_lock()
       
   return deployment_url

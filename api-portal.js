@@ -56,18 +56,6 @@ function initSandboxSender() {
   if (!sendBtn) return;
 
   sendBtn.addEventListener("click", () => {
-    const email = localStorage.getItem("userEmail");
-    if (!email) {
-      if (window.showAuthModal) {
-        window.showAuthModal(() => {
-          sendBtn.click();
-        });
-      } else {
-        alert("Vui lòng đăng ký Email miễn phí để sử dụng Sandbox thử nghiệm API.");
-      }
-      return;
-    }
-
     const acceptTerms = document.getElementById("accept-terms-sandbox");
     if (acceptTerms && !acceptTerms.checked) {
       alert("You must read and agree to the Terms & Conditions and Privacy Policy to use the API sandbox.");
@@ -263,10 +251,10 @@ function initCheckoutTrigger() {
   // Initialize bank configuration from config.json details
   if (window.initCheckoutConfig) {
     window.initCheckoutConfig({
-      bankName: "techcombank",
+      bankName: "Techcombank",
       bankId: "TCB",
-      accountNumber: "19027557341011",
-      accountName: "NGUYEN TRUNG THIEN PHUC"
+      accountNumber: "REDACTED_SET_IN_ENV",
+      accountName: "VINATOOLS PLATFORM"
     });
     
     // Check if there is a localApiUrl override in localStorage

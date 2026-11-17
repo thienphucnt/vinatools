@@ -24,123 +24,85 @@ def load_config():
 def classify_keyword(keyword):
     kw = keyword.lower()
     
-    # 1. Employment/Leave Forms
-    if any(x in kw for x in ["xin phép", "nghỉ phép", "nghỉ học", "nghỉ làm", "thôi việc", "nghỉ việc", "xin nghỉ", "vắng mặt"]):
+    # 1. Employment / Job Application / Leave Forms (check BEFORE generic "đơn xin")
+    if any(x in kw for x in ["xin việc", "ứng tuyển", "xin phép", "nghỉ phép", "nghỉ học", "nghỉ làm", "thôi việc", "nghỉ việc", "xin nghỉ", "vắng mặt"]):
         return "employment_leave_form"
     
     # 2. Civil/Administrative Forms
-    if any(x in kw for x in ["tạm trú", "sửa chữa nhà", "xây dựng", "thực tập", "hủy mã số", "đơn xin", "mẫu đơn"]):
+    if any(x in kw for x in ["tạm trú", "ct01", "sửa chữa nhà", "xây dựng", "thực tập", "hủy mã số", "tờ khai", "đơn xin", "mẫu đơn"]):
         return "civil_admin_form"
         
     # 3. Lease/Property Contracts
     if any(x in kw for x in ["thuê nhà", "thuê mặt bằng", "cho thuê", "đặt cọc", "mặt bằng", "cho ở nhờ"]):
         return "property_lease_contract"
         
-    # 4. Employment/Labor Contracts
-    if any(x in kw for x in ["lao động", "thử việc", "cộng tác viên", "hợp đồng"]):
+    # 4. Employment/Labor Contracts & Handover Minutes
+    if any(x in kw for x in ["lao động", "thử việc", "cộng tác viên", "hợp đồng", "bàn giao tài sản", "biên bản"]):
         return "labor_employment_contract"
         
-    # 5. Image Utilities
-    if any(x in kw for x in ["ảnh", "png", "jpg", "jpeg", "heic", "hinh ảnh", "nén hình"]):
-        return "image_utility"
-        
-    # 6. Document Utilities
-    if any(x in kw for x in ["pdf", "excel", "word", "file", "gộp o", "gộp khối", "o trong word", "đọc số"]):
-        return "document_utility"
-        
-    # 7. Video/Audio Utilities
-    if any(x in kw for x in ["mp4", "video", "nhạc", "mp3", "giọng nói", "tách nhac"]):
-        return "media_utility"
-        
-    # 8. Financial/Tax Calculators
-    if any(x in kw for x in ["tính", "lãi", "phí", "thuế", "doanh thu"]):
+    # 5. Financial/Tax Calculators
+    if any(x in kw for x in ["tính", "lãi", "phí", "thuế", "doanh thu", "lương", "gross", "net", "tncn", "sàn"]):
         return "financial_calculator"
+        
+    # 6. Registry / Data Utilities
+    if any(x in kw for x in ["đọc số", "địa chỉ", "tra cứu", "mã số thuế"]):
+        return "document_utility"
         
     return "general_utility"
 
 def get_specific_legal_basis(keyword):
     kw = keyword.lower()
-    if "tạm trú" in kw:
-        return "Điều 27 Luật Cư trú 2020 và hướng dẫn tại Nghị định 62/2021/NĐ-CP về thủ tục đăng ký tạm trú chính thức"
+    if "thuế hộ kinh doanh" in kw or "hộ kinh doanh" in kw:
+        return "Nghị định 68/2026/NĐ-CP, Nghị định 141/2026/NĐ-CP, Thông tư 18/2026/TT-BTC và Nghị quyết 198/2025/QH15"
+    if "thuế tncn" in kw or "gross" in kw or "lương" in kw:
+        return "Luật Thuế thu nhập cá nhân số 109/2025/QH15, Nghị quyết 110/2025/UBTVQH15, Nghị định 293/2025/NĐ-CP và Nghị định 161/2026/NĐ-CP"
+    if "phí sàn" in kw or "tmđt" in kw or "shopee" in kw or "tiktok" in kw:
+        return "Nghị định 68/2026/NĐ-CP (Điều 11 về khấu trừ thuế TMĐT) và Biểu phí sàn Shopee, TikTok Shop cập nhật năm 2026"
+    if "mã số thuế" in kw or "tra cứu" in kw or "vietregistry" in kw:
+        return "Luật Quản lý thuế số 38/2019/QH14 và Nghị định 126/2020/NĐ-CP"
+    if "xin việc" in kw or "ứng tuyển" in kw:
+        return "Bộ luật Lao động 2019 và Nghị định 30/2020/NĐ-CP"
+    if "tạm trú" in kw or "ct01" in kw:
+        return "Điều 27 Luật Cư trú 2020, Thông tư 66/2023/TT-BCA (biểu mẫu CT01) và Nghị định 30/2020/NĐ-CP"
     if "thôi việc" in kw or "nghỉ việc" in kw:
-        return "Điều 35 Bộ luật Lao động 2019 về quyền đơn phương chấm dứt hợp đồng lao động hợp pháp"
+        return "Điều 35 Bộ luật Lao động 2019 và Nghị định 30/2020/NĐ-CP"
     if "nghỉ phép" in kw or "nghỉ làm" in kw or "xin nghỉ" in kw:
-        return "Điều 113 Bộ luật Lao động 2019 quy định về chế độ nghỉ phép hằng năm hưởng nguyên lương"
-    if "nghỉ học" in kw:
-        return "Quy chế quản lý học sinh học đường ban hành kèm Thông tư 32/2020/TT-BGDĐT của Bộ Giáo dục và Đào tạo"
-    if "thử việc" in kw:
-        return "Điều 24 và Điều 25 Bộ luật Lao động 2019 về chế độ thử việc và giới hạn thời giờ thử việc"
-    if "lao động" in kw:
-        return "Chương III Bộ luật Lao động 2019 về các điều khoản bắt buộc phải có khi giao kết hợp đồng lao động"
-    if "thuê nhà" in kw or "cho thuê" in kw or "ở nhờ" in kw:
-        return "Điều 472 Bộ luật Dân sự 2015 và quy định Luật Nhà ở 2014 về quyền thuê tài sản nhà ở"
-    if "đặt cọc" in kw:
-        return "Điều 328 Bộ luật Dân sự 2015 về xử lý tài sản đặt cọc bảo đảm nghĩa vụ giao kết hợp đồng"
-    if "cộng tác viên" in kw:
-        return "Bộ luật Dân sự 2015 quy định về hợp đồng cung ứng dịch vụ cộng tác viên"
-    if "sửa chữa nhà" in kw or "xây dựng" in kw:
-        return "Điều 89 Luật Xây dựng 2014 (sửa đổi năm 2020) về điều kiện miễn/xin giấy phép cải tạo công trình"
-    if "thuế" in kw:
-        return "Luật Quản lý thuế 2019 và Thông tư 105/2020/TT-BTC quy định về quy trình đóng và hủy mã số thuế"
-    return "quy định pháp luật hành chính, dân sự và lao động hiện hành tại Việt Nam năm 2026"
+        return "Điều 113 Bộ luật Lao động 2019 và Nghị định 30/2020/NĐ-CP"
+    if "lao động" in kw or "thử việc" in kw:
+        return "Điều 21 Bộ luật Lao động 2019, Thông tư 10/2020/TT-BLĐTBXH và Nghị định 30/2020/NĐ-CP"
+    if "bàn giao" in kw:
+        return "Bộ luật Dân sự 2015, Bộ luật Lao động 2019 và Nghị định 30/2020/NĐ-CP"
+    return "quy định pháp luật hành chính, dân sự, thuế và lao động hiện hành tại Việt Nam năm 2026"
 
 def get_specific_steps(keyword, category):
     kw = keyword.lower()
-    if "đơn" in kw or "xin" in kw or "phép" in kw:
+    if "đơn" in kw or "tờ khai" in kw or "xin" in kw or "phép" in kw:
         return [
-            f"Bước 1: Điền thông tin người làm đơn trực tiếp vào các trường dữ liệu của biểu mẫu {keyword}.",
-            f"Bước 2: Nêu chi tiết lý do gửi {keyword} một cách rõ ràng, mạch lạc và thuyết phục cơ quan chức năng.",
-            f"Bước 3: Ghi nhận thời gian áp dụng cụ thể (số ngày xin nghỉ phép, ngày xin tạm trú, thời hạn sửa chữa nhà).",
-            f"Bước 4: Rà soát tính chính xác của CCCD và thông tin liên hệ, sau đó tải file Word (.docx) kết quả.",
-            f"Bước 5: Ký tên xác nhận và gửi trực tiếp tới người phụ trách hoặc cơ quan hành chính có thẩm quyền."
+            f"Bước 1: Điền thông tin cá nhân và đơn vị tiếp nhận trực tiếp vào trình hướng dẫn từng bước của biểu mẫu {keyword}.",
+            f"Bước 2: Nhập chi tiết nội dung, thời gian áp dụng hoặc sử dụng trợ lý soạn thảo văn phong hành chính chuẩn mực.",
+            f"Bước 3: Kiểm tra bản xem trước định dạng A4 chuẩn Nghị định 30/2020/NĐ-CP ngay ở khung bên phải.",
+            f"Bước 4: Bấm nút 'Tải File Word (.doc)', 'Sao chép HTML/Markdown' hoặc 'In Trực Tiếp / Lưu PDF' hoàn toàn miễn phí ngay lập tức."
         ]
-    elif "hợp đồng" in kw:
+    elif "hợp đồng" in kw or "biên bản" in kw:
         return [
-            f"Bước 1: Điền đầy đủ thông tin pháp lý của các bên tham gia (bên A và bên B) vào trình khởi tạo {keyword}.",
-            f"Bước 2: Thiết lập chi tiết nội dung công việc, quyền lợi cụ thể và nghĩa vụ tương ứng của mỗi bên.",
-            f"Bước 3: Thỏa thuận thời hạn hiệu lực hợp đồng, phương thức thanh toán chi phí và hạn chót giao nhận.",
-            f"Bước 4: Đọc kỹ phụ lục đính kèm, cam kết chất lượng sản phẩm/dịch vụ và tải file tài liệu Word chuẩn.",
-            f"Bước 5: Các bên tiến hành ký nháy, đóng dấu và thực hiện công chứng tại Văn phòng công chứng nếu cần."
+            f"Bước 1: Nhập thông tin pháp lý đầy đủ của Bên A và Bên B vào trình khởi tạo {keyword}.",
+            f"Bước 2: Thiết lập điều khoản công việc, tiền lương/tài sản bàn giao và các cam kết bảo hiểm, an toàn lao động.",
+            f"Bước 3: Đối chiếu bản xem trước A4 với đầy đủ Quốc hiệu, Tiêu ngữ và các điều khoản bắt buộc.",
+            f"Bước 4: Xuất trực tiếp file Word (.doc), sao chép nội dung sạch hoặc in bản PDF A4 mà không cần đăng ký hay chờ đợi."
         ]
-    elif "nén" in kw:
+    elif "tra cứu" in kw or "mã số thuế" in kw:
         return [
-            f"Bước 1: Lựa chọn tệp dữ liệu cần tối ưu dung lượng và tải lên khu vực làm việc của công cụ {keyword}.",
-            f"Bước 2: Thiết lập mức độ nén mong muốn (mức nén cao/trung bình/thấp) dựa trên nhu cầu sử dụng.",
-            f"Bước 3: Đợi hệ thống thực hiện giải thuật nén dữ liệu cục bộ an toàn trên trình duyệt.",
-            f"Bước 4: Quét mã QR thanh toán phí duy trì hệ thống qua VietQR Napas 24/7.",
-            f"Bước 5: Mở khóa liên kết và tải file đã nén chất lượng cao về máy tính hoặc điện thoại di động."
-        ]
-    elif "chuyển đổi" in kw:
-        return [
-            f"Bước 1: Tải tệp tài liệu nguồn (PDF, HEIC, PNG) cần thay đổi định dạng lên {keyword}.",
-            f"Bước 2: Lựa chọn định dạng đích phù hợp (Word, Excel, JPG, WebP) cho nhu cầu công việc.",
-            f"Bước 3: Nhấp nút thực thi chuyển đổi và chờ vài giây để thuật toán xử lý dữ liệu hoàn tất.",
-            f"Bước 4: Kiểm tra trực tiếp file đầu ra trên màn hình xem trước (preview) để đảm bảo không lỗi font.",
-            f"Bước 5: Thực hiện quét mã thanh toán VietQR để nhận file kết quả chuẩn chỉnh nhất."
-        ]
-    elif "gộp" in kw:
-        return [
-            f"Bước 1: Tải lên các tệp tin đơn lẻ cần ghép nối vào giao diện làm việc của công cụ {keyword}.",
-            f"Bước 2: Điều chỉnh thứ tự các file bằng cách kéo thả trực quan để sắp xếp đúng trình tự mong muốn.",
-            f"Bước 3: Bấm nút 'Hợp nhất dữ liệu' để thuật toán gộp trang/gộp ô chạy cục bộ an toàn.",
-            f"Bước 4: Xác thực giao dịch qua cổng thanh toán QR code tự động Napas 24/7.",
-            f"Bước 5: Nhận liên kết và tải file hợp nhất hoàn chỉnh (.pdf, .xlsx, .docx) về thiết bị."
-        ]
-    elif "tách" in kw:
-        return [
-            f"Bước 1: Tải file nguồn cần phân tách dữ liệu lên hệ thống công cụ {keyword}.",
-            f"Bước 2: Thiết lập các tùy chọn phân tách (chia nhỏ trang PDF, tách âm thanh MP3 từ luồng video).",
-            f"Bước 3: Chờ hệ thống biên dịch và phân chia các luồng dữ liệu riêng biệt.",
-            f"Bước 4: Xem trước dung lượng và định dạng của các tệp tin kết quả sau phân tách.",
-            f"Bước 5: Hoàn tất giao dịch VietQR để tải trọn gói các file đã tách thành công."
+            f"Bước 1: Chọn chế độ tra cứu theo Mã số thuế (MST 10 chữ số) hoặc tìm kiếm theo tên doanh nghiệp / tỉnh thành.",
+            f"Bước 2: Nhấn 'Tra cứu ngay' để truy vấn trực tiếp qua API VietRegistry (/api/company hoặc /api/search).",
+            f"Bước 3: Kiểm tra trạng thái hoạt động, người đại diện pháp luật và địa chỉ đăng ký từ Tổng cục Thuế.",
+            f"Bước 4: Tải danh sách kết quả dưới dạng bảng tính CSV (UTF-8) hoặc sao chép thông tin để xuất hóa đơn."
         ]
     else:
         return [
-            f"Bước 1: Điền thông số đầu vào hoặc tải tệp dữ liệu lên công cụ {keyword}.",
-            f"Bước 2: Tùy chỉnh các tham số cấu hình hiển thị trực quan trên giao diện.",
-            f"Bước 3: Nhấn nút thực thi để chạy giải thuật tính toán hoặc xử lý dữ liệu cục bộ.",
-            f"Bước 4: Kiểm tra kết quả hiển thị trên bảng dữ liệu hoặc màn hình xem trước.",
-            f"Bước 5: Thực hiện quét mã thanh toán tự động VietQR để tải tệp tin kết quả chuẩn xác về máy."
+            f"Bước 1: Nhập các thông số tài chính hoặc dữ liệu đầu vào cần xử lý vào công cụ {keyword}.",
+            f"Bước 2: Lựa chọn phương pháp tính, nhóm ngành nghề, khu vực hoặc bộ quy tắc áp dụng cho năm 2026.",
+            f"Bước 3: Xem ngay bảng phân tích chi tiết, số liệu so sánh và cảnh báo tuân thủ pháp lý được tính toán tự động client-side.",
+            f"Bước 4: Xuất bảng tính CSV chuẩn UTF-8 BOM hoặc nhấn 'In / Xuất PDF' để lưu trữ báo cáo A4 ngay lập tức."
         ]
 
 def get_specific_faqs(keyword, category):
@@ -150,188 +112,149 @@ def get_specific_faqs(keyword, category):
     faqs = []
     
     # FAQ 1: Legal/Technical basis
-    if "đơn" in kw or "xin" in kw or "phép" in kw or "hợp đồng" in kw:
+    if "đơn" in kw or "tờ khai" in kw or "xin" in kw or "phép" in kw or "hợp đồng" in kw or "biên bản" in kw:
         faqs.append({
-            "q": f"Văn bản biểu mẫu {keyword} tuân theo quy định pháp lý nào?",
-            "a": f"Mẫu văn bản {keyword} được đội ngũ luật sư biên soạn chính xác dựa trên {legal_basis}. Biểu mẫu được cập nhật các nghị định và hướng dẫn mới nhất để áp dụng thực tế."
+            "q": f"Văn bản {keyword} tuân theo quy định pháp lý nào?",
+            "a": f"Biểu mẫu {keyword} được xây dựng dựa trên {legal_basis}. Cấu trúc Quốc hiệu, Tiêu ngữ, phông chữ Times New Roman 13pt và căn lề A4 được chuẩn hóa theo Phụ lục I Nghị định 30/2020/NĐ-CP."
         })
     else:
         faqs.append({
-            "q": f"Sử dụng công cụ {keyword} trực tuyến có đảm bảo an toàn dữ liệu không?",
-            "a": f"Tuyệt đối an toàn. Công cụ {keyword} xử lý dữ liệu hoàn toàn bằng JavaScript client-side ngay trên trình duyệt của bạn. Dữ liệu không được truyền lên máy chủ, đảm bảo tuân thủ nghiêm ngặt Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15."
+            "q": f"Công cụ {keyword} sử dụng căn cứ pháp lý nào cho năm 2026?",
+            "a": f"Công cụ áp dụng công thức và biểu suất theo {legal_basis}. Toàn bộ tính toán chạy trực tiếp bằng JavaScript trên trình duyệt của bạn, tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15."
         })
         
-    # FAQ 2: Filling/Usage question
-    if "đơn" in kw or "xin" in kw or "phép" in kw:
+    # FAQ 2: Usage / Privacy
+    if "đơn" in kw or "tờ khai" in kw or "xin" in kw or "phép" in kw:
         faqs.append({
-            "q": f"Biểu mẫu đơn {keyword} có bắt buộc phải viết tay không?",
-            "a": f"Không bắt buộc. Bạn có thể sử dụng công cụ của chúng tôi điền thông tin, xem trước bố cục chuẩn A4 rồi tải file Word (.docx) về để in ra và ký tên. Các cơ quan hành chính đều chấp nhận văn bản đánh máy chuẩn hóa này."
+            "q": f"Biểu mẫu {keyword} có thể in trực tiếp hoặc mở bằng Microsoft Word không?",
+            "a": "Có. Bạn có thể bấm 'In Trực Tiếp / Lưu PDF' để xuất bản A4 chuẩn lề (trên/dưới 20mm, trái 30mm, phải 15mm) hoặc tải về file Word / sao chép mã HTML/Markdown ngay lập tức."
         })
-    elif "hợp đồng" in kw:
+    elif "hợp đồng" in kw or "biên bản" in kw:
         faqs.append({
-            "q": f"Bản hợp đồng {keyword} này có cần phải công chứng không?",
-            "a": f"Tùy vào quy định cụ thể của từng loại giao dịch. Ví dụ hợp đồng lao động/thử việc không bắt buộc công chứng. Hợp đồng thuê nhà hoặc mặt bằng kinh doanh nên được công chứng để làm bằng chứng pháp lý vững chắc nếu có tranh chấp xảy ra."
-        })
-    elif "heic" in kw or "ảnh" in kw or "png" in kw or "jpg" in kw:
-        faqs.append({
-            "q": f"Độ phân giải của ảnh có bị giảm khi chạy {keyword} không?",
-            "a": f"Không. Trình tối ưu {keyword} áp dụng giải thuật nén lượng tử thông minh giúp giảm tối đa dung lượng tệp tin (60-80%) nhưng vẫn bảo toàn nguyên vẹn độ phân giải và chất lượng hiển thị sắc nét ban đầu."
-        })
-    elif "pdf" in kw or "excel" in kw or "word" in kw:
-        faqs.append({
-            "q": f"Tài liệu sau khi xử lý qua {keyword} có bị vỡ định dạng bảng biểu không?",
-            "a": f"Công cụ được lập trình nâng cao để giữ nguyên cấu trúc phân trang, sơ đồ ô tính Excel và định dạng font chữ tiếng Việt Unicode chuẩn. Tài liệu tải về sẽ giống 99% so với file nguồn ban đầu."
+            "q": f"{keyword} đã bao gồm đầy đủ điều khoản bắt buộc chưa?",
+            "a": f"Có. Các biểu mẫu hợp đồng và biên bản trên VinaTools bám sát {legal_basis}, bảo đảm đầy đủ thông tin các bên và các điều khoản cốt lõi trước khi ký kết."
         })
     else:
         faqs.append({
-            "q": f"Tôi có thể sử dụng công cụ {keyword} này trên điện thoại di động được không?",
-            "a": f"Có. Trang web VinaTools được thiết kế đáp ứng hoàn toàn chuẩn Responsive, hỗ trợ mượt mà trên tất cả các trình duyệt smartphone (Safari, Chrome, Samsung Internet) chạy iOS và Android."
+            "q": f"Tôi có thể xuất bảng tính hoặc sử dụng {keyword} trên điện thoại không?",
+            "a": f"Có. Giao diện VinaTools hỗ trợ đầy đủ trên điện thoại và máy tính bảng, đồng thời cho phép tải bảng tính CSV (mở trực tiếp trong Excel mà không lỗi font tiếng Việt) hoặc in báo cáo A4."
         })
         
-    # FAQ 3: Transaction/Download questions
+    # FAQ 3: Instant Free Export
     faqs.append({
-        "q": f"Làm cách nào để tải và mở khóa file kết quả của {keyword}?",
-        "a": f"Sau khi hệ thống xử lý xong, bạn chỉ cần thực hiện quét mã QR thanh toán phí duy trì cổng tự động (9.000 đ) thông qua VietQR Napas 24/7. Cổng API cục bộ sẽ nhận diện giao dịch trong 1 giây và mở khóa tải file lập tức."
+        "q": f"Sử dụng và tải kết quả từ {keyword} có mất phí hay phải chờ đếm ngược không?",
+        "a": "Hoàn toàn miễn phí và tức thì. VinaTools không thu phí, không yêu cầu đăng nhập và không đặt đồng hồ đếm ngược khi tải xuống tệp kết quả CSV, Word hoặc in PDF."
     })
     
     # FAQ 4: Print/Edit options
     faqs.append({
-        "q": f"Tôi có thể tự do in ấn hoặc chỉnh sửa file kết quả sau khi tải về không?",
-        "a": f"Hoàn toàn được. Các tệp tin tải về từ VinaTools được định dạng dưới dạng chuẩn Microsoft Word (.docx) sạch, không bị khóa bảo mật hay giới hạn quyền chỉnh sửa. Bạn có thể in trực tiếp trên giấy A4 hoặc gửi qua email, Zalo cho đối tác bình thường."
+        "q": "Dữ liệu nhập vào có được lưu lại trên máy chủ không?",
+        "a": "Không. Mọi số liệu kinh doanh, thu nhập hay thông tin cá nhân đều được xử lý hoàn toàn tại trình duyệt người dùng (client-side), không lưu trữ trên máy chủ."
     })
     
     return faqs
 
 def get_category_content(category, keyword):
     clean_kw = keyword.strip()
-    cap_kw = clean_kw.capitalize()
+    cap_kw = clean_kw[:1].upper() + clean_kw[1:]
     
     content = {}
     legal_basis = get_specific_legal_basis(keyword)
     
     if category == "employment_leave_form":
-        content["intro"] = (
-            f"Mẫu đơn <strong>{clean_kw}</strong> là văn bản hành chính nhân sự chính thức được sử dụng phổ biến trong các doanh nghiệp, tổ chức và cơ sở giáo dục tại Việt Nam hiện nay. Việc lập đơn xin nghỉ phép, xin phép vắng mặt hay xin thôi việc đúng quy chuẩn kỹ thuật soạn thảo văn bản không chỉ thể hiện sự chuyên nghiệp, tôn trọng ban lãnh đạo mà còn là căn cứ pháp lý quan trọng để bảo vệ quyền lợi chính đáng của cá nhân người lao động hoặc học sinh, sinh viên."
-        )
-        content["sec1_title"] = "Căn Cứ Pháp Lý Điều Chỉnh Quy Trình Nghỉ Phép & Thôi Việc"
-        content["sec1_text"] = (
-            f"Quy trình xin nghỉ phép, nghỉ việc không lương hoặc đơn phương chấm dứt hợp đồng lao động đối với người lao động được quy định rất chi tiết tại {legal_basis}. Theo đó, người lao động có trách nhiệm thông báo trước cho người sử dụng lao động theo thời hạn quy định (thường là 3 ngày đối với nghỉ phép năm và nghỉ ốm, hoặc từ 30 đến 45 ngày đối với đơn xin thôi việc). Việc làm đơn bằng văn bản rõ ràng giúp doanh nghiệp chủ động sắp xếp nhân sự thay thế, đảm bảo tiến độ vận hành không bị gián đoạn. Đối với môi trường học đường, đơn xin nghỉ học cần được gửi đến giáo viên chủ nhiệm và ban giám hiệu kèm theo lý do chính đáng và cam kết học bù đầy đủ để đảm bảo kết quả rèn luyện."
-        )
-        content["sec3_pitfalls"] = (
-            "Khuyến nghị hành chính quan trọng: Người làm đơn cần điền chính xác khoảng thời gian xin nghỉ phép (từ ngày nào đến ngày nào) và ghi rõ thông tin người bàn giao công việc tạm thời. Đối với trường hợp xin nghỉ ốm hoặc điều trị y tế, bạn nên đính kèm giấy xác nhận của cơ sở y tế có thẩm quyền (hoặc giấy chứng nhận nghỉ việc hưởng BHXH) để làm căn cứ hưởng chế độ ốm đau theo Luật Bảo hiểm xã hội 2014."
-        )
+        if "xin việc" in clean_kw.lower() or "ứng tuyển" in clean_kw.lower():
+            content["intro"] = (
+                f"Biểu mẫu <strong>{clean_kw}</strong> hỗ trợ ứng viên soạn thảo đơn ứng tuyển chuyên nghiệp, rõ ràng trình độ học vấn, kinh nghiệm làm việc và vị trí mong muốn theo đúng thể thức văn bản hành chính Việt Nam."
+            )
+            content["sec1_title"] = "Quy Chuẩn Thể Thức & Căn Cứ Pháp Lý Đơn Xin Việc"
+            content["sec1_text"] = (
+                f"Hồ sơ và đơn ứng tuyển lao động được xây dựng phù hợp với quy định tại {legal_basis}. Khi trình bày đơn xin việc gửi tới Ban Giám đốc và Bộ phận Tuyển dụng doanh nghiệp, văn bản cần nêu rõ thông tin liên hệ, vị trí ứng tuyển, quá trình đào tạo, kỹ năng chuyên môn nổi bật và cam kết trách nhiệm trong công việc."
+            )
+            content["sec3_pitfalls"] = (
+                "Khuyến nghị dành cho ứng viên: Sử dụng phông chữ Times New Roman cỡ 13pt trên khổ giấy A4, kiểm tra kỹ chính tả tên doanh nghiệp/bộ phận tuyển dụng và thông tin liên lạc (email, số điện thoại) trước khi in PDF hoặc gửi trực tuyến."
+            )
+        else:
+            content["intro"] = (
+                f"Mẫu đơn <strong>{clean_kw}</strong> là văn bản hành chính nhân sự chính thức được sử dụng phổ biến trong các doanh nghiệp, tổ chức tại Việt Nam. Việc lập đơn xin nghỉ phép, bàn giao công việc hay thôi việc đúng quy chuẩn giúp doanh nghiệp chủ động điều phối nhân sự và bảo vệ quyền lợi hợp pháp của người lao động."
+            )
+            content["sec1_title"] = "Căn Cứ Pháp Lý Điều Chỉnh Quy Trình Nghỉ Phép & Bàn Giao"
+            content["sec1_text"] = (
+                f"Quy trình xin nghỉ phép năm, nghỉ việc hoặc đơn phương chấm dứt hợp đồng lao động được quy định chi tiết tại {legal_basis}. Người lao động có trách nhiệm thông báo trước theo thời hạn nội quy công ty hoặc luật định và ghi rõ người tiếp nhận bàn giao công việc tạm thời."
+            )
+            content["sec3_pitfalls"] = (
+                "Khuyến nghị hành chính quan trọng: Ghi rõ khoảng thời gian nghỉ phép (từ ngày đến ngày), tổng số ngày nghỉ và họ tên/chức vụ của đồng nghiệp tiếp nhận bàn giao công việc để đơn sớm được Ban lãnh đạo phê duyệt."
+            )
         
     elif category == "civil_admin_form":
         content["intro"] = (
-            f"Tờ trình biểu mẫu <strong>{clean_kw}</strong> là văn bản hành chính công thức dùng để gửi lên các cơ quan quản lý nhà nước cấp cơ sở (Ủy ban nhân dân, Công an xã/phường) hoặc ban quản trị khu dân cư nhằm khai báo thông tin hoặc đề đạt nguyện vọng cấp phép chính thức. Đơn từ hành chính công dân đòi hỏi tính chuẩn xác tuyệt đối về mặt pháp lý và cấu trúc trình bày để hồ sơ được duyệt nhanh chóng."
+            f"Biểu mẫu <strong>{clean_kw}</strong> là văn bản hành chính công dân dùng để thực hiện thủ tục khai báo cư trú trực tiếp hoặc nộp kèm hồ sơ hành chính công tại cơ quan Công an xã/phường theo chuẩn mới nhất."
         )
-        content["sec1_title"] = "Thông Tư Hướng Dẫn & Cơ Quan Có Thẩm Quyền Xử Lý"
+        content["sec1_title"] = "Quy Định Pháp Lý & Cơ Quan Tiếp Nhận Hồ Sơ"
         content["sec1_text"] = (
-            f"Khi thực hiện các thủ tục khai báo hành chính liên quan đến {keyword}, công dân cần đối chiếu thông tin dựa trên {legal_basis}. Các trường dữ liệu cơ bản như Họ và tên khai sinh, ngày tháng năm sinh, số thẻ Căn cước công dân (CCCD), nơi đăng ký thường trú và chỗ ở hiện tại phải trùng khớp hoàn toàn với dữ liệu trên Cơ sở dữ liệu quốc gia về dân cư. Bất kỳ sự sai lệch nào cũng có thể khiến hồ sơ của bạn bị từ chối hoặc yêu cầu bổ sung, kéo dài thời gian xử lý hành chính. Sử dụng công cụ VinaTools giúp bạn điền đơn đúng biểu mẫu chuẩn quy định hiện hành, tránh các lỗi viết tay thiếu chuyên nghiệp."
+            f"Khi thực hiện thủ tục khai báo thông tin liên quan đến {keyword}, công dân cần đối chiếu chính xác dữ liệu dựa trên {legal_basis}. Họ tên khai sinh, số định danh cá nhân/CCCD, nơi thường trú và địa chỉ tạm trú mới phải thống nhất hoàn toàn với Cơ sở dữ liệu quốc gia về dân cư."
         )
         content["sec3_pitfalls"] = (
-            "Lưu ý pháp lý đối với công dân: Việc kê khai thông tin không trung thực trên các văn bản gửi cơ quan nhà nước có thể bị coi là hành vi vi phạm pháp luật về quản lý hành chính và chịu các chế tài xử phạt hành chính tùy theo mức độ vi phạm. Đảm bảo chuẩn bị đầy đủ các giấy tờ chứng minh đính kèm hợp lệ như bản sao công chứng CCCD hoặc giấy tờ chứng minh quyền sở hữu hợp pháp."
+            "Lưu ý pháp lý đối với công dân: Chuẩn bị sẵn giấy tờ chứng minh chỗ ở hợp pháp (hợp đồng thuê nhà, văn bản đồng ý của chủ hộ) khi nộp tờ khai CT01 trực tiếp hoặc qua Cổng Dịch vụ công."
         )
 
     elif category == "property_lease_contract":
         content["intro"] = (
-            f"Hợp đồng thỏa thuận <strong>{clean_kw}</strong> thiết lập các cam kết pháp lý ràng buộc giữa các bên trong việc khai thác và thuê bất động sản. Văn bản soạn thảo chặt chẽ giúp ngăn ngừa rủi ro tranh chấp về quyền sử dụng và chi phí tài chính trong suốt thời hạn hợp đồng."
+            f"Hợp đồng thỏa thuận <strong>{clean_kw}</strong> thiết lập các cam kết pháp lý ràng buộc giữa các bên trong việc khai thác và thuê tài sản."
         )
         content["sec1_title"] = "Nguyên Tắc Thiết Lập Hợp Đồng Thuê Tài Sản"
         content["sec1_text"] = (
-            f"Hợp đồng thuê tài sản được xây dựng chặt chẽ dựa trên các quy định tại {legal_basis}. Các nội dung cốt lõi bắt buộc phải có trong hợp đồng bao gồm: Mô tả chi tiết diện tích và tình trạng tài sản bàn giao, mục đích sử dụng cụ thể, thời hạn thuê, giá thuê cố định hoặc lộ trình điều chỉnh giá, phương thức thanh toán định kỳ, giá trị tiền đặt cọc và điều kiện hoàn trả cọc. Đặc biệt, các bên cần thỏa thuận rõ điều kiện được quyền đơn phương chấm dứt hợp đồng trước hạn và mức phạt vi phạm hợp đồng để làm căn cứ giải quyết khi có bất đồng xảy ra."
+            f"Hợp đồng thuê tài sản được xây dựng dựa trên các quy định tại {legal_basis}, bảo đảm minh bạch giá thuê, tiền cọc, thời hạn và trách nhiệm các bên."
         )
         content["sec3_pitfalls"] = (
-            "Khuyến nghị phòng ngừa rủi ro tranh chấp: Các bên nên lập biên bản bàn giao hiện trạng trang thiết bị đính kèm hình ảnh thực tế tại thời điểm giao nhận nhà/mặt bằng. Số tiền đặt cọc và giá thuê phải được ghi nhận rõ bằng Việt Nam Đồng (VND) để đảm bảo hợp đồng không bị tuyên vô hiệu do vi phạm quy định cấm sử dụng ngoại hối trên lãnh thổ Việt Nam."
+            "Khuyến nghị phòng ngừa tranh chấp: Lập biên bản bàn giao hiện trạng tài sản đính kèm và ghi giá trị bằng Việt Nam Đồng (VND)."
         )
 
     elif category == "labor_employment_contract":
         content["intro"] = (
-            f"Bản hợp đồng <strong>{clean_kw}</strong> ghi nhận các thỏa thuận chính thức về việc làm, chế độ lương thưởng và điều kiện làm việc giữa người lao động và người sử dụng lao động. Soạn thảo hợp đồng chuẩn hóa giúp doanh nghiệp tuân thủ luật lao động và xây dựng quan hệ lao động bền vững."
+            f"Văn bản <strong>{clean_kw}</strong> ghi nhận đầy đủ các thỏa thuận pháp lý về quan hệ lao động, bàn giao tài sản, quyền lợi tiền lương và trách nhiệm bảo hộ, bảo hiểm giữa doanh nghiệp và người lao động."
         )
-        content["sec1_title"] = "Quy Định Luật Lao Động Về Giao Kết Hợp Đồng"
+        content["sec1_title"] = "Quy Định Bộ Luật Lao Động & Điều Khoản Bắt Buộc"
         content["sec1_text"] = (
-            f"Mọi nội dung trong hợp đồng lao động hoặc hợp đồng thử việc phải tuân thủ nghiêm ngặt theo các điều khoản của {legal_basis}. Hợp đồng bắt buộc phải có các nội dung chủ yếu như: Công việc cụ thể và địa điểm làm việc, thời giờ làm việc và nghỉ ngơi, mức lương theo chức danh, hình thức trả lương, phụ cấp lương và các khoản bổ sung, chế độ nâng lương, trang bị bảo hộ lao động và đặc biệt là chế độ bảo hiểm bắt buộc bao gồm Bảo hiểm xã hội (BHXH), Bảo hiểm y tế (BHYT) và Bảo hiểm thất nghiệp (BHTN)."
+            f"Mọi nội dung trong {clean_kw} phải tuân thủ {legal_basis}. Đối với hợp đồng lao động, văn bản phải thể hiện đầy đủ 10 nội dung chủ yếu: thông tin hai bên, công việc và địa điểm làm việc, thời hạn hợp đồng, mức lương (không thấp hơn lương tối thiểu vùng NĐ 293/2025/NĐ-CP), hình thức trả lương, chế độ nâng lương, thời giờ làm việc - nghỉ ngơi, trang bị bảo hộ lao động, bảo hiểm bắt buộc (BHXH, BHYT, BHTN) và đào tạo bồi dưỡng nghề."
         )
         content["sec3_pitfalls"] = (
-            "Khuyến nghị bảo vệ quyền lợi người lao động: Doanh nghiệp tuyệt đối không được giữ bản chính giấy tờ tùy thân hoặc văn bằng chứng chỉ của người lao động, đồng thời không được yêu cầu người lao động nộp tiền mặt để bảo đảm thực hiện hợp đồng. Mọi thỏa thuận làm thêm giờ hoặc tăng ca phải có sự đồng ý tự nguyện của người lao động và tuân thủ định mức giới hạn giờ làm thêm của luật."
-        )
-
-    elif category == "image_utility":
-        content["intro"] = (
-            f"Trình xử lý hình ảnh <strong>{clean_kw}</strong> trực tuyến giúp tối ưu dung lượng tệp tin ngay trên trình duyệt. Công cụ giúp giảm kích thước file ảnh nhanh chóng để tăng tốc độ tải trang web và tiết kiệm không gian lưu trữ tệp trên bộ nhớ thiết bị của bạn."
-        )
-        content["sec1_title"] = "Công Nghệ Nén Lượng Tử & Định Dạng Hình Ảnh"
-        content["sec1_text"] = (
-            f"Công cụ tối ưu hóa <strong>{clean_kw}</strong> hỗ trợ xử lý tất cả các định dạng hình ảnh thông dụng như JPEG, PNG, WebP và định dạng ảnh hiệu suất cao HEIC từ thiết bị di động. Bằng cách áp dụng các thuật toán nén thông minh, loại bỏ các thông tin siêu dữ liệu không cần thiết (EXIF metadata) và tối ưu hóa bảng màu sắc của ảnh, công cụ giúp giảm tới 80% dung lượng tệp tin gốc mà vẫn bảo toàn nguyên vẹn độ phân giải và chất lượng hiển thị sắc nét như ban đầu."
-        )
-        content["sec3_pitfalls"] = (
-            "Cam kết bảo mật dữ liệu tuyệt đối: Tác vụ nén ảnh được thực thi hoàn toàn bằng thư viện JavaScript client-side chạy cục bộ trên trình duyệt của người dùng. Hình ảnh của bạn không bao giờ được gửi lên máy chủ của chúng tôi, đảm bảo sự riêng tư và bảo mật tuyệt đối cho các tài liệu và ảnh cá nhân nhạy cảm của bạn."
+            "Khuyến nghị tuân thủ pháp luật lao động: Doanh nghiệp không được giữ bản chính giấy tờ tùy thân hoặc yêu cầu đặt cọc tiền mặt khi giao kết hợp đồng lao động; đồng thời lập biên bản bàn giao rõ ràng đối với thiết bị cấp phát."
         )
 
     elif category == "document_utility":
         content["intro"] = (
-            f"Công cụ văn phòng <strong>{clean_kw}</strong> trực tuyến cung cấp giải pháp xử lý văn bản và cấu trúc ô tính nhanh chóng. Đây là công cụ hữu ích giúp tự động hóa các tác vụ quản lý tài liệu hàng ngày mà không đòi hỏi cài đặt các ứng dụng phần mềm cồng kềnh."
+            f"Tiện ích <strong>{clean_kw}</strong> cung cấp giải pháp xử lý dữ liệu hành chính, kế toán và tra cứu doanh nghiệp chính xác theo thời gian thực ngay trên trình duyệt."
         )
-        content["sec1_title"] = "Nguyên Lý Phân Tích Cú Pháp Tài Liệu Office & PDF"
+        content["sec1_title"] = "Chuẩn Dữ Liệu Kế Toán, Địa Chính & Doanh Nghiệp Việt Nam"
         content["sec1_text"] = (
-            f"Giải thuật xử lý của <strong>{clean_kw}</strong> thực hiện bóc tách và phân tích trực tiếp cấu trúc nhị phân của các tệp tin Word (.docx), Excel (.xlsx) hoặc PDF. Trình khởi tạo đảm bảo giữ nguyên định dạng phông chữ tiếng Việt chuẩn Unicode, cấu trúc phân trang, bảng biểu và công thức tính toán gốc. Hệ thống tự động gộp trang, gộp ô hoặc đọc số tiền thành chữ với độ chính xác tuyệt đối, xuất ra định dạng văn bản sạch phục vụ công tác logistics, kế toán."
+            f"Công cụ <strong>{clean_kw}</strong> được xây dựng bám sát {legal_basis}, hỗ trợ chuẩn hóa chuỗi dữ liệu tiếng Việt Unicode, xử lý hàng loạt không giới hạn dòng và xuất trực tiếp bảng tính CSV chuẩn UTF-8 BOM dùng ngay trong Excel."
         )
         content["sec3_pitfalls"] = (
-            "Khuyến nghị an toàn bảo mật tài liệu: Mọi hoạt động bóc tách và xử lý tệp tin đều diễn ra cục bộ trên máy khách thông qua kết nối HTTPS bảo mật. Tuy nhiên, để đảm bảo an toàn tối đa cho các báo cáo tài chính nội bộ hoặc thông tin mật, bạn nên xóa sạch bộ nhớ cache trình duyệt sau khi hoàn thành công việc trên thiết bị dùng chung."
-        )
-
-    elif category == "media_utility":
-        content["intro"] = (
-            f"Trình biên tập đa phương tiện <strong>{clean_kw}</strong> cung cấp công nghệ nén và xử lý âm thanh, "
-            f"video nhanh chóng. Công cụ chạy mượt mà trực tiếp trên web giúp bạn dễ dàng chuyển đổi video "
-            f"hoặc trích xuất nhạc chất lượng cao để chia sẻ trực tuyến nhanh hơn."
-        )
-        content["sec1_title"] = "Chuẩn Mã Hóa Âm Thanh & Luồng Video Tốc Độ Cao"
-        content["sec1_text"] = (
-            f"Công cụ <strong>{clean_kw}</strong> sử dụng bộ codec tiêu chuẩn H.264/AAC để mã hóa lại luồng dữ liệu. "
-            f"Bằng giải thuật điều chỉnh Bitrate tự động, dung lượng video hoặc file nhạc sẽ được nén hiệu quả xuống mức tối thiểu "
-            f"mà vẫn duy trì dải tần âm thanh và độ phân giải hình ảnh sắc nét, tương thích trên mọi thiết bị phát."
-        )
-        content["sec3_pitfalls"] = (
-            "Chính sách dữ liệu: Mọi tệp tin đa phương tiện được lưu trữ tạm thời trong bộ nhớ đệm mã hóa "
-            "và tự động xóa sạch hoàn toàn sau 1 giờ làm việc để bảo vệ tuyệt đối tính riêng tư của bạn."
+            "Cam kết bảo mật dữ liệu: Các nghiệp vụ tách địa chỉ và đọc số tiền thành chữ chạy 100% cục bộ trên trình duyệt, tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15."
         )
 
     elif category == "financial_calculator":
         content["intro"] = (
-            f"Công cụ máy tính <strong>{clean_kw}</strong> hỗ trợ tính toán tài chính, biểu phí và thuế "
-            f"cho hộ kinh doanh cá thể hoặc người bán hàng trực tuyến. Giải pháp giúp bạn tự động hóa các công thức "
-            f"phức tạp để quản lý dòng tiền và biên lợi nhuận ròng chuẩn xác nhất."
+            f"Công cụ tài chính <strong>{clean_kw}</strong> giúp cá nhân, hộ kinh doanh và nhà bán hàng thương mại điện tử mô phỏng chính xác nghĩa vụ thuế, bảo hiểm xã hội, biểu phí sàn và dòng tiền thực nhận theo quy định mới nhất năm 2026."
         )
-        content["sec1_title"] = "Công Thức Thuế & Phí Sàn Thương Mại Điện Tử 2026"
+        content["sec1_title"] = "Căn Cứ Pháp Lý & Biểu Suất Tính Toán Năm 2026"
         content["sec1_text"] = (
-            f"Trình toán của <strong>{clean_kw}</strong> được tích hợp các biểu phí khấu trừ sàn TMĐT mới nhất năm 2026 "
-            f"và quy chế khai thuế hộ kinh doanh cá thể theo {legal_basis}. "
-            f"Báo cáo trả về giúp cá nhân kinh doanh nắm rõ cơ cấu chi phí, mức thuế GTGT/TNCN phải nộp và "
-            f"tỷ suất lợi nhuận ròng để tối ưu giá bán."
+            f"Hệ thống công thức của <strong>{clean_kw}</strong> cập nhật trực tiếp theo {legal_basis}. Người dùng có thể so sánh song song các phương pháp kê khai, kiểm tra ngưỡng miễn thuế 1 tỷ đồng/năm, biểu thuế TNCN 5 bậc hoặc biên lợi nhuận ròng & Break-Even ROAS chỉ trong vài giây."
         )
         content["sec3_pitfalls"] = (
-            "Lời khuyên quản lý tài chính: Các số liệu tính toán chỉ mang tính tham khảo dựa trên quy chuẩn pháp luật 2026. "
-            "VinaTools không lưu trữ số liệu kinh doanh của bạn, cam kết bảo mật 100% dòng tiền của hộ kinh doanh."
+            "Lưu ý sử dụng: Số liệu mô phỏng bám sát văn bản quy phạm pháp luật năm 2026 và biểu phí sàn công bố chính thức; dữ liệu doanh thu/thu nhập được xử lý hoàn toàn cục bộ trên trình duyệt của bạn."
         )
 
     else:
-        # general_utility
         content["intro"] = (
-            f"Công cụ trực tuyến <strong>{clean_kw}</strong> cung cấp tiện ích đa năng giúp giải quyết nhanh chóng "
-            f"các nhu cầu xử lý dữ liệu hàng ngày. Giao diện thân thiện, tốc độ xử lý nhanh giúp bạn hoàn thành công việc "
-            f"chỉ trong vài giây ngay trên trình duyệt web."
+            f"Công cụ trực tuyến <strong>{clean_kw}</strong> hỗ trợ tự động hóa tác vụ hành chính và tính toán tài chính nhanh chóng ngay trên trình duyệt."
         )
-        content["sec1_title"] = "Giải Thuật Xử Lý Dữ Liệu Tốc Độ Cao & An Toàn"
+        content["sec1_title"] = "Xử Lý Client-Side An Toàn & Minh Bạch"
         content["sec1_text"] = (
-            f"Tiện ích <strong>{clean_kw}</strong> sử dụng các thư viện lập trình tối ưu hóa bộ nhớ đệm trên máy khách. "
-            f"Quy trình xử lý không đòi hỏi băng thông cao, tương thích hoàn toàn với các giao thức mã hóa đường truyền "
-            f"SSL giúp chống nghe lén và bảo mật tuyệt đối các thao tác nghiệp vụ của bạn."
+            f"Tiện ích <strong>{clean_kw}</strong> hoạt động dựa trên {legal_basis} với mã nguồn xử lý hoàn toàn trên trình duyệt."
         )
         content["sec3_pitfalls"] = (
-            "Cam kết dịch vụ: VinaTools cam kết hoạt động phi lợi nhuận phục vụ cộng đồng, "
-            "tuân thủ đầy đủ các chuẩn mực về quản lý dữ liệu cá nhân theo quy định số 91/2025/QH15 của Quốc hội."
+            "Cam kết bảo mật: Tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP."
         )
 
     # Injected custom steps & FAQs based on exact keyword
@@ -342,10 +265,8 @@ def get_category_content(category, keyword):
 
 def get_related_tools_html(current_keyword, category):
     """
-    Selects 3 related tools from deployed_tools.json based on category
-    and compiles a beautiful, responsive internal linking panel.
+    Selects up to 3 related tools deterministically from deployed_tools.json based on category.
     """
-    related_html = ""
     tools = []
     
     if os.path.exists(DEPLOYED_LOG):
@@ -358,42 +279,43 @@ def get_related_tools_html(current_keyword, category):
     if not tools:
         return ""
         
-    # Filter tools in the same category, excluding the current tool
     curr_kw = current_keyword.lower().strip()
-    same_cat_tools = [
-        t for t in tools 
-        if t.get("keyword", "").lower().strip() != curr_kw 
-        and classify_keyword(t.get("keyword", "")) == category
-    ]
+    same_cat_tools = sorted(
+        [
+            t for t in tools
+            if t.get("keyword", "").lower().strip() != curr_kw
+            and classify_keyword(t.get("keyword", "")) == category
+        ],
+        key=lambda t: -t.get("estimated_volume", 0)
+    )
     
-    # If not enough in the same category, fill with others
     if len(same_cat_tools) < 3:
-        other_tools = [
-            t for t in tools 
-            if t.get("keyword", "").lower().strip() != curr_kw 
-            and t not in same_cat_tools
-        ]
-        selected_tools = same_cat_tools + random.sample(other_tools, min(len(other_tools), 3 - len(same_cat_tools)))
+        other_tools = sorted(
+            [
+                t for t in tools
+                if t.get("keyword", "").lower().strip() != curr_kw
+                and t not in same_cat_tools
+            ],
+            key=lambda t: -t.get("estimated_volume", 0)
+        )
+        selected_tools = (same_cat_tools + other_tools)[:3]
     else:
-        # Pick 3 randomly or by search volume to distribute PageRank
-        selected_tools = random.sample(same_cat_tools, 3)
+        selected_tools = same_cat_tools[:3]
         
     cards_html = ""
     for t in selected_tools:
         kw = t["keyword"]
         slug = t["slug"]
-        cap_kw = kw.capitalize()
-        vol = t.get("estimated_volume", 1000)
         
         cards_html += f"""
         <a href="/{slug}" style="text-decoration: none; display: block;" class="related-tool-card">
           <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
-             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; text-transform: capitalize; line-height: 1.4;">{kw}</h4>
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; line-height: 1.4;">{kw}</h4>
              <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
-               Công cụ trực tuyến giúp xử lý {kw} chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+               Công cụ trực tuyến hỗ trợ {kw} chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
              </p>
-             <span style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">
-               <i class="fa-solid fa-fire" style="color: #f59e0b;"></i> {vol} lượt sử dụng/tháng
+             <span style="font-size: 0.72rem; color: #10b981; display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-bolt"></i> Miễn phí • Client-Side
              </span>
           </div>
         </a>
@@ -429,14 +351,14 @@ def generate_local_seo_article(keyword):
     c = get_category_content(category, keyword)
     
     clean_kw = keyword.strip()
-    cap_kw = clean_kw.capitalize()
+    cap_kw = clean_kw[:1].upper() + clean_kw[1:]
     
     # Generate related tools navigation links
     related_tools_section = get_related_tools_html(keyword, category)
     
     # 1. Build the HTML template for the article
     html_article = f"""
-      <section class="glass-panel" style="margin-top: 40px; border-color: rgba(255, 255, 255, 0.08); text-align: left; padding: 30px;">
+      <section class="glass-panel no-print" style="margin-top: 40px; border-color: rgba(255, 255, 255, 0.08); text-align: left; padding: 30px;">
         <h2 style="margin-bottom: 20px; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
           <i class="fa-solid fa-circle-info" style="color: var(--accent-secondary); margin-right: 8px;"></i>
           {cap_kw} là gì?
@@ -553,7 +475,7 @@ def generate_seo_article(slug, keyword):
     )
 
     # Insert the article right before the footer block
-    footer_match = re.search(r'<footer\s+[^>]*class=["\']tool-footer["\']', html_content)
+    footer_match = re.search(r'<footer\s+[^>]*class=["\'][^"\']*tool-footer[^"\']*["\']', html_content)
     if footer_match:
         idx = footer_match.start()
         updated_html = html_content[:idx] + article_html + "\n\n    " + html_content[idx:]

@@ -4,21 +4,22 @@
   "vercel_project_name": "vinatools",
   "payment_provider": "casso",
   "payment_webhook_secret": "YOUR_WEBHOOK_SECRET_KEY",
-  "bank_name": "techcombank",
-  "bank_account": "19027557341011",
-  "bank_account_holder": "NGUYEN TRUNG THIEN PHUC",
+  "bank_name": "Techcombank",
+  "bank_id": "TCB",
+  "bank_account": "REDACTED_SET_IN_ENV",
+  "bank_account_holder": "VINATOOLS PLATFORM",
   "domain_root": "vinatools.vercel.app",
-  "api_url": "https://f882b288e3e029b5-42-114-207-242.serveousercontent.com/api/check-payment",
+  "api_url": "/api",
   "niche_finder_settings": {
     "min_monthly_volume": 1000,
     "max_difficulty": 30
   },
-  "last_deployed_url": "https://f882b288e3e029b5-42-114-207-242.serveousercontent.com",
-  "google_adsense_client": "pub-8865134830595358",
+  "last_deployed_url": "https://vinatools.vercel.app",
+  "google_adsense_client": "",
   "admin_passcode": "YOUR_ADMIN_PASSCODE",
   "commission_goal": 50000000,
   "google_oauth_client_id": "YOUR_GOOGLE_OAUTH_CLIENT_ID",
   "google_oauth_client_secret": "YOUR_GOOGLE_OAUTH_CLIENT_SECRET",
   "google_adsense_refresh_token": "YOUR_GOOGLE_ADSENSE_REFRESH_TOKEN",
-  "google_adsense_account_id": "pub-8865134830595358"
+  "google_adsense_account_id": ""
 }

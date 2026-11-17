@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Công cụ tính lương Gross sang Net & Thuế TNCN 2026 - Biểu Thuế 5 Bậc Luật 109/2025/QH15 | VinaTools</title>
+
+  <meta name="description" content="Tính lương Gross sang Net và Net sang Gross năm 2026 theo Luật Thuế TNCN 109/2025/QH15 (5 bậc, giảm trừ 15,5 triệu/6,2 triệu), NĐ 253/2026, NĐ 293/2025 và NĐ 161/2026.">
+  <meta name="keywords" content="tính lương gross sang net 2026, thuế tncn 2026 5 bậc, giảm trừ gia cảnh 15.5 triệu, lương tối thiểu vùng 2026, luật 109/2025/qh15">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vinatools.vercel.app/cong-cu-tinh-luong-gross-net-tncn-2026">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Công cụ tính lương Gross sang Net & Thuế TNCN 2026 - Biểu Thuế 5 Bậc Luật 109/2025/QH15 | VinaTools">
+  <meta property="og:description" content="Tính lương Gross sang Net và Net sang Gross năm 2026 theo Luật Thuế TNCN 109/2025/QH15 (5 bậc, giảm trừ 15,5 triệu/6,2 triệu), NĐ 253/2026, NĐ 293/2025 và NĐ 161/2026.">
+  <meta property="og:url" content="https://vinatools.vercel.app/cong-cu-tinh-luong-gross-net-tncn-2026">
+  <meta property="og:site_name" content="VinaTools">
+  <meta property="og:image" content="https://vinatools.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Công cụ tính lương Gross sang Net & Thuế TNCN 2026",
+        "operatingSystem": "All",
+        "applicationCategory": "BusinessApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "VND"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "VinaTools",
+            "item": "https://vinatools.vercel.app"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "FinTech & Thuế 2026",
+            "item": "https://vinatools.vercel.app"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Công cụ tính lương Gross sang Net & Thuế TNCN 2026",
+            "item": "https://vinatools.vercel.app/cong-cu-tinh-luong-gross-net-tncn-2026"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/global_style.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0a0c10">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  
+  <style>
+    .ft-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 992px) { .ft-grid-2 { grid-template-columns: 1.05fr 0.95fr; align-items: start; } }
+    .ft-card { background: rgba(18, 22, 32, 0.78); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; }
+    .ft-label { display: block; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #9ca3af; margin-bottom: 6px; }
+    .ft-input, .ft-select, .ft-textarea { width: 100%; background: rgba(10, 12, 16, 0.65); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 0.95rem; font-family: inherit; box-sizing: border-box; }
+    .ft-input:focus, .ft-select:focus, .ft-textarea:focus { outline: none; border-color: #00a8ff; box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.18); }
+    .ft-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .ft-preset-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); color: #e5e7eb; padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .ft-preset-btn:hover { background: rgba(0,168,255,0.18); border-color: #00a8ff; color: #fff; }
+    .ft-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+    .ft-tab { padding: 11px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #d1d5db; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .ft-tab.active { background: linear-gradient(135deg, #00a8ff 0%, #2563eb 100%); color: #fff; border-color: transparent; box-shadow: 0 4px 16px rgba(0, 168, 255, 0.3); }
+    .ft-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.9rem; }
+    .ft-row:last-child { border-bottom: none; }
+    .ft-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+    .ft-badge-green { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.35); }
+    .ft-badge-amber { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35); }
+    .ft-badge-red { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.35); }
+    .ft-badge-blue { background: rgba(0,168,255,0.15); color: #38bdf8; border: 1px solid rgba(0,168,255,0.35); }
+    .ft-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    .ft-table th, .ft-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; }
+    .ft-table th { color: #9ca3af; font-weight: 600; font-size: 0.78rem; text-transform: uppercase; }
+    .ft-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .ft-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 640px) { .ft-grid-2col { grid-template-columns: 1fr; } }
+    .print-only { display: none; }
+    @media print {
+      body { background: #fff !important; color: #000 !important; padding: 0 !important; }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      .ft-grid, .ft-grid-2 { display: block !important; max-width: 100% !important; padding: 0 !important; }
+      .ft-card, .print-report { background: #fff !important; color: #000 !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; backdrop-filter: none !important; page-break-inside: avoid; margin-bottom: 16px !important; }
+      .ft-card *, .print-report * { color: #111827 !important; border-color: #cbd5e1 !important; }
+      .ft-badge { border: 1px solid #334155 !important; background: #f8fafc !important; }
+      @page { size: A4 portrait; margin: 18mm 15mm; }
+    }
+  </style>
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Công cụ Công cụ tính lương Gross sang Net & Thuế TNCN 2026 sử dụng căn cứ pháp lý nào cho năm 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Công cụ áp dụng công thức và biểu suất theo Luật Thuế thu nhập cá nhân số 109/2025/QH15, Nghị quyết 110/2025/UBTVQH15, Nghị định 293/2025/NĐ-CP và Nghị định 161/2026/NĐ-CP. Toàn bộ tính toán chạy trực tiếp bằng JavaScript trên trình duyệt của bạn, tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tôi có thể xuất bảng tính hoặc sử dụng Công cụ tính lương Gross sang Net & Thuế TNCN 2026 trên điện thoại không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Có. Giao diện VinaTools hỗ trợ đầy đủ trên điện thoại và máy tính bảng, đồng thời cho phép tải bảng tính CSV (mở trực tiếp trong Excel mà không lỗi font tiếng Việt) hoặc in báo cáo A4."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sử dụng và tải kết quả từ Công cụ tính lương Gross sang Net & Thuế TNCN 2026 có mất phí hay phải chờ đếm ngược không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hoàn toàn miễn phí và tức thì. VinaTools không thu phí, không yêu cầu đăng nhập và không đặt đồng hồ đếm ngược khi tải xuống tệp kết quả CSV, Word hoặc in PDF."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Dữ liệu nhập vào có được lưu lại trên máy chủ không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Không. Mọi số liệu kinh doanh, thu nhập hay thông tin cá nhân đều được xử lý hoàn toàn tại trình duyệt người dùng (client-side), không lưu trữ trên máy chủ."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body class="bg-slate-950 text-white min-h-screen">
+  <div class="layout-container max-w-7xl mx-auto">
+    <nav class="portal-nav no-print" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 30px; flex-wrap: wrap; gap: 12px;">
+      <a href="/" class="portal-logo" style="display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none;">
+        <i class="fa-solid fa-toolbox" style="color: #00a8ff;"></i> VinaTools
+      </a>
+      <div class="nav-links" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+        <a href="/?filter=tien-ich" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-calculator" style="color: #ec4899; margin-right: 4px;"></i> FinTech &amp; Thuế</a>
+        <a href="/?filter=hop-dong" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-file-contract" style="color: #8b5cf6; margin-right: 4px;"></i> Hợp đồng</a>
+        <a href="/?filter=don-tu" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-file-lines" style="color: #00a8ff; margin-right: 4px;"></i> Đơn từ</a>
+        <a href="/api-docs.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-code" style="color: #10b981; margin-right: 4px;"></i> VietRegistry API</a>
+      </div>
+      <div id="user-nav-status" style="font-size: 0.85rem; color: #10b981; display: flex; align-items: center; gap: 8px; font-weight: 600;">
+        <i class="fa-solid fa-shield-halved"></i> Luật TNCN 109/2025
+      </div>
+    </nav>
+
+    <header class="tool-header no-print" style="text-align: center; margin-bottom: 32px; padding: 0 16px;">
+      <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 12px;">Công cụ tính lương Gross sang Net & Thuế TNCN 2026</h1>
+      <p style="color: var(--text-secondary); max-width: 780px; margin: 0 auto; font-size: 0.98rem;">Quy đổi hai chiều Gross &harr; Net, tự động áp trần BHXH/BHYT (NĐ 161/2026) &amp; BHTN (NĐ 293/2025), giảm trừ 15,5tr / 6,2tr và so sánh tiền thuế tiết kiệm so với 2025.</p>
+    </header>
+
+    
+    <div class="ft-grid ft-grid-2">
+      <!-- Inputs -->
+      <div class="ft-card no-print">
+        <h2 style="font-size: 1.25rem; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-money-check-dollar" style="color: #00a8ff;"></i> Thông Số Lương &amp; Giảm Trừ 2026
+        </h2>
+
+        <div class="ft-tabs">
+          <button type="button" id="mode-gross-net" class="ft-tab active">GROSS &rarr; NET</button>
+          <button type="button" id="mode-net-gross" class="ft-tab">NET &rarr; GROSS</button>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label class="ft-label" id="income-label" for="salary-income">Thu Nhập Gross Hàng Tháng (VND)</label>
+          <input type="number" id="salary-income" class="ft-input" value="25000000" min="0" step="500000">
+          <div class="ft-presets">
+            <button type="button" class="ft-preset-btn" data-sal="15000000">15 Triệu</button>
+            <button type="button" class="ft-preset-btn" data-sal="25000000">25 Triệu</button>
+            <button type="button" class="ft-preset-btn" data-sal="40000000">40 Triệu</button>
+            <button type="button" class="ft-preset-btn" data-sal="60000000">60 Triệu</button>
+            <button type="button" class="ft-preset-btn" data-sal="100000000">100 Triệu</button>
+          </div>
+        </div>
+
+        <div class="ft-grid-2col" style="margin-bottom: 16px;">
+          <div>
+            <label class="ft-label" for="salary-dependents">Số Người Phụ Thuộc</label>
+            <input type="number" id="salary-dependents" class="ft-input" value="1" min="0" max="20">
+          </div>
+          <div>
+            <label class="ft-label" for="salary-med-edu">Giảm Trừ Y Tế / Giáo Dục (VND/tháng)</label>
+            <input type="number" id="salary-med-edu" class="ft-input" value="0" min="0" max="3916667" step="100000">
+          </div>
+        </div>
+
+        <div class="ft-grid-2col" style="margin-bottom: 16px;">
+          <div>
+            <label class="ft-label" for="salary-region">Vùng Lương Tối Thiểu (NĐ 293/2025)</label>
+            <select id="salary-region" class="ft-select">
+              <option value="1">Vùng I: 5.310.000 đ (Trần BHTN: 106,2tr)</option>
+              <option value="2">Vùng II: 4.730.000 đ (Trần BHTN: 94,6tr)</option>
+              <option value="3">Vùng III: 4.140.000 đ (Trần BHTN: 82,8tr)</option>
+              <option value="4">Vùng IV: 3.700.000 đ (Trần BHTN: 74,0tr)</option>
+            </select>
+          </div>
+          <div>
+            <label class="ft-label" for="salary-period">Giai Đoạn Lương Cơ Sở (NĐ 161/2026)</label>
+            <select id="salary-period" class="ft-select">
+              <option value="h2_2026">Từ 01/07/2026 (2.530.000 đ - Trần 50,6tr)</option>
+              <option value="h1_2026">Nửa đầu 2026 (2.340.000 đ - Trần 46,8tr)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ft-grid-2col" style="margin-bottom: 8px;">
+          <div>
+            <label class="ft-label" for="salary-ins-mode">Mức Đóng Bảo Hiểm</label>
+            <select id="salary-ins-mode" class="ft-select">
+              <option value="official">Trên lương chính thức</option>
+              <option value="custom">Mức đóng tùy chỉnh (VND)</option>
+            </select>
+          </div>
+          <div id="ins-custom-wrap" style="display: none;">
+            <label class="ft-label" for="salary-ins-custom">Lương Đóng Bảo Hiểm (VND)</label>
+            <input type="number" id="salary-ins-custom" class="ft-input" value="10000000" min="0" step="500000">
+          </div>
+        </div>
+        <p style="font-size: 0.75rem; color: #9ca3af; margin-top: 8px;">NĐ 253/2026/NĐ-CP cho phép giảm trừ chi phí y tế tối đa 23 triệu/năm và giáo dục tối đa 24 triệu/năm (~3.916.667 đ/tháng).</p>
+      </div>
+
+      <!-- Outputs -->
+      <div class="print-report" style="display: flex; flex-direction: column; gap: 18px;">
+        <div class="ft-card">
+          <div class="print-only" style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 16px;">
+            <h2 style="margin: 0; font-size: 16pt; text-transform: uppercase;">BẢNG TÍNH LƯƠNG GROSS / NET &amp; THUẾ TNCN 5 BẬC 2026</h2>
+            <p style="margin: 4px 0 0 0; font-size: 10pt;">Luật Thuế TNCN số 109/2025/QH15, Nghị quyết 110/2025/UBTVQH15, NĐ 293/2025 &amp; NĐ 161/2026</p>
+          </div>
+
+          <!-- Green Savings Card -->
+          <div style="padding: 16px; border-radius: 12px; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.35); margin-bottom: 18px;">
+            <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: #34d399;">Tiết Kiệm Nhờ Cải Cách Thuế TNCN 2026 (Biểu 5 Bậc &amp; Giảm Trừ 15,5tr / 6,2tr)</div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+              <div>
+                <span style="font-size: 0.82rem; color: #d1d5db;">Tiết kiệm/tháng: </span>
+                <strong id="pit-saved-month" style="font-size: 1.2rem; color: #34d399;">0 đ</strong>
+              </div>
+              <div>
+                <span style="font-size: 0.82rem; color: #d1d5db;">Tiết kiệm/năm: </span>
+                <strong id="pit-saved-year" style="font-size: 1.35rem; color: #34d399;">0 đ</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="ft-row">
+            <span>Lương Gross</span>
+            <strong id="pit-res-gross" style="font-size: 1.1rem; color: #fff;">0 đ</strong>
+          </div>
+          <div class="ft-row">
+            <span>BHXH (8%) + BHYT (1.5%) + BHTN (1%) = 10.5%</span>
+            <strong id="pit-res-ins" style="color: #f87171;">-0 đ</strong>
+          </div>
+          <div class="ft-row" style="font-size: 0.82rem; color: #9ca3af;">
+            <span>Chi tiết BH: BHXH (<span id="pit-bhxh">0</span>) • BHYT (<span id="pit-bhyt">0</span>) • BHTN (<span id="pit-bhtn">0</span>)</span>
+          </div>
+          <div class="ft-row">
+            <span>Giảm trừ gia cảnh (15,5tr + <span id="pit-dep-count">1</span> &times; 6,2tr + Y tế/GD)</span>
+            <strong id="pit-res-deductions">0 đ</strong>
+          </div>
+          <div class="ft-row">
+            <span>Thu nhập tính thuế 2026 (TNTT)</span>
+            <strong id="pit-res-tntt">0 đ</strong>
+          </div>
+          <div class="ft-row">
+            <span>Thuế TNCN 2026 (Biểu 5 bậc - Luật 109/2025/QH15)</span>
+            <strong id="pit-res-tax-2026" style="color: #f87171;">-0 đ</strong>
+          </div>
+          <div class="ft-row" style="background: rgba(0,168,255,0.08); padding: 12px; border-radius: 8px; margin-top: 8px;">
+            <span style="font-weight: 700; color: #fff;">Lương Thực Nhận (NET 2026)</span>
+            <strong id="pit-res-net" style="font-size: 1.35rem; color: #38bdf8;">0 đ</strong>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <h3 style="font-size: 0.9rem; color: #d1d5db; margin-bottom: 8px;">So Sánh Luật Cũ 2025 vs. Luật Mới 2026</h3>
+            <table class="ft-table">
+              <thead>
+                <tr>
+                  <th>Chỉ tiêu</th>
+                  <th>Quy định cũ 2025 (7 bậc)</th>
+                  <th>Quy định mới 2026 (5 bậc)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Giảm trừ bản thân / NPT</td>
+                  <td>11,0tr / 4,4tr</td>
+                  <td>15,5tr / 6,2tr</td>
+                </tr>
+                <tr>
+                  <td>Thuế TNCN / tháng</td>
+                  <td id="pit-cmp-2025-mo">0 đ</td>
+                  <td id="pit-cmp-2026-mo" style="color: #34d399; font-weight: 700;">0 đ</td>
+                </tr>
+                <tr>
+                  <td>Thuế TNCN / năm</td>
+                  <td id="pit-cmp-2025-yr">0 đ</td>
+                  <td id="pit-cmp-2026-yr" style="color: #34d399; font-weight: 700;">0 đ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ft-actions no-print">
+            <button type="button" id="pit-print-btn" class="btn btn-primary" style="flex: 1;"><i class="fa-solid fa-print"></i> In Báo Cáo A4 / PDF</button>
+            <button type="button" id="pit-csv-btn" class="btn btn-secondary" style="flex: 1;"><i class="fa-solid fa-file-csv"></i> Tải Bảng Lương CSV</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    
+    <!-- VINATOOLS_SEO_START -->
+
+      <section class="glass-panel no-print" style="margin-top: 40px; border-color: rgba(255, 255, 255, 0.08); text-align: left; padding: 30px;">
+        <h2 style="margin-bottom: 20px; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-circle-info" style="color: var(--accent-secondary); margin-right: 8px;"></i>
+          Công cụ tính lương Gross sang Net & Thuế TNCN 2026 là gì?
+        </h2>
+        
+        <p style="margin-bottom: 25px; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          Công cụ tài chính <strong>Công cụ tính lương Gross sang Net & Thuế TNCN 2026</strong> giúp cá nhân, hộ kinh doanh và nhà bán hàng thương mại điện tử mô phỏng chính xác nghĩa vụ thuế, bảo hiểm xã hội, biểu phí sàn và dòng tiền thực nhận theo quy định mới nhất năm 2026.
+        </p>
+
+        <h3 style="margin: 25px 0 15px 0; color: #fff; font-size: 1.2rem;">
+          <i class="fa-solid fa-scale-balanced" style="color: var(--accent-primary); margin-right: 8px;"></i>
+          Căn Cứ Pháp Lý & Biểu Suất Tính Toán Năm 2026
+        </h3>
+        <p style="margin-bottom: 25px; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          Hệ thống công thức của <strong>Công cụ tính lương Gross sang Net & Thuế TNCN 2026</strong> cập nhật trực tiếp theo Luật Thuế thu nhập cá nhân số 109/2025/QH15, Nghị quyết 110/2025/UBTVQH15, Nghị định 293/2025/NĐ-CP và Nghị định 161/2026/NĐ-CP. Người dùng có thể so sánh song song các phương pháp kê khai, kiểm tra ngưỡng miễn thuế 1 tỷ đồng/năm, biểu thuế TNCN 5 bậc hoặc biên lợi nhuận ròng & Break-Even ROAS chỉ trong vài giây.
+        </p>
+
+        <h2 style="margin: 35px 0 20px 0; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-list-check" style="color: var(--accent-secondary); margin-right: 8px;"></i>
+          Hướng dẫn sử dụng Công cụ tính lương Gross sang Net & Thuế TNCN 2026
+        </h2>
+        <ol style="margin-left: 20px; margin-bottom: 25px; color: var(--text-secondary); display: grid; gap: 10px; line-height: 1.6; font-size: 0.95rem;">
+          <li style="padding-left: 5px;">Bước 1: Nhập các thông số tài chính hoặc dữ liệu đầu vào cần xử lý vào công cụ Công cụ tính lương Gross sang Net & Thuế TNCN 2026.</li>
+      <li style="padding-left: 5px;">Bước 2: Lựa chọn phương pháp tính, nhóm ngành nghề, khu vực hoặc bộ quy tắc áp dụng cho năm 2026.</li>
+      <li style="padding-left: 5px;">Bước 3: Xem ngay bảng phân tích chi tiết, số liệu so sánh và cảnh báo tuân thủ pháp lý được tính toán tự động client-side.</li>
+      <li style="padding-left: 5px;">Bước 4: Xuất bảng tính CSV chuẩn UTF-8 BOM hoặc nhấn 'In / Xuất PDF' để lưu trữ báo cáo A4 ngay lập tức.</li>
+    </ol>
+
+        <div style="background: rgba(245, 158, 11, 0.05); border-left: 4px solid #f59e0b; padding: 15px 20px; border-radius: 4px; margin-bottom: 30px;">
+          <h4 style="margin: 0 0 8px 0; color: #f59e0b; font-weight: bold; font-size: 1rem;"><i class="fa-solid fa-triangle-exclamation"></i> Khuyến Nghị An Toàn & Bảo Mật</h4>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+            Lưu ý sử dụng: Số liệu mô phỏng bám sát văn bản quy phạm pháp luật năm 2026 và biểu phí sàn công bố chính thức; dữ liệu doanh thu/thu nhập được xử lý hoàn toàn cục bộ trên trình duyệt của bạn.
+          </p>
+        </div>
+
+        <h2 style="margin: 40px 0 20px 0; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-clipboard-question" style="color: var(--accent-primary); margin-right: 8px;"></i>
+          Các câu hỏi thường gặp về Công cụ tính lương Gross sang Net & Thuế TNCN 2026 (FAQ)
+        </h2>
+        <div style="display: grid; gap: 20px;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Công cụ Công cụ tính lương Gross sang Net & Thuế TNCN 2026 sử dụng căn cứ pháp lý nào cho năm 2026?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Công cụ áp dụng công thức và biểu suất theo Luật Thuế thu nhập cá nhân số 109/2025/QH15, Nghị quyết 110/2025/UBTVQH15, Nghị định 293/2025/NĐ-CP và Nghị định 161/2026/NĐ-CP. Toàn bộ tính toán chạy trực tiếp bằng JavaScript trên trình duyệt của bạn, tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Tôi có thể xuất bảng tính hoặc sử dụng Công cụ tính lương Gross sang Net & Thuế TNCN 2026 trên điện thoại không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Có. Giao diện VinaTools hỗ trợ đầy đủ trên điện thoại và máy tính bảng, đồng thời cho phép tải bảng tính CSV (mở trực tiếp trong Excel mà không lỗi font tiếng Việt) hoặc in báo cáo A4.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Sử dụng và tải kết quả từ Công cụ tính lương Gross sang Net & Thuế TNCN 2026 có mất phí hay phải chờ đếm ngược không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Hoàn toàn miễn phí và tức thì. VinaTools không thu phí, không yêu cầu đăng nhập và không đặt đồng hồ đếm ngược khi tải xuống tệp kết quả CSV, Word hoặc in PDF.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Dữ liệu nhập vào có được lưu lại trên máy chủ không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Không. Mọi số liệu kinh doanh, thu nhập hay thông tin cá nhân đều được xử lý hoàn toàn tại trình duyệt người dùng (client-side), không lưu trữ trên máy chủ.</p>
+          </div>
+    </div>
+        
+        
+      <!-- Related Tools Internal Linking Panel -->
+      <section style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; text-align: left;">
+        <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-layer-group" style="color: var(--accent-secondary);"></i>
+          Công Cụ Hữu Ích Liên Quan Gợi Ý
+        </h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+          
+        <a href="/tra-cuu-ma-so-thue-doanh-nghiep" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; line-height: 1.4;">Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến hỗ trợ Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: #10b981; display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-bolt"></i> Miễn phí • Client-Side
+             </span>
+          </div>
+        </a>
+        
+        <a href="/cong-cu-tinh-thue-ho-kinh-doanh" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; line-height: 1.4;">Công cụ tính thuế hộ kinh doanh 2026</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến hỗ trợ Công cụ tính thuế hộ kinh doanh 2026 chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: #10b981; display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-bolt"></i> Miễn phí • Client-Side
+             </span>
+          </div>
+        </a>
+        
+        <a href="/cong-cu-tinh-phi-san-tmdt" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; line-height: 1.4;">Công cụ tính phí sàn TMĐT Shopee & TikTok Shop 2026</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến hỗ trợ Công cụ tính phí sàn TMĐT Shopee & TikTok Shop 2026 chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: #10b981; display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-bolt"></i> Miễn phí • Client-Side
+             </span>
+          </div>
+        </a>
+        
+        </div>
+      </section>
+      
+      <style>
+        .related-tool-card:hover div {
+          border-color: var(--accent-secondary-glow) !important;
+          background: rgba(255,255,255,0.035) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+      </style>
+    
+      </section>
+    
+    <!-- VINATOOLS_SEO_END -->
+
+    <footer class="tool-footer no-print" style="margin-top: 50px; padding: 25px 16px; border-top: 1px solid var(--border-glass); font-size: 0.8rem; color: var(--text-muted); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+      <p>&copy; 2026 VinaTools. Toàn bộ biểu mẫu &amp; công cụ tính toán chạy hoàn toàn miễn phí trên trình duyệt (client-side), tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15.</p>
+      <p style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+        <a href="/" style="color: var(--text-secondary); text-decoration: none;">Trang chủ</a>
+        <a href="/api-docs.html" style="color: var(--text-secondary); text-decoration: none;">VietRegistry API</a>
+        <a href="/terms.html" style="color: var(--text-secondary); text-decoration: none;">Điều khoản</a>
+        <a href="/privacy.html" style="color: var(--text-secondary); text-decoration: none;">Bảo mật</a>
+        <a href="/about.html" style="color: var(--text-secondary); text-decoration: none;">Giới thiệu</a>
+        <a href="/contact.html" style="color: var(--text-secondary); text-decoration: none;">Liên hệ</a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    
+    const REGION_WAGES = { '1': 5310000, '2': 4730000, '3': 4140000, '4': 3700000 };
+    const BASE_SALARIES = { h2_2026: 2530000, h1_2026: 2340000 };
+    let pitMode = 'gross-to-net';
+    let lastPitState = {};
+    function fmt(n) { return Math.round(n).toLocaleString('vi-VN') + ' đ'; }
+
+    function pit2026(tntt) {
+      if (tntt <= 0) return 0;
+      if (tntt <= 10000000) return Math.round(tntt * 0.05);
+      if (tntt <= 30000000) return Math.round(tntt * 0.10 - 500000);
+      if (tntt <= 60000000) return Math.round(tntt * 0.20 - 3500000);
+      if (tntt <= 100000000) return Math.round(tntt * 0.30 - 9500000);
+      return Math.round(tntt * 0.35 - 14500000);
+    }
+
+    function pit2025(tntt) {
+      if (tntt <= 0) return 0;
+      if (tntt <= 5000000) return Math.round(tntt * 0.05);
+      if (tntt <= 10000000) return Math.round(tntt * 0.10 - 250000);
+      if (tntt <= 18000000) return Math.round(tntt * 0.15 - 750000);
+      if (tntt <= 32000000) return Math.round(tntt * 0.20 - 1650000);
+      if (tntt <= 52000000) return Math.round(tntt * 0.25 - 3250000);
+      if (tntt <= 80000000) return Math.round(tntt * 0.30 - 5850000);
+      return Math.round(tntt * 0.35 - 9850000);
+    }
+
+    function evalGross(gross, deps, region, period, insMode, insCustom, medEdu) {
+      const insBase = insMode === 'custom' ? Math.max(0, insCustom) : gross;
+      const capBhxh = 20 * (BASE_SALARIES[period] || 2530000);
+      const capBhtn = 20 * (REGION_WAGES[region] || 5310000);
+      const bhxh = Math.round(Math.min(insBase, capBhxh) * 0.08);
+      const bhyt = Math.round(Math.min(insBase, capBhxh) * 0.015);
+      const bhtn = Math.round(Math.min(insBase, capBhtn) * 0.01);
+      const totalIns = bhxh + bhyt + bhtn;
+
+      const ded2026 = 15500000 + deps * 6200000 + medEdu;
+      const tntt2026 = Math.max(0, gross - totalIns - ded2026);
+      const tax2026 = pit2026(tntt2026);
+      const net2026 = Math.round(gross - totalIns - tax2026);
+
+      const ded2025 = 11000000 + deps * 4400000;
+      const tntt2025 = Math.max(0, gross - totalIns - ded2025);
+      const tax2025 = pit2025(tntt2025);
+      return { gross: Math.round(gross), net: net2026, bhxh, bhyt, bhtn, totalIns, ded2026, tntt2026, tax2026, tax2025 };
+    }
+
+    function computeSalary() {
+      const income = Math.max(0, parseFloat(document.getElementById('salary-income').value) || 0);
+      const deps = Math.max(0, parseInt(document.getElementById('salary-dependents').value, 10) || 0);
+      const medEdu = Math.min(3916667, Math.max(0, parseFloat(document.getElementById('salary-med-edu').value) || 0));
+      const region = document.getElementById('salary-region').value;
+      const period = document.getElementById('salary-period').value;
+      const insMode = document.getElementById('salary-ins-mode').value;
+      const insCustom = parseFloat(document.getElementById('salary-ins-custom').value) || 0;
+
+      document.getElementById('ins-custom-wrap').style.display = insMode === 'custom' ? 'block' : 'none';
+
+      let res;
+      if (pitMode === 'net-to-gross') {
+        let low = income, high = Math.max(income * 2.2 + 50000000, 100000000);
+        for (let i = 0; i < 80; i++) {
+          const mid = (low + high) / 2;
+          const cand = evalGross(mid, deps, region, period, insMode, insCustom, medEdu);
+          if (cand.net < income) low = mid; else high = mid;
+        }
+        const gEst = Math.round((low + high) / 2);
+        res = evalGross(gEst, deps, region, period, insMode, insCustom, medEdu);
+        for (let d = -2; d <= 2; d++) {
+          const cand = evalGross(Math.max(0, gEst + d), deps, region, period, insMode, insCustom, medEdu);
+          if (Math.abs(cand.net - income) < Math.abs(res.net - income)) res = cand;
+        }
+      } else {
+        res = evalGross(income, deps, region, period, insMode, insCustom, medEdu);
+      }
+
+      const savedMonth = res.tax2025 - res.tax2026;
+      const savedYear = savedMonth * 12;
+
+      document.getElementById('pit-saved-month').innerText = fmt(savedMonth);
+      document.getElementById('pit-saved-year').innerText = fmt(savedYear);
+      document.getElementById('pit-res-gross').innerText = fmt(res.gross);
+      document.getElementById('pit-res-ins').innerText = '-' + fmt(res.totalIns);
+      document.getElementById('pit-bhxh').innerText = fmt(res.bhxh);
+      document.getElementById('pit-bhyt').innerText = fmt(res.bhyt);
+      document.getElementById('pit-bhtn').innerText = fmt(res.bhtn);
+      document.getElementById('pit-dep-count').innerText = deps;
+      document.getElementById('pit-res-deductions').innerText = fmt(res.ded2026);
+      document.getElementById('pit-res-tntt').innerText = fmt(res.tntt2026);
+      document.getElementById('pit-res-tax-2026').innerText = '-' + fmt(res.tax2026);
+      document.getElementById('pit-res-net').innerText = fmt(res.net);
+      document.getElementById('pit-cmp-2025-mo').innerText = fmt(res.tax2025);
+      document.getElementById('pit-cmp-2026-mo').innerText = fmt(res.tax2026);
+      document.getElementById('pit-cmp-2025-yr').innerText = fmt(res.tax2025 * 12);
+      document.getElementById('pit-cmp-2026-yr').innerText = fmt(res.tax2026 * 12);
+
+      lastPitState = { ...res, deps, savedMonth, savedYear };
+    }
+
+    document.getElementById('mode-gross-net').addEventListener('click', () => {
+      pitMode = 'gross-to-net';
+      document.getElementById('mode-gross-net').classList.add('active');
+      document.getElementById('mode-net-gross').classList.remove('active');
+      document.getElementById('income-label').innerText = 'Thu Nhập Gross Hàng Tháng (VND)';
+      computeSalary();
+    });
+    document.getElementById('mode-net-gross').addEventListener('click', () => {
+      pitMode = 'net-to-gross';
+      document.getElementById('mode-net-gross').classList.add('active');
+      document.getElementById('mode-gross-net').classList.remove('active');
+      document.getElementById('income-label').innerText = 'Thu Nhập Net Mong Muốn Hàng Tháng (VND)';
+      computeSalary();
+    });
+    document.querySelectorAll('.ft-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('salary-income').value = btn.getAttribute('data-sal');
+        computeSalary();
+      });
+    });
+    ['salary-income', 'salary-dependents', 'salary-med-edu', 'salary-region', 'salary-period', 'salary-ins-mode', 'salary-ins-custom'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', computeSalary);
+      el.addEventListener('change', computeSalary);
+    });
+    document.getElementById('pit-print-btn').addEventListener('click', () => window.print());
+    document.getElementById('pit-csv-btn').addEventListener('click', () => {
+      const s = lastPitState;
+      const rows = [
+        ['Chi tieu', 'Thang (VND)', 'Nam (VND)'],
+        ['Luong Gross', s.gross, s.gross * 12],
+        ['BHXH (8%)', s.bhxh, s.bhxh * 12],
+        ['BHYT (1.5%)', s.bhyt, s.bhyt * 12],
+        ['BHTN (1%)', s.bhtn, s.bhtn * 12],
+        ['Tong bao hiem (10.5%)', s.totalIns, s.totalIns * 12],
+        ['Giam tru gia canh + Y te/GD', s.ded2026, s.ded2026 * 12],
+        ['Thu nhap tinh thue 2026', s.tntt2026, s.tntt2026 * 12],
+        ['Thue TNCN 2026 (5 bac)', s.tax2026, s.tax2026 * 12],
+        ['Thue TNCN 2025 (7 bac cu)', s.tax2025, s.tax2025 * 12],
+        ['Thue tiet kiem duoc nho cai cach 2026', s.savedMonth, s.savedYear],
+        ['Luong thuc nhan (NET 2026)', s.net, s.net * 12]
+      ];
+      const csv = rows.map(r => r.join(',')).join('\n');
+      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'bang-tinh-luong-tncn-2026.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+    computeSalary();
+    
+  </script>
+</body>
+</html>

@@ -23,9 +23,10 @@ def _load_vercel_token():
     return os.environ.get("VERCEL_TOKEN", "YOUR_VERCEL_TOKEN")
 
 TOKEN = _load_vercel_token()
-PROJECT_NAME = "vinaearn-ai"
+PROJECT_NAME = "vinatools"
 FILES_TO_DEPLOY = [
     "index.html",
+    "api-docs.html",
     "dashboard.html",
     "styles.css",
     "global_style.css",
@@ -128,26 +129,9 @@ def release_lock():
 def main():
     print("Starting Vercel direct deployment...")
     acquire_lock()
-    
-    # Step 0: Temporarily swap index.html with vinaearn_index.html
-    has_original = os.path.exists("index.html")
-    index_bak = "index.html.bak"
-    index_temp = "vinaearn_index.html"
-    
-    if has_original:
-        if os.path.exists(index_bak):
-            os.remove(index_bak)
-        os.rename("index.html", index_bak)
-        
-    import shutil
-    if os.path.exists(index_temp):
-        shutil.copy(index_temp, "index.html")
-        print("Temporarily copied vinaearn_index.html to index.html for deployment.")
-        
     try:
-        # Dynamically inject the active tunnel URL into app.js from config.json
+        config_path = "config.local.json" if os.path.exists("config.local.json") else "config.json"
         try:
-            config_path = "config.json"
             if os.path.exists(config_path):
                 with open(config_path, "r", encoding="utf-8") as f:
                     config = json.load(f)
@@ -155,70 +139,18 @@ def main():
                 import re
                 match = re.match(r'(https?://[a-zA-Z0-9\.\-_]+)', api_url)
                 if match:
-                    tunnel_url = match.group(1)
-                    print(f"Extracted active tunnel URL: {tunnel_url}")
-                    
+                    gateway_url = match.group(1)
                     app_path = "app.js"
                     if os.path.exists(app_path):
                         with open(app_path, "r", encoding="utf-8") as f:
                             app_content = f.read()
-                        
-                        # Replace the ACTIVE_TUNNEL_URL constant (new pattern)
                         updated_content = re.sub(
-                            r"const ACTIVE_TUNNEL_URL\s*=\s*[\"']https?://[^\"']*[\"']\s*;",
-                            f'const ACTIVE_TUNNEL_URL = "{tunnel_url}";',
+                            r"const ACTIVE_TUNNEL_URL\s*=\s*[\"'][^\"']*[\"']\s*;",
+                            f'const ACTIVE_TUNNEL_URL = "{gateway_url}";',
                             app_content
                         )
-                        # Also support old localApiUrl pattern (legacy fallback)
-                        updated_content = re.sub(
-                            r"localApiUrl\s*=\s*[\"']https?://[^\"']*(?:serveousercontent\.com|lhr\.life)[\"']\s*;",
-                            f'localApiUrl = "{tunnel_url}";',
-                            updated_content
-                        )
-
-                        
                         with open(app_path, "w", encoding="utf-8") as f:
                             f.write(updated_content)
-                        print(f"Updated app.js with the active tunnel URL: {tunnel_url}")
-                    
-                    # Dynamically inject the active bank settings into api-portal.js
-                    api_portal_path = "api-portal.js"
-                    if os.path.exists(api_portal_path):
-                        with open(api_portal_path, "r", encoding="utf-8") as f:
-                            api_portal_content = f.read()
-                        
-                        bank_name = config.get("bank_name", "Techcombank")
-                        bank_id = config.get("bank_id", "TCB")
-                        if bank_id == "TCB" and "vietcom" in bank_name.lower():
-                            bank_id = "VCB"
-                        
-                        bank_acc = config.get("bank_account", "")
-                        bank_holder = config.get("bank_account_holder", "")
-                        
-                        updated_portal = re.sub(
-                            r'bankName:\s*["\'][^"\']*["\']',
-                            f'bankName: "{bank_name}"',
-                            api_portal_content
-                        )
-                        updated_portal = re.sub(
-                            r'bankId:\s*["\'][^"\']*["\']',
-                            f'bankId: "{bank_id}"',
-                            updated_portal
-                        )
-                        updated_portal = re.sub(
-                            r'accountNumber:\s*["\'][^"\']*["\']',
-                            f'accountNumber: "{bank_acc}"',
-                            updated_portal
-                        )
-                        updated_portal = re.sub(
-                            r'accountName:\s*["\'][^"\']*["\']',
-                            f'accountName: "{bank_holder}"',
-                            updated_portal
-                        )
-                        
-                        with open(api_portal_path, "w", encoding="utf-8") as f:
-                            f.write(updated_portal)
-                        print(f"Updated api-portal.js with dynamic bank settings: {bank_name}, {bank_acc}")
         except Exception as e:
             print(f"Warning: Failed to inject configs: {e}")
 
@@ -245,12 +177,6 @@ def main():
         # Step 2: Create Deployment
         create_deployment(files_meta)
     finally:
-        # Restore original index.html
-        if os.path.exists("index.html"):
-            os.remove("index.html")
-        if has_original and os.path.exists(index_bak):
-            os.rename(index_bak, "index.html")
-            print("Restored original index.html.")
         release_lock()
 
 if __name__ == "__main__":

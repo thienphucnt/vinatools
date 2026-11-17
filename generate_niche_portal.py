@@ -4,115 +4,119 @@ import os
 WORKSPACE = os.path.dirname(os.path.abspath(__file__))
 DEPLOYED_LOG = os.path.join(WORKSPACE, "deployed_tools.json")
 
+
+def _tool_metadata(tool):
+    kw = tool["keyword"]
+    slug = tool["slug"]
+    cat = tool.get("category")
+    kw_lower = kw.lower()
+
+    if not cat:
+        if "hợp đồng" in kw_lower or "biên bản" in kw_lower:
+            cat = "hop-dong"
+        elif "đơn" in kw_lower or "tờ khai" in kw_lower:
+            cat = "don-tu"
+        else:
+            cat = "tien-ich"
+
+    if cat == "hop-dong":
+        return (
+            "hop-dong",
+            "Hợp đồng",
+            "fa-file-contract",
+            "violet",
+            f"Trình khởi tạo {kw} chuẩn pháp lý 2026 theo Nghị định 30/2020/NĐ-CP. Xem trước A4, in PDF và tải Word tức thì.",
+        )
+    if cat == "don-tu":
+        return (
+            "don-tu",
+            "Đơn từ",
+            "fa-file-signature",
+            "teal",
+            f"Soạn thảo {kw} trực quan, kiểm tra hợp lệ từng bước, xuất bản in chuẩn A4 và tải xuống miễn phí.",
+        )
+
+    custom_descs = {
+        "cong-cu-tinh-thue-ho-kinh-doanh": "Mô phỏng thuế GTGT & TNCN Hộ Kinh Doanh theo NĐ 68/2026, NĐ 141/2026, TT 18/2026 & NQ 198/2025. Hỗ trợ so sánh 2 phương pháp và xuất CSV/PDF.",
+        "cong-cu-tinh-luong-gross-net-tncn-2026": "Quy đổi lương Gross/Net và tính thuế TNCN 5 bậc (Luật 109/2025/QH15, giảm trừ 15,5tr / 6,2tr, trần BHXH/BHTN NĐ 293 & NĐ 161/2026).",
+        "cong-cu-tinh-phi-san-tmdt": "Tính chi phí bán hàng Shopee & TikTok Shop cập nhật tháng 5-8/2026 (phí giao dịch 6%, hạ tầng 3.000đ, Voucher/Content Xtra, PiShip, khấu trừ thuế 1,5%) và Break-Even ROAS.",
+        "cong-cu-doc-so-thanh-chu": "Đọc số tiền bằng chữ tiếng Việt chuẩn quy tắc kế toán (lẻ/linh, mốt, tư, lăm) lên tới hàng trăm nghìn tỷ đồng.",
+        "cong-cu-tach-va-chuan-hoa-dia-chi": "Phân tách tự động danh sách địa chỉ thô (1 dòng/địa chỉ) thành 4 cấp hành chính và xuất bảng Excel/CSV tức thì.",
+        "cong-cu-tinh-lai-gop": "Mô phỏng lãi suất kép theo kỳ hạn ghép lãi (tháng/quý/năm), bảng dòng tiền từng năm và xuất file CSV.",
+        "tra-cuu-ma-so-thue-doanh-nghiep": "Tra cứu thông tin doanh nghiệp theo Mã số thuế (MST) hoặc tên công ty trực tiếp qua VietRegistry Serverless API.",
+    }
+    return (
+        "tien-ich",
+        "Tiện ích",
+        "fa-calculator" if "tính" in kw_lower else "fa-toolbox",
+        "pink",
+        custom_descs.get(slug, f"Công cụ {kw} chạy 100% client-side, bảo mật dữ liệu và xuất kết quả tức thì."),
+    )
+
+
 def generate_index():
     if not os.path.exists(DEPLOYED_LOG):
         print("No deployed tools found. Skipping niche portal generation.")
         return
-        
+
     with open(DEPLOYED_LOG, "r", encoding="utf-8") as f:
         tools = json.load(f)
-        
-    # Load config to get Google AdSense Client
-    config_path = os.path.join(WORKSPACE, "config.json")
-    config = {}
-    if os.path.exists(config_path):
-        try:
-            with open(config_path, "r", encoding="utf-8") as f:
-                config = json.load(f)
-        except Exception as e:
-            print(f"Failed to load config.json: {e}")
-            
-    google_adsense_client = config.get("google_adsense_client", "ca-pub-mock")
-    bank_name = config.get("bank_name", "Techcombank")
-    bank_id = config.get("bank_id", "TCB")
-    acc_num = config.get("bank_account", "")
-    acc_holder = config.get("bank_account_holder", "")
-    api_url = config.get("api_url", "/api/check-payment")
-        
+
     print(f"Generating niche portal directory for {len(tools)} tools...")
-    
-    # Categorize tools based on keyword name
+
     cards_html = ""
     for tool in tools:
         kw = tool["keyword"]
         slug = tool["slug"]
-        
-        # Determine category and icon
-        if "hợp đồng" in kw.lower():
-            category = "hop-dong"
-            category_label = "Hợp đồng"
-            icon = "fa-file-contract"
-            color_class = "violet"
-            desc = f"Khởi tạo {kw} trực tuyến. Cập nhật các điều khoản mới nhất, xuất file Word (.docx) chuẩn pháp lý nhanh chóng."
-        elif "đơn" in kw.lower():
-            category = "don-tu"
-            category_label = "Đơn từ"
-            icon = "fa-file-signature"
-            color_class = "teal"
-            desc = f"Mẫu {kw} chuẩn quy định hành chính. Điền thông tin trực quan, tải file xem trước và bản chuẩn tức thì."
-        else:
-            category = "tien-ich"
-            category_label = "Tiện ích"
-            icon = "fa-toolbox"
-            color_class = "pink"
-            desc = f"Công cụ hỗ trợ {kw} trực tuyến, xử lý dữ liệu tự động, bảo mật và an toàn tuyệt đối."
-            
+        category, category_label, icon, color_class, desc = _tool_metadata(tool)
+
         cards_html += f"""
-        <article class="glass-panel feature-card {color_class} tool-card" data-category="{category}" data-keyword="{kw.lower()}">
+        <article class="glass-panel feature-card {color_class} tool-card" data-category="{category}" data-keyword="{kw.lower()} {slug.replace('-', ' ')}">
           <div class="feature-icon">
             <i class="fa-solid {icon}"></i>
           </div>
           <span class="tool-badge">{category_label}</span>
-          <h4 class="feature-title" style="margin-top: 12px; font-size: 1.15rem; color: #fff;">{kw.capitalize()}</h4>
-          <p class="feature-desc" style="margin-top: 8px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">{desc}</p>
+          <h4 class="feature-title" style="margin-top: 12px; font-size: 1.15rem; color: #fff;">{kw}</h4>
+          <p class="feature-desc" style="margin-top: 8px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; flex-grow: 1;">{desc}</p>
           <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 0.75rem; color: var(--text-muted);"><i class="fa-solid fa-fire" style="color: #f59e0b; margin-right: 4px;"></i> {tool.get('estimated_volume', 1000)} lượt tìm kiếm</span>
-            <a href="/{slug}" class="btn" style="padding: 8px 16px; font-size: 0.8rem; border-radius: 6px;">Sử dụng <i class="fa-solid fa-arrow-right" style="font-size: 0.75rem;"></i></a>
+            <span style="font-size: 0.75rem; color: var(--text-muted);"><i class="fa-solid fa-bolt" style="color: #10b981; margin-right: 4px;"></i> Miễn phí • Client-Side</span>
+            <a href="/{slug}" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.8rem; border-radius: 6px;">Mở công cụ <i class="fa-solid fa-arrow-right" style="font-size: 0.75rem;"></i></a>
           </div>
         </article>
         """
 
+    tool_count = len(tools)
     full_html = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VinaTools - Thư Viện Mẫu Đơn Từ Hành Chính &amp; Hợp Đồng Pháp Lý Trực Tuyến 2026</title>
-  
+  <title>VinaTools - Nền Tảng Công Cụ LegalTech, FinTech &amp; Tra Cứu Doanh Nghiệp 2026</title>
+
   <!-- SEO Meta Tags -->
-  <meta name="description" content="VinaTools - Thư viện 35+ mẫu đơn từ hành chính, mẫu hợp đồng lao động, hợp đồng dịch vụ chuẩn quy định pháp luật 2026. Điền thông tin trực tuyến, xem trước A4, tải file Word miễn phí. Đơn xin việc, đơn xin phép, đơn xin nghỉ việc và nhiều biểu mẫu khác.">
-  <meta name="keywords" content="mẫu đơn xin việc, mẫu hợp đồng lao động, đơn xin nghỉ phép, đơn xin tạm trú, mẫu đơn hành chính, biểu mẫu trực tuyến, mẫu hợp đồng dịch vụ, đơn xin thôi việc, vinatools">
+  <meta name="description" content="VinaTools - Bộ 12 công cụ LegalTech & FinTech chuẩn quy định pháp luật Việt Nam 2026: Tính thuế Hộ Kinh Doanh (NĐ 68 & 141/2026), tính lương Gross/Net & TNCN 5 bậc (Luật 109/2025), tính phí sàn Shopee/TikTok 2026, soạn biểu mẫu chuẩn NĐ 30/2020 và tra cứu MST VietRegistry.">
+  <meta name="keywords" content="tính thuế hộ kinh doanh 2026, tính lương gross net 2026, tính phí sàn shopee tiktok 2026, hợp đồng lao động 2026, tra cứu mã số thuế, vinatools">
   <meta name="author" content="VinaTools">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  <meta name="google-site-verification" content="sFH2HKNSUZ5RjFpF5tNCnfjBTWMGRTajAHA4_by0mhE">
-  
+
   <!-- Canonical URL -->
   <link rel="canonical" href="https://vinatools.vercel.app">
-  
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
-  
+
   <!-- Language / Locale -->
   <link rel="alternate" hreflang="vi" href="https://vinatools.vercel.app">
   <link rel="alternate" hreflang="x-default" href="https://vinatools.vercel.app">
   <meta property="og:locale" content="vi_VN">
-  
+
   <!-- Open Graph Tags -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="VinaTools - Thư Viện Mẫu Đơn Từ &amp; Hợp Đồng Trực Tuyến 2026">
-  <meta property="og:description" content="35+ mẫu đơn từ hành chính, hợp đồng pháp lý chuẩn quy định. Điền thông tin trực quan, xem trước A4, tải file Word nhanh chóng.">
+  <meta property="og:title" content="VinaTools - Công Cụ LegalTech, FinTech &amp; VietRegistry API 2026">
+  <meta property="og:description" content="12 công cụ tính thuế, lương TNCN 5 bậc, phí sàn TMĐT 2026 và biểu mẫu hành chính chuẩn Nghị định 30/2020/NĐ-CP.">
   <meta property="og:url" content="https://vinatools.vercel.app">
   <meta property="og:site_name" content="VinaTools">
   <meta property="og:image" content="https://vinatools.vercel.app/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  
-  <!-- Twitter Card Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="VinaTools - Thư Viện Mẫu Đơn Từ &amp; Hợp Đồng Trực Tuyến 2026">
-  <meta name="twitter:description" content="35+ mẫu đơn từ hành chính, hợp đồng pháp lý chuẩn quy định. Điền thông tin trực quan, xem trước A4, tải file Word nhanh chóng.">
-  <meta name="twitter:image" content="https://vinatools.vercel.app/og-image.png">
-  
+
   <!-- JSON-LD WebSite Schema -->
   <script type="application/ld+json">
   {{
@@ -128,18 +132,14 @@ def generate_index():
   }}
   </script>
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={google_adsense_client}" crossorigin="anonymous"></script>
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <!-- Stylesheets -->
-  <link rel="preload" href="/global_style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/global_style.css"></noscript>
+  <link rel="stylesheet" href="/global_style.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0a0c10">
-  
+
   <script>
     if ('serviceWorker' in navigator) {{
       window.addEventListener('load', () => {{
@@ -147,26 +147,26 @@ def generate_index():
       }});
     }}
   </script>
-  
+
   <style>
     body {{
       padding: 0 !important;
       margin: 0;
       background-color: #0a0c10;
     }}
-    
+
     .portal-container {{
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
     }}
-    
+
     header.hero-section {{
       text-align: center;
-      padding: 100px 0 60px 0;
+      padding: 80px 0 50px 0;
       background: radial-gradient(circle, rgba(0, 168, 255, 0.1) 0%, transparent 60%);
     }}
-    
+
     .hero-badge {{
       display: inline-flex;
       align-items: center;
@@ -182,7 +182,7 @@ def generate_index():
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }}
-    
+
     .hero-title {{
       font-size: 3rem;
       margin-bottom: 20px;
@@ -192,30 +192,32 @@ def generate_index():
       font-family: var(--font-display);
       line-height: 1.2;
     }}
-    
+
     .hero-subtitle {{
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: var(--text-secondary);
-      max-width: 700px;
-      margin: 0 auto 40px auto;
+      max-width: 760px;
+      margin: 0 auto 30px auto;
       line-height: 1.6;
     }}
-    
+
     /* Navigation Bar */
     .portal-nav {{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 0;
+      padding: 20px 0;
       border-bottom: 1px solid var(--border-glass);
       position: sticky;
       top: 0;
-      background: rgba(10, 12, 16, 0.8);
+      background: rgba(10, 12, 16, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       z-index: 1000;
+      gap: 16px;
+      flex-wrap: wrap;
     }}
-    
+
     .portal-logo {{
       display: flex;
       align-items: center;
@@ -226,12 +228,12 @@ def generate_index():
       color: white;
       text-decoration: none;
     }}
-    
+
     .portal-logo i {{
       color: #00a8ff;
       filter: drop-shadow(0 0 8px #00a8ff);
     }}
-    
+
     /* Search & Filter Panel */
     .filter-panel {{
       display: flex;
@@ -240,12 +242,12 @@ def generate_index():
       margin-bottom: 40px;
       padding: 24px;
     }}
-    
+
     .search-row {{
       display: flex;
       position: relative;
     }}
-    
+
     .search-icon {{
       position: absolute;
       left: 16px;
@@ -253,17 +255,17 @@ def generate_index():
       transform: translateY(-50%);
       color: var(--text-secondary);
     }}
-    
+
     .search-input {{
       padding-left: 48px !important;
     }}
-    
+
     .category-tabs {{
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }}
-    
+
     .category-btn {{
       background: rgba(255,255,255,0.02);
       border: 1px solid var(--border-glass);
@@ -275,40 +277,40 @@ def generate_index():
       border-radius: var(--radius-sm);
       transition: var(--transition-smooth);
     }}
-    
+
     .category-btn:hover, .category-btn.active {{
       background: rgba(0, 168, 255, 0.1);
       border-color: rgba(0, 168, 255, 0.3);
       color: white;
     }}
-    
+
     /* Tools Grid */
     .tools-grid {{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      margin-bottom: 80px;
+      margin-bottom: 60px;
     }}
-    
+
     @media (max-width: 992px) {{
       .tools-grid {{
         grid-template-columns: repeat(2, 1fr);
       }}
     }}
-    
+
     @media (max-width: 600px) {{
       .tools-grid {{
         grid-template-columns: 1fr;
       }}
     }}
-    
+
     .feature-card {{
       padding: 24px;
       display: flex;
       flex-direction: column;
       position: relative;
     }}
-    
+
     .feature-icon {{
       width: 44px;
       height: 44px;
@@ -321,19 +323,19 @@ def generate_index():
       color: #00a8ff;
       font-size: 1.15rem;
     }}
-    
+
     .feature-card.violet .feature-icon {{
       background: rgba(139, 92, 246, 0.1);
       border-color: rgba(139, 92, 246, 0.2);
       color: #8b5cf6;
     }}
-    
+
     .feature-card.pink .feature-icon {{
       background: rgba(236, 72, 153, 0.1);
       border-color: rgba(236, 72, 153, 0.2);
       color: #ec4899;
     }}
-    
+
     .tool-badge {{
       position: absolute;
       top: 24px;
@@ -346,7 +348,7 @@ def generate_index():
       border-radius: 4px;
       font-weight: 500;
     }}
-    
+
     /* Footer */
     .portal-footer {{
       border-top: 1px solid var(--border-glass);
@@ -356,217 +358,152 @@ def generate_index():
       font-size: 0.85rem;
     }}
   </style>
+</head>
 <body class="portal-body">
-
-  <!-- Persistent Sidebar Ads (Left and Right Rails) -->
-  <div class="side-ad-left">
-    <span class="side-ad-label">Quảng cáo</span>
-    <ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="{google_adsense_client}" data-ad-slot="mock-sidebar-left">
-      <div class="fallback-ad-vertical" onclick="triggerVipUpgrade()">
-        <div class="fallback-ad-crown"><i class="fa-solid fa-crown"></i></div>
-        <div class="fallback-ad-title">VinaTools VIP</div>
-        <div class="fallback-ad-text">Tải file cực nhanh không quảng cáo. Hoàn tiền 100% nếu lỗi.</div>
-        <div class="fallback-ad-price">9.000đ/tháng</div>
-        <span class="fallback-ad-btn">Nâng Cấp</span>
-      </div>
-    </ins>
-  </div>
-  <div class="side-ad-right">
-    <span class="side-ad-label">Quảng cáo</span>
-    <ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="{google_adsense_client}" data-ad-slot="mock-sidebar-right">
-      <!-- Fallback House Ad 2 -->
-      <div class="fallback-ad-vertical second" onclick="window.open('https://vinaearn-ai.vercel.app', '_blank')">
-        <div class="fallback-ad-logo"><i class="fa-solid fa-code"></i></div>
-        <div class="fallback-ad-title">VinaEarn API</div>
-        <div class="fallback-ad-text">Cổng tra cứu doanh nghiệp tự động</div>
-        <div class="fallback-ad-price">VietRegistry</div>
-        <span class="fallback-ad-btn">Xem Thêm</span>
-      </div>
-    </ins>
-  </div>
-
   <div class="portal-container">
-    
     <!-- Navigation -->
-    <nav class="portal-nav" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border-glass); margin-bottom: 30px;">
-      <a href="/" class="portal-logo" style="display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none;">
-        <i class="fa-solid fa-toolbox" style="color: #00a8ff;"></i> VinaTools
+    <nav class="portal-nav">
+      <a href="/" class="portal-logo">
+        <i class="fa-solid fa-toolbox"></i> VinaTools
       </a>
-      <div class="nav-links" style="display: flex; gap: 20px; align-items: center;">
-        <a href="/?filter=don-tu" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="fa-solid fa-file-lines" style="color: #00a8ff; margin-right: 4px;"></i> Đơn từ</a>
-        <a href="/?filter=hop-dong" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="fa-solid fa-file-contract" style="color: #8b5cf6; margin-right: 4px;"></i> Hợp đồng</a>
-        <a href="/?filter=tien-ich" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="fa-solid fa-screwdriver-wrench" style="color: #ec4899; margin-right: 4px;"></i> Tiện ích</a>
+      <div class="nav-links" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+        <a href="/?filter=tien-ich" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-calculator" style="color: #ec4899; margin-right: 4px;"></i> FinTech &amp; Thuế</a>
+        <a href="/?filter=hop-dong" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-file-contract" style="color: #8b5cf6; margin-right: 4px;"></i> Hợp đồng</a>
+        <a href="/?filter=don-tu" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-file-lines" style="color: #00a8ff; margin-right: 4px;"></i> Đơn từ</a>
+        <a href="/api-docs.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-code" style="color: #10b981; margin-right: 4px;"></i> VietRegistry API</a>
       </div>
-      <div id="user-nav-status" style="font-size: 0.9rem; color: #94a3b8; display: flex; align-items: center; gap: 10px;">
-        <i class="fa-solid fa-server" style="color: #10b981;"></i> Hoạt động 24/7
+      <div style="font-size: 0.85rem; color: #10b981; display: flex; align-items: center; gap: 8px; font-weight: 600;">
+        <i class="fa-solid fa-shield-halved"></i> 100% Client-Side
       </div>
     </nav>
-    
+
     <!-- Hero Banner -->
     <header class="hero-section">
       <div class="hero-badge">
-        <i class="fa-solid fa-wand-magic-sparkles" style="color: #00a8ff;"></i> Đăng ký biểu mẫu tự động bằng AI
+        <i class="fa-solid fa-scale-balanced" style="color: #00a8ff;"></i> Chuẩn Pháp Lý &amp; Thuế Việt Nam 2026
       </div>
-      <h1 class="hero-title">VinaTools Directory</h1>
+      <h1 class="hero-title">VinaTools &amp; VietRegistry</h1>
       <p class="hero-subtitle">
-        Thư viện công cụ trực tuyến và các mẫu đơn từ hành chính, mẫu hợp đồng dân sự chuẩn quy định pháp luật. Điền thông tin trực quan, xem trước định dạng chuẩn A4 và tải xuống file Word nhanh chóng.
+        Bộ {tool_count} công cụ FinTech, LegalTech và tra cứu doanh nghiệp miễn phí: mô phỏng thuế Hộ Kinh Doanh (NĐ 68 &amp; 141/2026), tính lương Gross/Net &amp; thuế TNCN 5 bậc (Luật 109/2025), tính phí sàn TMĐT 2026 và khởi tạo văn bản hành chính chuẩn Nghị định 30/2020/NĐ-CP.
       </p>
+      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+        <a href="/cong-cu-tinh-thue-ho-kinh-doanh" class="btn btn-primary"><i class="fa-solid fa-calculator"></i> Tính Thuế Hộ Kinh Doanh 2026</a>
+        <a href="/api-docs.html" class="btn btn-secondary"><i class="fa-solid fa-terminal"></i> Tài Liệu VietRegistry API</a>
+      </div>
     </header>
-    
+
     <!-- Filters & Search -->
     <section class="glass-panel filter-panel">
       <div class="search-row">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" id="search-bar" class="search-input" placeholder="Tìm kiếm mẫu đơn, hợp đồng hoặc công cụ tiện ích... (ví dụ: tạm trú, lao động)">
+        <input type="text" id="search-bar" class="search-input" placeholder="Tìm kiếm công cụ tính thuế, lương TNCN, phí sàn TMĐT, hợp đồng lao động, tờ khai CT01...">
       </div>
-      
+
       <div class="category-tabs">
-        <button class="category-btn active" data-filter="all">Tất cả ({len(tools)} công cụ)</button>
+        <button class="category-btn active" data-filter="all">Tất cả ({tool_count} công cụ)</button>
+        <button class="category-btn" data-filter="tien-ich">FinTech &amp; Tiện ích</button>
+        <button class="category-btn" data-filter="hop-dong">Hợp đồng &amp; Biên bản</button>
         <button class="category-btn" data-filter="don-tu">Đơn từ hành chính</button>
-        <button class="category-btn" data-filter="hop-dong">Hợp đồng pháp lý</button>
-        <button class="category-btn" data-filter="tien-ich">Công cụ tiện ích</button>
       </div>
     </section>
-    
+
     <!-- Grid List -->
     <section class="tools-grid" id="tools-list">
       {cards_html}
     </section>
-    
-    <!-- Ad Slot: Between tools and FAQ -->
-    <div id="vinatools-portal-ad" class="ad-slot" style="grid-column: 1 / -1; margin-bottom: 40px;">
-      <ins class="adsbygoogle" style="display:block" data-ad-client="{google_adsense_client}" data-ad-slot="mock-page" data-ad-format="auto" data-full-width-responsive="true">
-        <!-- Fallback Horizontal Banner -->
-        <div class="fallback-ad-horizontal" onclick="triggerVipUpgrade()">
-          <div style="display:flex; align-items:center; gap: 15px;">
-            <div class="fallback-ad-crown"><i class="fa-solid fa-crown"></i></div>
-            <div style="text-align:left;">
-              <div class="fallback-ad-title" style="margin:0; font-size:1.1rem;">Thành Viên VIP VinaTools</div>
-              <div class="fallback-ad-text" style="margin:2px 0 0 0; font-size:0.85rem; color:#a3a3a3;">Tải trọn bộ VIP Bundle, in trực tiếp và tắt sạch quảng cáo. <strong>Cam kết hoàn tiền 100% trong vòng 7 ngày!</strong></div>
-            </div>
-          </div>
-          <div style="display:flex; align-items:center; gap: 15px;">
-            <div class="fallback-ad-price" style="margin:0; font-size:1.2rem; font-weight:bold; color:#f59e0b;">9.000 đ/tháng</div>
-            <span class="fallback-ad-btn" style="margin:0; padding: 8px 16px;">Đăng Ký Ngay</span>
-          </div>
-        </div>
-      </ins>
-    </div>
 
-    <!-- FAQ Section for SEO -->
-    <section class="glass-panel" style="margin-bottom: 40px; padding: 30px; grid-column: 1 / -1;" id="faq">
+    <!-- FAQ Section -->
+    <section class="glass-panel" style="margin-bottom: 40px; padding: 30px;" id="faq">
       <h2 style="color: #fff; margin-bottom: 24px; font-size: 1.5rem;">
         <i class="fa-solid fa-circle-question" style="color: #00a8ff; margin-right: 8px;"></i>
         Câu Hỏi Thường Gặp (FAQ)
       </h2>
       <div style="display: grid; gap: 16px;">
         <details style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 16px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #fff; font-size: 1rem;">VinaTools là gì?</summary>
-          <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 0.9rem;">VinaTools là thư viện trực tuyến cung cấp các mẫu đơn từ hành chính và hợp đồng pháp lý chuẩn quy định pháp luật Việt Nam. Người dùng có thể điền thông tin trực quan, xem trước định dạng A4 và tải xuống file Word (.docx) nhanh chóng.</p>
+          <summary style="cursor: pointer; font-weight: 600; color: #fff; font-size: 1rem;">Các công cụ tính thuế và lương trên VinaTools tuân theo quy định nào của năm 2026?</summary>
+          <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 0.9rem;">Công cụ Thuế Hộ Kinh Doanh áp dụng Nghị định 68/2026/NĐ-CP, Thông tư 18/2026/TT-BTC, Nghị định 141/2026/NĐ-CP (ngưỡng miễn thuế 1 tỷ đồng/năm) và Nghị quyết 198/2025/QH15 (bãi bỏ lệ phí môn bài). Công cụ tính lương &amp; thuế TNCN áp dụng Luật Thuế TNCN 109/2025/QH15 (biểu 5 bậc), Nghị quyết 110/2025/UBTVQH15 (giảm trừ 15,5 triệu / 6,2 triệu), Nghị định 293/2025/NĐ-CP và Nghị định 161/2026/NĐ-CP.</p>
         </details>
         <details style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 16px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #fff; font-size: 1rem;">Làm sao để tải mẫu đơn xin việc trên VinaTools?</summary>
-          <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 0.9rem;">Bạn chỉ cần truy cập trang mẫu đơn xin việc mong muốn, nhập thông tin đầy đủ vào biểu mẫu trực tuyến, nhấn 'Xem trước' để kiểm tra bản nháp và chọn 'Mở khóa / Tải xuống' để xem quảng cáo tài trợ và tải file Word bản chuẩn sạch hoàn toàn miễn phí.</p>
+          <summary style="cursor: pointer; font-weight: 600; color: #fff; font-size: 1rem;">VinaTools có yêu cầu đăng ký tài khoản hoặc chờ đếm ngược khi tải file không?</summary>
+          <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 0.9rem;">Không. Toàn bộ 12 công cụ trên VinaTools đều miễn phí 100%, không chèn cổng đếm ngược và không yêu cầu đăng nhập khi xuất bảng tính CSV, file Word (.doc) hay in báo cáo A4/PDF.</p>
         </details>
         <details style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 16px;">
-          <summary style="cursor: pointer; font-weight: 600; color: #fff; font-size: 1rem;">VinaTools có an toàn không?</summary>
-          <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 0.9rem;">Toàn bộ quá trình điền thông tin của bạn được thực hiện cục bộ trên trình duyệt của bạn và không lưu giữ thông tin nhạy cảm của người dùng trên bất kỳ máy chủ nào. Thanh toán nâng cấp VIP được xử lý an toàn thông qua cổng chuyển khoản tự động Techcombank VietQR.</p>
+          <summary style="cursor: pointer; font-weight: 600; color: #fff; font-size: 1rem;">Dữ liệu nhập vào có được bảo mật không?</summary>
+          <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7; font-size: 0.9rem;">Mọi dữ liệu tài chính và nhân sự được tính toán hoàn toàn cục bộ trên trình duyệt (client-side), tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15. Riêng công cụ tra cứu mã số thuế doanh nghiệp gọi trực tiếp tới API công khai /api/company và /api/search.</p>
         </details>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="portal-footer" style="grid-column: 1 / -1;">
+    <footer class="portal-footer">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: left; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 40px;">
         <div>
           <h3 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px;">Về VinaTools</h3>
-          <p style="font-size: 0.8rem; line-height: 1.6;">VinaTools cung cấp các giải pháp tự động hóa biểu mẫu, giúp cá nhân và doanh nghiệp tiết kiệm hàng giờ soạn thảo văn bản hành chính.</p>
+          <p style="font-size: 0.8rem; line-height: 1.6;">Nền tảng công cụ FinTech, LegalTech và API tra cứu doanh nghiệp Việt Nam hoạt động hoàn toàn client-side và serverless.</p>
         </div>
         <div>
-          <h3 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px;">Mẫu Đơn Phổ Thông</h3>
+          <h3 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px;">FinTech &amp; Dữ Liệu 2026</h3>
           <nav>
-            <a href="/mau-don-xin-viec-chuan" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Đơn xin việc chuẩn</a>
-            <a href="/mau-don-xin-phep-nghi-hoc" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Đơn xin nghỉ học</a>
-            <a href="/mau-don-xin-tam-tru" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Đơn xin tạm trú</a>
-            <a href="/mau-don-xin-thuc-tap" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Đơn xin thực tập</a>
+            <a href="/cong-cu-tinh-thue-ho-kinh-doanh" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Tính thuế Hộ Kinh Doanh 2026</a>
+            <a href="/cong-cu-tinh-luong-gross-net-tncn-2026" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Tính lương Gross/Net &amp; TNCN 2026</a>
+            <a href="/cong-cu-tinh-phi-san-tmdt" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Tính phí sàn Shopee &amp; TikTok 2026</a>
+            <a href="/tra-cuu-ma-so-thue-doanh-nghiep" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Tra cứu MST VietRegistry</a>
           </nav>
         </div>
         <div>
-          <h3 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px;">Mẫu Hợp Đồng</h3>
+          <h3 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px;">Hợp Đồng &amp; Đơn Từ</h3>
           <nav>
             <a href="/mau-hop-dong-lao-dong-2026" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Hợp đồng lao động 2026</a>
-            <a href="/mau-hop-dong-dich-vu" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Hợp đồng dịch vụ</a>
-            <a href="/mau-hop-dong-cho-thue-mat-bang" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Hợp đồng thuê mặt bằng</a>
-            <a href="/mau-hop-dong-cho-thue-nha" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Hợp đồng thuê nhà</a>
+            <a href="/bien-ban-ban-giao-tai-san" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Biên bản bàn giao tài sản</a>
+            <a href="/mau-don-xin-viec" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Mẫu đơn xin việc</a>
+            <a href="/mau-don-xin-tam-tru" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;">Tờ khai tạm trú CT01</a>
           </nav>
         </div>
         <div>
-          <h3 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px;">Chính Sách & Hỗ Trợ</h3>
+          <h3 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px;">Nền Tảng &amp; Chính Sách</h3>
           <nav>
+            <a href="/api-docs.html" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;"><i class="fa-solid fa-code" style="width: 16px;"></i> VietRegistry API Docs</a>
             <a href="/terms.html" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;"><i class="fa-solid fa-file-contract" style="width: 16px;"></i> Điều khoản dịch vụ</a>
             <a href="/privacy.html" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;"><i class="fa-solid fa-shield-halved" style="width: 16px;"></i> Chính sách bảo mật</a>
             <a href="/about.html" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;"><i class="fa-solid fa-circle-info" style="width: 16px;"></i> Giới thiệu</a>
-            <a href="/contact.html" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;"><i class="fa-solid fa-envelope" style="width: 16px;"></i> Liên hệ ban quản trị</a>
+            <a href="/contact.html" style="display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 6px; text-decoration: none;"><i class="fa-solid fa-envelope" style="width: 16px;"></i> Liên hệ</a>
           </nav>
         </div>
       </div>
-      <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 25px; font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; display: flex; flex-direction: column; align-items: center; gap: 16px;">
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 24px; margin-bottom: 10px;">
-          <!-- SSL Protected Badge -->
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 8px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);">
-            <i class="fa-solid fa-lock" style="color: #10b981; font-size: 1.2rem; filter: drop-shadow(0 0 5px rgba(16,185,129,0.4));"></i>
-            <div style="text-align: left; line-height: 1.2;">
-              <div style="color: #fff; font-weight: bold; font-size: 0.72rem; letter-spacing: 0.05em;">SSL SECURE</div>
-              <div style="color: var(--text-muted); font-size: 0.62rem; letter-spacing: 0.02em;">256-BIT ENCRYPTION</div>
-            </div>
-          </div>
-          <!-- Napas 24/7 Instant Transfer Badge -->
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 8px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);">
-            <i class="fa-solid fa-shield-halved" style="color: var(--accent-secondary); font-size: 1.2rem; filter: drop-shadow(0 0 5px rgba(236,72,153,0.4));"></i>
-            <div style="text-align: left; line-height: 1.2;">
-              <div style="color: #fff; font-weight: bold; font-size: 0.72rem; letter-spacing: 0.05em;">NAPAS 24/7</div>
-              <div style="color: var(--text-muted); font-size: 0.62rem; letter-spacing: 0.02em;">XÁC THỰC TỰ ĐỘNG</div>
-            </div>
-          </div>
-        </div>
-        <p>© 2026 VinaTools - Thư viện mẫu đơn từ hành chính và hợp đồng pháp lý trực tuyến.</p>
-        <p style="margin-top: 4px;"><strong>Đại diện sở hữu:</strong> Ban quản trị VinaTools | <strong>Địa chỉ liên hệ:</strong> Quận 1, Thành phố Hồ Chí Minh, Việt Nam | <strong>Email:</strong> vinatools.support@gmail.com</p>
-        <p style="margin-top: 4px; max-width: 800px; margin-left: auto; margin-right: auto; text-align: center;"><strong>Tuyên bố tuân thủ:</strong> Hệ thống hoạt động hoàn toàn tự động client-side trên trình duyệt người dùng. Mọi thông tin biểu mẫu được xử lý bảo mật cục bộ, tuân thủ Luật An ninh mạng 2018, Luật Bảo vệ dữ liệu cá nhân (Luật số 91/2025/QH15) và Nghị định số 356/2025/NĐ-CP.</p>
+      <div style="padding-top: 15px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.6;">
+        <p>© 2026 VinaTools - Nền tảng công cụ LegalTech, FinTech &amp; VietRegistry API.</p>
+        <p style="margin-top: 4px; max-width: 800px; margin-left: auto; margin-right: auto;"><strong>Tuyên bố tuân thủ:</strong> Hệ thống vận hành hoàn toàn client-side đối với toàn bộ công cụ biểu mẫu và tính toán, tuân thủ Luật An ninh mạng 2018, Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP.</p>
       </div>
     </footer>
   </div>
 
-  <script src="/checkout_modal.js?v=1.0.2"></script>
   <script>
-    // Search & Category Filtering Logic
     const searchBar = document.getElementById('search-bar');
     const filterBtns = document.querySelectorAll('.category-btn');
     const toolCards = document.querySelectorAll('.tool-card');
-    
+
     let currentFilter = 'all';
     let searchQuery = '';
-    
+
     function filterCards() {{
       toolCards.forEach(card => {{
         const cardCategory = card.getAttribute('data-category');
-        const cardKeyword = card.getAttribute('data-keyword');
-        
+        const cardKeyword = card.getAttribute('data-keyword') || '';
+
         const matchesCategory = currentFilter === 'all' || cardCategory === currentFilter;
         const matchesSearch = cardKeyword.includes(searchQuery);
-        
-        if (matchesCategory && matchesSearch) {{
-          card.style.display = 'flex';
-        }} else {{
-          card.style.display = 'none';
-        }}
+
+        card.style.display = (matchesCategory && matchesSearch) ? 'flex' : 'none';
       }});
     }}
-    
-    searchBar.addEventListener('input', function(e) {{
-      searchQuery = e.target.value.toLowerCase().trim();
-      filterCards();
-    }});
-    
+
+    if (searchBar) {{
+      searchBar.addEventListener('input', function(e) {{
+        searchQuery = e.target.value.toLowerCase().trim();
+        filterCards();
+      }});
+    }}
+
     filterBtns.forEach(btn => {{
       btn.addEventListener('click', function() {{
         filterBtns.forEach(b => b.classList.remove('active'));
@@ -576,7 +513,6 @@ def generate_index():
       }});
     }});
 
-    // Parse URL parameter on load to set pre-filter
     const urlParams = new URLSearchParams(window.location.search);
     const filterParam = urlParams.get('filter');
     if (filterParam) {{
@@ -590,60 +526,16 @@ def generate_index():
       }});
       filterCards();
     }}
-
-    initCheckoutConfig({{
-      bankName: "{bank_name}",
-      bankId: "{bank_id}",
-      accountNumber: "{acc_num}",
-      accountName: "{acc_holder}",
-      apiEndpoint: "{api_url}"
-    }});
-
-    function triggerVipUpgrade() {{
-      const email = localStorage.getItem("userEmail");
-      if (!email) {{
-        showAuthModal(function(registeredEmail) {{
-          proceedToVipUpgrade();
-        }});
-      }} else {{
-        proceedToVipUpgrade();
-      }}
-    }}
-
-    function proceedToVipUpgrade() {{
-      const memo = "VE_VIP_" + Math.floor(Date.now() / 1000).toString().slice(-6);
-      showCheckoutModal(9000, memo, function(token) {{
-        localStorage.setItem("vipToken", token);
-        alert('Chúc mừng! Bạn đã nâng cấp VIP thành viên thành công.');
-        location.reload();
-      }});
-    }}
-    window.triggerVipUpgrade = triggerVipUpgrade;
-
-    // Initialize Google AdSense
-    document.addEventListener("DOMContentLoaded", function() {{
-      if (localStorage.getItem("vipToken")) {{
-        const ads = document.querySelectorAll(".side-ad-left, .side-ad-right, #vinatools-portal-ad");
-        ads.forEach(el => el.style.display = "none");
-      }} else {{
-        try {{
-          (window.adsbygoogle = window.adsbygoogle || []).push({{}});
-          (window.adsbygoogle = window.adsbygoogle || []).push({{}});
-          (window.adsbygoogle = window.adsbygoogle || []).push({{}});
-        }} catch (e) {{
-          console.error("AdSense initialization failed:", e);
-        }}
-      }}
-    }});
   </script>
 </body>
 </html>
 """
-    
-    index_path = os.path.join(WORKSPACE, "vinatools_index.html")
+
+    index_path = os.path.join(WORKSPACE, "index.html")
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(full_html)
-    print("vinatools_index.html generated successfully!")
+    print("index.html generated successfully!")
+
 
 if __name__ == "__main__":
     generate_index()

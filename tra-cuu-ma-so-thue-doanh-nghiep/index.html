@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry - Tra Cứu MST & Doanh Nghiệp | VinaTools</title>
+
+  <meta name="description" content="Tra cứu mã số thuế (MST), người đại diện pháp luật, trạng thái hoạt động và địa chỉ trụ sở doanh nghiệp Việt Nam trực tiếp qua VietRegistry Serverless API.">
+  <meta name="keywords" content="tra cứu mã số thuế, tìm kiếm doanh nghiệp, vietregistry api, mã số thuế công ty">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vinatools.vercel.app/tra-cuu-ma-so-thue-doanh-nghiep">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry - Tra Cứu MST & Doanh Nghiệp | VinaTools">
+  <meta property="og:description" content="Tra cứu mã số thuế (MST), người đại diện pháp luật, trạng thái hoạt động và địa chỉ trụ sở doanh nghiệp Việt Nam trực tiếp qua VietRegistry Serverless API.">
+  <meta property="og:url" content="https://vinatools.vercel.app/tra-cuu-ma-so-thue-doanh-nghiep">
+  <meta property="og:site_name" content="VinaTools">
+  <meta property="og:image" content="https://vinatools.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry",
+        "operatingSystem": "All",
+        "applicationCategory": "BusinessApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "VND"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "VinaTools",
+            "item": "https://vinatools.vercel.app"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "VietRegistry API",
+            "item": "https://vinatools.vercel.app"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry",
+            "item": "https://vinatools.vercel.app/tra-cuu-ma-so-thue-doanh-nghiep"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/global_style.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0a0c10">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  
+  <style>
+    .ft-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 992px) { .ft-grid-2 { grid-template-columns: 1.05fr 0.95fr; align-items: start; } }
+    .ft-card { background: rgba(18, 22, 32, 0.78); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; }
+    .ft-label { display: block; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #9ca3af; margin-bottom: 6px; }
+    .ft-input, .ft-select, .ft-textarea { width: 100%; background: rgba(10, 12, 16, 0.65); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 11px 14px; color: #fff; font-size: 0.95rem; font-family: inherit; box-sizing: border-box; }
+    .ft-input:focus, .ft-select:focus, .ft-textarea:focus { outline: none; border-color: #00a8ff; box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.18); }
+    .ft-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .ft-preset-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); color: #e5e7eb; padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .ft-preset-btn:hover { background: rgba(0,168,255,0.18); border-color: #00a8ff; color: #fff; }
+    .ft-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+    .ft-tab { padding: 11px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #d1d5db; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .ft-tab.active { background: linear-gradient(135deg, #00a8ff 0%, #2563eb 100%); color: #fff; border-color: transparent; box-shadow: 0 4px 16px rgba(0, 168, 255, 0.3); }
+    .ft-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.9rem; }
+    .ft-row:last-child { border-bottom: none; }
+    .ft-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+    .ft-badge-green { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.35); }
+    .ft-badge-amber { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35); }
+    .ft-badge-red { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.35); }
+    .ft-badge-blue { background: rgba(0,168,255,0.15); color: #38bdf8; border: 1px solid rgba(0,168,255,0.35); }
+    .ft-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    .ft-table th, .ft-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; }
+    .ft-table th { color: #9ca3af; font-weight: 600; font-size: 0.78rem; text-transform: uppercase; }
+    .ft-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .ft-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 640px) { .ft-grid-2col { grid-template-columns: 1fr; } }
+    .print-only { display: none; }
+    @media print {
+      body { background: #fff !important; color: #000 !important; padding: 0 !important; }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      .ft-grid, .ft-grid-2 { display: block !important; max-width: 100% !important; padding: 0 !important; }
+      .ft-card, .print-report { background: #fff !important; color: #000 !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; backdrop-filter: none !important; page-break-inside: avoid; margin-bottom: 16px !important; }
+      .ft-card *, .print-report * { color: #111827 !important; border-color: #cbd5e1 !important; }
+      .ft-badge { border: 1px solid #334155 !important; background: #f8fafc !important; }
+      @page { size: A4 portrait; margin: 18mm 15mm; }
+    }
+  </style>
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Công cụ Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry sử dụng căn cứ pháp lý nào cho năm 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Công cụ áp dụng công thức và biểu suất theo Luật Quản lý thuế số 38/2019/QH14 và Nghị định 126/2020/NĐ-CP. Toàn bộ tính toán chạy trực tiếp bằng JavaScript trên trình duyệt của bạn, tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tôi có thể xuất bảng tính hoặc sử dụng Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry trên điện thoại không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Có. Giao diện VinaTools hỗ trợ đầy đủ trên điện thoại và máy tính bảng, đồng thời cho phép tải bảng tính CSV (mở trực tiếp trong Excel mà không lỗi font tiếng Việt) hoặc in báo cáo A4."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sử dụng và tải kết quả từ Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry có mất phí hay phải chờ đếm ngược không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hoàn toàn miễn phí và tức thì. VinaTools không thu phí, không yêu cầu đăng nhập và không đặt đồng hồ đếm ngược khi tải xuống tệp kết quả CSV, Word hoặc in PDF."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Dữ liệu nhập vào có được lưu lại trên máy chủ không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Không. Mọi số liệu kinh doanh, thu nhập hay thông tin cá nhân đều được xử lý hoàn toàn tại trình duyệt người dùng (client-side), không lưu trữ trên máy chủ."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body class="bg-slate-950 text-white min-h-screen">
+  <div class="layout-container max-w-7xl mx-auto">
+    <nav class="portal-nav no-print" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 30px; flex-wrap: wrap; gap: 12px;">
+      <a href="/" class="portal-logo" style="display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none;">
+        <i class="fa-solid fa-toolbox" style="color: #00a8ff;"></i> VinaTools
+      </a>
+      <div class="nav-links" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+        <a href="/?filter=tien-ich" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-calculator" style="color: #ec4899; margin-right: 4px;"></i> FinTech &amp; Thuế</a>
+        <a href="/?filter=hop-dong" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-file-contract" style="color: #8b5cf6; margin-right: 4px;"></i> Hợp đồng</a>
+        <a href="/?filter=don-tu" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-file-lines" style="color: #00a8ff; margin-right: 4px;"></i> Đơn từ</a>
+        <a href="/api-docs.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;"><i class="fa-solid fa-code" style="color: #10b981; margin-right: 4px;"></i> VietRegistry API</a>
+      </div>
+      <div id="user-nav-status" style="font-size: 0.85rem; color: #10b981; display: flex; align-items: center; gap: 8px; font-weight: 600;">
+        <i class="fa-solid fa-shield-halved"></i> VietRegistry Live API
+      </div>
+    </nav>
+
+    <header class="tool-header no-print" style="text-align: center; margin-bottom: 32px; padding: 0 16px;">
+      <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 12px;">Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry</h1>
+      <p style="color: var(--text-secondary); max-width: 780px; margin: 0 auto; font-size: 0.98rem;">Tra cứu trực tiếp thông tin đăng ký doanh nghiệp theo Mã số thuế (/api/company) hoặc tìm kiếm theo tên công ty &amp; tỉnh thành (/api/search).</p>
+    </header>
+
+    
+    <div class="ft-grid" style="max-width: 1020px;">
+      <div class="ft-card">
+        <div class="ft-tabs">
+          <button type="button" id="mst-tab-company" class="ft-tab active"><i class="fa-solid fa-building"></i> Tra Cứu Theo Mã Số Thuế (/api/company)</button>
+          <button type="button" id="mst-tab-search" class="ft-tab"><i class="fa-solid fa-magnifying-glass"></i> Tìm Theo Tên Doanh Nghiệp (/api/search)</button>
+        </div>
+
+        <div id="mst-panel-company">
+          <label class="ft-label" for="mst-input">Nhập Mã Số Thuế Doanh Nghiệp (10 hoặc 13 số)</label>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="mst-input" class="ft-input" value="0100109106" placeholder="Ví dụ: 0100109106" style="flex: 1; min-width: 220px;">
+            <button type="button" id="mst-lookup-btn" class="btn btn-primary"><i class="fa-solid fa-search"></i> Tra Cứu MST</button>
+          </div>
+          <div class="ft-presets">
+            <button type="button" class="ft-preset-btn" data-mst="0100109106">Viettel (0100109106)</button>
+            <button type="button" class="ft-preset-btn" data-mst="0101248147">FPT (0101248147)</button>
+            <button type="button" class="ft-preset-btn" data-mst="0300588569">Vinamilk (0300588569)</button>
+          </div>
+        </div>
+
+        <div id="mst-panel-search" style="display: none;">
+          <div class="ft-grid-2col" style="margin-bottom: 12px;">
+            <div>
+              <label class="ft-label" for="search-q-input">Tên Doanh Nghiệp / Từ Khóa</label>
+              <input type="text" id="search-q-input" class="ft-input" value="Viettel" placeholder="Ví dụ: Viettel, FPT, Vinamilk...">
+            </div>
+            <div>
+              <label class="ft-label" for="search-province">Tỉnh / Thành Phố</label>
+              <select id="search-province" class="ft-select">
+                <option value="">Tất cả tỉnh thành</option>
+                <option value="hanoi">Hà Nội</option>
+                <option value="hcm">TP. Hồ Chí Minh</option>
+                <option value="danang">Đà Nẵng</option>
+                <option value="binhduong">Bình Dương</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" id="mst-search-btn" class="btn btn-primary" style="width: 100%;"><i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm Doanh Nghiệp</button>
+        </div>
+      </div>
+
+      <div class="ft-card" id="mst-result-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+          <h3 style="margin: 0; font-size: 1.15rem;"><i class="fa-solid fa-database" style="color: #34d399;"></i> Kết Quả Từ VietRegistry API</h3>
+          <button type="button" id="export-mst-csv-btn" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.82rem;"><i class="fa-solid fa-file-csv"></i> Xuất CSV</button>
+        </div>
+        <div id="mst-status-line" style="font-size: 0.84rem; color: #9ca3af; margin-bottom: 12px;">Nhấn nút tra cứu để lấy dữ liệu doanh nghiệp thời gian thực.</div>
+        <div id="mst-result-body"></div>
+      </div>
+    </div>
+    
+
+    
+    <!-- VINATOOLS_SEO_START -->
+
+      <section class="glass-panel no-print" style="margin-top: 40px; border-color: rgba(255, 255, 255, 0.08); text-align: left; padding: 30px;">
+        <h2 style="margin-bottom: 20px; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-circle-info" style="color: var(--accent-secondary); margin-right: 8px;"></i>
+          Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry là gì?
+        </h2>
+        
+        <p style="margin-bottom: 25px; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          Công cụ tài chính <strong>Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry</strong> giúp cá nhân, hộ kinh doanh và nhà bán hàng thương mại điện tử mô phỏng chính xác nghĩa vụ thuế, bảo hiểm xã hội, biểu phí sàn và dòng tiền thực nhận theo quy định mới nhất năm 2026.
+        </p>
+
+        <h3 style="margin: 25px 0 15px 0; color: #fff; font-size: 1.2rem;">
+          <i class="fa-solid fa-scale-balanced" style="color: var(--accent-primary); margin-right: 8px;"></i>
+          Căn Cứ Pháp Lý & Biểu Suất Tính Toán Năm 2026
+        </h3>
+        <p style="margin-bottom: 25px; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+          Hệ thống công thức của <strong>Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry</strong> cập nhật trực tiếp theo Luật Quản lý thuế số 38/2019/QH14 và Nghị định 126/2020/NĐ-CP. Người dùng có thể so sánh song song các phương pháp kê khai, kiểm tra ngưỡng miễn thuế 1 tỷ đồng/năm, biểu thuế TNCN 5 bậc hoặc biên lợi nhuận ròng & Break-Even ROAS chỉ trong vài giây.
+        </p>
+
+        <h2 style="margin: 35px 0 20px 0; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-list-check" style="color: var(--accent-secondary); margin-right: 8px;"></i>
+          Hướng dẫn sử dụng Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry
+        </h2>
+        <ol style="margin-left: 20px; margin-bottom: 25px; color: var(--text-secondary); display: grid; gap: 10px; line-height: 1.6; font-size: 0.95rem;">
+          <li style="padding-left: 5px;">Bước 1: Chọn chế độ tra cứu theo Mã số thuế (MST 10 chữ số) hoặc tìm kiếm theo tên doanh nghiệp / tỉnh thành.</li>
+      <li style="padding-left: 5px;">Bước 2: Nhấn 'Tra cứu ngay' để truy vấn trực tiếp qua API VietRegistry (/api/company hoặc /api/search).</li>
+      <li style="padding-left: 5px;">Bước 3: Kiểm tra trạng thái hoạt động, người đại diện pháp luật và địa chỉ đăng ký từ Tổng cục Thuế.</li>
+      <li style="padding-left: 5px;">Bước 4: Tải danh sách kết quả dưới dạng bảng tính CSV (UTF-8) hoặc sao chép thông tin để xuất hóa đơn.</li>
+    </ol>
+
+        <div style="background: rgba(245, 158, 11, 0.05); border-left: 4px solid #f59e0b; padding: 15px 20px; border-radius: 4px; margin-bottom: 30px;">
+          <h4 style="margin: 0 0 8px 0; color: #f59e0b; font-weight: bold; font-size: 1rem;"><i class="fa-solid fa-triangle-exclamation"></i> Khuyến Nghị An Toàn & Bảo Mật</h4>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+            Lưu ý sử dụng: Số liệu mô phỏng bám sát văn bản quy phạm pháp luật năm 2026 và biểu phí sàn công bố chính thức; dữ liệu doanh thu/thu nhập được xử lý hoàn toàn cục bộ trên trình duyệt của bạn.
+          </p>
+        </div>
+
+        <h2 style="margin: 40px 0 20px 0; font-size: 1.5rem; color: #fff; border-bottom: 2px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+          <i class="fa-solid fa-clipboard-question" style="color: var(--accent-primary); margin-right: 8px;"></i>
+          Các câu hỏi thường gặp về Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry (FAQ)
+        </h2>
+        <div style="display: grid; gap: 20px;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Công cụ Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry sử dụng căn cứ pháp lý nào cho năm 2026?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Công cụ áp dụng công thức và biểu suất theo Luật Quản lý thuế số 38/2019/QH14 và Nghị định 126/2020/NĐ-CP. Toàn bộ tính toán chạy trực tiếp bằng JavaScript trên trình duyệt của bạn, tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Tôi có thể xuất bảng tính hoặc sử dụng Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry trên điện thoại không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Có. Giao diện VinaTools hỗ trợ đầy đủ trên điện thoại và máy tính bảng, đồng thời cho phép tải bảng tính CSV (mở trực tiếp trong Excel mà không lỗi font tiếng Việt) hoặc in báo cáo A4.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Sử dụng và tải kết quả từ Công cụ tra cứu mã số thuế doanh nghiệp VietRegistry có mất phí hay phải chờ đếm ngược không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Hoàn toàn miễn phí và tức thì. VinaTools không thu phí, không yêu cầu đăng nhập và không đặt đồng hồ đếm ngược khi tải xuống tệp kết quả CSV, Word hoặc in PDF.</p>
+          </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 15px 20px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 1.05rem; font-weight: bold;"><i class="fa-solid fa-circle-question" style="color: var(--accent-secondary); margin-right: 6px;"></i> Dữ liệu nhập vào có được lưu lại trên máy chủ không?</h4>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; text-align: justify;">Không. Mọi số liệu kinh doanh, thu nhập hay thông tin cá nhân đều được xử lý hoàn toàn tại trình duyệt người dùng (client-side), không lưu trữ trên máy chủ.</p>
+          </div>
+    </div>
+        
+        
+      <!-- Related Tools Internal Linking Panel -->
+      <section style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; text-align: left;">
+        <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-layer-group" style="color: var(--accent-secondary);"></i>
+          Công Cụ Hữu Ích Liên Quan Gợi Ý
+        </h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+          
+        <a href="/cong-cu-tinh-luong-gross-net-tncn-2026" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; line-height: 1.4;">Công cụ tính lương Gross sang Net & Thuế TNCN 2026</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến hỗ trợ Công cụ tính lương Gross sang Net & Thuế TNCN 2026 chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: #10b981; display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-bolt"></i> Miễn phí • Client-Side
+             </span>
+          </div>
+        </a>
+        
+        <a href="/cong-cu-tinh-thue-ho-kinh-doanh" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; line-height: 1.4;">Công cụ tính thuế hộ kinh doanh 2026</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến hỗ trợ Công cụ tính thuế hộ kinh doanh 2026 chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: #10b981; display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-bolt"></i> Miễn phí • Client-Side
+             </span>
+          </div>
+        </a>
+        
+        <a href="/cong-cu-tinh-phi-san-tmdt" style="text-decoration: none; display: block;" class="related-tool-card">
+          <div style="padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); transition: all 0.3s ease; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+             <h4 style="margin: 0 0 10px 0; color: #fff; font-size: 0.98rem; font-weight: bold; line-height: 1.4;">Công cụ tính phí sàn TMĐT Shopee & TikTok Shop 2026</h4>
+             <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.8rem; line-height: 1.45; flex-grow: 1;">
+               Công cụ trực tuyến hỗ trợ Công cụ tính phí sàn TMĐT Shopee & TikTok Shop 2026 chuẩn quy định 2026, bảo mật dữ liệu tuyệt đối.
+             </p>
+             <span style="font-size: 0.72rem; color: #10b981; display: flex; align-items: center; gap: 4px;">
+               <i class="fa-solid fa-bolt"></i> Miễn phí • Client-Side
+             </span>
+          </div>
+        </a>
+        
+        </div>
+      </section>
+      
+      <style>
+        .related-tool-card:hover div {
+          border-color: var(--accent-secondary-glow) !important;
+          background: rgba(255,255,255,0.035) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+      </style>
+    
+      </section>
+    
+    <!-- VINATOOLS_SEO_END -->
+
+    <footer class="tool-footer no-print" style="margin-top: 50px; padding: 25px 16px; border-top: 1px solid var(--border-glass); font-size: 0.8rem; color: var(--text-muted); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+      <p>&copy; 2026 VinaTools. Toàn bộ biểu mẫu &amp; công cụ tính toán chạy hoàn toàn miễn phí trên trình duyệt (client-side), tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15.</p>
+      <p style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+        <a href="/" style="color: var(--text-secondary); text-decoration: none;">Trang chủ</a>
+        <a href="/api-docs.html" style="color: var(--text-secondary); text-decoration: none;">VietRegistry API</a>
+        <a href="/terms.html" style="color: var(--text-secondary); text-decoration: none;">Điều khoản</a>
+        <a href="/privacy.html" style="color: var(--text-secondary); text-decoration: none;">Bảo mật</a>
+        <a href="/about.html" style="color: var(--text-secondary); text-decoration: none;">Giới thiệu</a>
+        <a href="/contact.html" style="color: var(--text-secondary); text-decoration: none;">Liên hệ</a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    
+    let mstMode = 'company';
+    let lastRegistryRows = [];
+
+    document.getElementById('mst-tab-company').addEventListener('click', () => {
+      mstMode = 'company';
+      document.getElementById('mst-tab-company').classList.add('active');
+      document.getElementById('mst-tab-search').classList.remove('active');
+      document.getElementById('mst-panel-company').style.display = 'block';
+      document.getElementById('mst-panel-search').style.display = 'none';
+    });
+    document.getElementById('mst-tab-search').addEventListener('click', () => {
+      mstMode = 'search';
+      document.getElementById('mst-tab-search').classList.add('active');
+      document.getElementById('mst-tab-company').classList.remove('active');
+      document.getElementById('mst-panel-search').style.display = 'block';
+      document.getElementById('mst-panel-company').style.display = 'none';
+    });
+    document.querySelectorAll('.ft-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('mst-input').value = btn.getAttribute('data-mst');
+        lookupByTaxCode();
+      });
+    });
+
+    function escHtml(v) {
+      return String(v || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    async function lookupByTaxCode() {
+      const code = (document.getElementById('mst-input').value || '').trim();
+      const statusEl = document.getElementById('mst-status-line');
+      const bodyEl = document.getElementById('mst-result-body');
+      if (!code) return;
+      statusEl.innerText = 'Đang truy vấn /api/company...';
+      bodyEl.innerHTML = '';
+      try {
+        const resp = await fetch(`/api/company?tax_code=${encodeURIComponent(code)}`);
+        const data = await resp.json();
+        if (!resp.ok || data.error) {
+          statusEl.innerText = 'Lỗi: ' + (data.error || resp.statusText);
+          lastRegistryRows = [];
+          return;
+        }
+        statusEl.innerText = 'Nguồn: ' + (data.data_source || 'VietRegistry API');
+        lastRegistryRows = [data];
+        const statusBadge = data.status === 'active'
+          ? '<span class="ft-badge ft-badge-green">Đang hoạt động</span>'
+          : '<span class="ft-badge ft-badge-amber">' + escHtml(data.status || 'unknown') + '</span>';
+        bodyEl.innerHTML = `
+          <div class="ft-row"><span>Tên doanh nghiệp</span><strong>${escHtml(data.name_vietnamese || data.name)}</strong></div>
+          <div class="ft-row"><span>Mã số thuế</span><strong>${escHtml(data.tax_code)}</strong></div>
+          <div class="ft-row"><span>Trạng thái</span>${statusBadge}</div>
+          <div class="ft-row"><span>Đại diện pháp luật</span><strong>${escHtml(data.legal_representative || 'N/A')}</strong></div>
+          <div class="ft-row"><span>Địa chỉ trụ sở</span><strong style="text-align:right;">${escHtml(data.address || 'N/A')}</strong></div>
+        `;
+      } catch (err) {
+        statusEl.innerText = 'Không thể kết nối /api/company (hãy kiểm tra triển khai Vercel hoặc chạy local API).';
+        lastRegistryRows = [];
+      }
+    }
+
+    async function searchCompanies() {
+      const q = (document.getElementById('search-q-input').value || '').trim();
+      const province = document.getElementById('search-province').value;
+      const statusEl = document.getElementById('mst-status-line');
+      const bodyEl = document.getElementById('mst-result-body');
+      if (!q) return;
+      statusEl.innerText = 'Đang tìm kiếm qua /api/search...';
+      bodyEl.innerHTML = '';
+      try {
+        const resp = await fetch(`/api/search?q=${encodeURIComponent(q)}&province=${encodeURIComponent(province)}`);
+        const data = await resp.json();
+        if (!resp.ok || data.error) {
+          statusEl.innerText = 'Lỗi: ' + (data.error || resp.statusText);
+          lastRegistryRows = [];
+          return;
+        }
+        const results = data.results || [];
+        lastRegistryRows = results;
+        statusEl.innerText = `Tìm thấy ${results.length} kết quả (${data.note || ''})`;
+        if (results.length === 0) {
+          bodyEl.innerHTML = '<p style="color:#9ca3af;">Không có doanh nghiệp phù hợp.</p>';
+          return;
+        }
+        let html = '<div style="overflow-x:auto;"><table class="ft-table"><thead><tr><th>MST</th><th>Tên doanh nghiệp</th><th>Địa chỉ</th><th>Trạng thái</th></tr></thead><tbody>';
+        results.forEach(r => {
+          html += `<tr><td><strong>${escHtml(r.tax_code)}</strong></td><td>${escHtml(r.name)}</td><td>${escHtml(r.address)}</td><td>${escHtml(r.status)}</td></tr>`;
+        });
+        html += '</tbody></table></div>';
+        bodyEl.innerHTML = html;
+      } catch (err) {
+        statusEl.innerText = 'Không thể kết nối /api/search.';
+        lastRegistryRows = [];
+      }
+    }
+
+    document.getElementById('mst-lookup-btn').addEventListener('click', lookupByTaxCode);
+    document.getElementById('mst-search-btn').addEventListener('click', searchCompanies);
+    document.getElementById('export-mst-csv-btn').addEventListener('click', () => {
+      if (!lastRegistryRows.length) return;
+      const esc = (v) => '"' + String(v || '').replace(/"/g, '""') + '"';
+      const rows = [['Ma so thue', 'Ten doanh nghiep', 'Dia chi', 'Trang thai']];
+      lastRegistryRows.forEach(r => rows.push([esc(r.tax_code), esc(r.name_vietnamese || r.name), esc(r.address), esc(r.status)]));
+      const csv = rows.map(r => r.join(',')).join('\n');
+      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ket-qua-tra-cuu-mst.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+    
+  </script>
+</body>
+</html>
