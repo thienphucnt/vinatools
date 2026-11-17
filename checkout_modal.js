@@ -10,7 +10,7 @@ let paymentConfig = {
   bankId: "TCB",
   accountNumber: "",
   accountName: "",
-  apiEndpoint: "/api/check-payment",
+  apiEndpoint: "/api",
   adsenseClient: ""
 };
 

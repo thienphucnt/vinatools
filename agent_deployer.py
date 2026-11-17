@@ -25,16 +25,21 @@ print = log_to_file
 # Config & Paths
 WORKSPACE = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(WORKSPACE, "config.json")
+LOCAL_CONFIG_PATH = os.path.join(WORKSPACE, "config.local.json")
 TEMPLATES_DIR = os.path.join(WORKSPACE, "templates")
 
 # Excluded folders during scanning
-EXCLUDE_DIRS = {".git", ".gemini", "templates", "__pycache__"}
+EXCLUDE_DIRS = {".git", ".gemini", "templates", "__pycache__", "scratch"}
 
 def load_config():
+  config = {}
   if os.path.exists(CONFIG_PATH):
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
-      return json.load(f)
-  return {}
+      config = json.load(f)
+  if os.environ.get("TESTING") != "true" and os.path.exists(LOCAL_CONFIG_PATH):
+    with open(LOCAL_CONFIG_PATH, "r", encoding="utf-8") as f:
+      config.update(json.load(f))
+  return config
 
 def copy_static_assets():
   """
@@ -129,7 +134,8 @@ def scan_files_to_deploy():
     "global_style.css", "styles.css", "checkout_modal.js", "app.js", "api-portal.js",
     "robots.txt", "sitemap.xml", "terms.html", "privacy.html", "refund.html",
     "ads.txt", "sw.js", "og-image.png", "vercel.json", "manifest.json",
-    "offline.html", "about.html", "contact.html", "logo.png"
+    "offline.html", "about.html", "contact.html", "logo.png",
+    "companies_sample.db", "requirements.txt"
   ]
   for f in core_files:
     path = os.path.join(WORKSPACE, f)
@@ -187,39 +193,39 @@ def run_deployment():
   print("run_deployment() function started...")
   acquire_lock()
 
-  config = load_config()
-  token = config.get("vercel_token", "")
-  project_name = config.get("vercel_project_name", "vinaearn-ai")
-  
-  if not token or token.startswith("YOUR_"):
-    print("Error: Vercel Token is missing in config.json. Deployment cancelled.")
-    return None
-    
-  # Step 1: Copy templates to root
-  copy_static_assets()
-  
-  # Step 2: Generate up-to-date directory index.html and sitemap.xml
-  try:
-    from generate_niche_portal import generate_index
-    generate_index()
-  except Exception as e:
-    print(f"Error generating niche portal index: {e}")
-
-  try:
-    from generate_sitemap import generate_sitemap
-    generate_sitemap()
-  except Exception as e:
-    print(f"Error generating sitemap.xml: {e}")
-
   deployment_url = None
   try:
+    config = load_config()
+    token = config.get("vercel_token", "")
+    project_name = config.get("vercel_project_name", "vinaearn-ai")
+
+    if not token or token.startswith("YOUR_"):
+      print("Error: Vercel Token is missing in config.json. Deployment cancelled.")
+      return None
+
+    # Step 1: Copy templates to root
+    copy_static_assets()
+
+    # Step 2: Generate up-to-date directory index.html and sitemap.xml
+    try:
+      from generate_niche_portal import generate_index
+      generate_index()
+    except Exception as e:
+      print(f"Error generating niche portal index: {e}")
+
+    try:
+      from generate_sitemap import generate_sitemap
+      generate_sitemap()
+    except Exception as e:
+      print(f"Error generating sitemap.xml: {e}")
+
     # Scan files directly from workspace
     files_to_deploy = scan_files_to_deploy()
     print(f"Scanned {len(files_to_deploy)} files for deployment.")
-    
+
     files_meta = []
     sha_to_content = {}
-    
+
     for rel_path in files_to_deploy:
       abs_path = os.path.join(WORKSPACE, rel_path)
       sha1, size, content = get_sha1_and_size(abs_path)
@@ -229,7 +235,7 @@ def run_deployment():
         "size": size
       })
       sha_to_content[sha1] = (rel_path, content)
-      
+
     # Try deploying directly
     print("Attempting to create Vercel deployment...")
     try:
@@ -242,7 +248,7 @@ def run_deployment():
           if err_data.get("error", {}).get("code") == "missing_files":
             missing_shas = err_data["error"].get("missing", [])
             print(f"Vercel reports {len(missing_shas)} files are missing. Uploading only the missing files...")
-            
+
             for sha in missing_shas:
               if sha in sha_to_content:
                 rel_path, content = sha_to_content[sha]
@@ -250,7 +256,7 @@ def run_deployment():
                 upload_file(sha, content, token)
               else:
                 print(f"Error: Missing file with SHA1 {sha} not found in scan!")
-                
+
             # Retry deployment
             print("Retrying Vercel deployment after uploading missing files...")
             deployment_url = create_vercel_deployment(files_meta, project_name, token)
@@ -265,7 +271,7 @@ def run_deployment():
         raise
   finally:
     release_lock()
-      
+
   return deployment_url
 
 if __name__ == "__main__":
